@@ -7,5 +7,6 @@ namespace AuctionOnline.Models
 {
     public class Vinh
     {
+        //fix code
     }
 }
