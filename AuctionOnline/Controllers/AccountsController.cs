@@ -10,6 +10,7 @@ namespace AuctionOnline.Controllers
     {
         public IActionResult Index()
         {
+            // fix comment
             return View();
         }
     }
