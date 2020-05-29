@@ -13,5 +13,6 @@ namespace AuctionOnline.Models
         public decimal CurrentPrice { get; set; }
         [Column(TypeName = "decimal(18,1)")]
         public decimal BidIncrement { get; set; }
+
     }
 }
