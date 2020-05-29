@@ -19,6 +19,24 @@ namespace AuctionOnline.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("AuctionOnline.Models.BidIncrementDefinition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("BidIncrement")
+                        .HasColumnType("decimal(18,1)");
+
+                    b.Property<decimal>("CurrentPrice")
+                        .HasColumnType("decimal(18,1)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BidIncrementDefinition");
+                });
+
             modelBuilder.Entity("AuctionOnline.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -61,6 +79,9 @@ namespace AuctionOnline.Migrations
                     b.Property<DateTime>("BidEndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("BidIncrementDefinitionId")
+                        .HasColumnType("int");
+
                     b.Property<int>("BidIncrementId")
                         .HasColumnType("int");
 
@@ -93,6 +114,8 @@ namespace AuctionOnline.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BidIncrementDefinitionId");
+
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Items");
@@ -100,6 +123,12 @@ namespace AuctionOnline.Migrations
 
             modelBuilder.Entity("AuctionOnline.Models.Item", b =>
                 {
+                    b.HasOne("AuctionOnline.Models.BidIncrementDefinition", "BidIncrementDefinition")
+                        .WithMany()
+                        .HasForeignKey("BidIncrementDefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AuctionOnline.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")

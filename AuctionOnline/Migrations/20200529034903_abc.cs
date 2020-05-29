@@ -3,10 +3,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuctionOnline.Migrations
 {
-    public partial class test : Migration
+    public partial class abc : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "BidIncrementDefinition",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CurrentPrice = table.Column<decimal>(type: "decimal(18,1)", nullable: false),
+                    BidIncrement = table.Column<decimal>(type: "decimal(18,1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BidIncrementDefinition", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -36,12 +50,19 @@ namespace AuctionOnline.Migrations
                     BidEndDate = table.Column<DateTime>(nullable: false),
                     BidIncrementId = table.Column<int>(nullable: false),
                     MinimumBid = table.Column<decimal>(type: "decimal(18,1)", nullable: false),
+                    BidIncrementDefinitionId = table.Column<int>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Items", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Items_BidIncrementDefinition_BidIncrementDefinitionId",
+                        column: x => x.BidIncrementDefinitionId,
+                        principalTable: "BidIncrementDefinition",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Items_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -61,6 +82,11 @@ namespace AuctionOnline.Migrations
                 values: new object[] { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Electric" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Items_BidIncrementDefinitionId",
+                table: "Items",
+                column: "BidIncrementDefinitionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Items_CategoryId",
                 table: "Items",
                 column: "CategoryId");
@@ -70,6 +96,9 @@ namespace AuctionOnline.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Items");
+
+            migrationBuilder.DropTable(
+                name: "BidIncrementDefinition");
 
             migrationBuilder.DropTable(
                 name: "Categories");
