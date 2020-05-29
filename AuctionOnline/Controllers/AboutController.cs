@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("account")]
-    public class AccountsController : Controller
+    [Route("about")]
+    public class AboutController : Controller
     {
         [Route("index")]
         public IActionResult Index()
