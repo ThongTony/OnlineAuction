@@ -18,8 +18,8 @@ namespace AuctionOnline.Models
         public int BidIncrementId { get; set; }
         [Column(TypeName="decimal(18,1)")]
         public decimal MinimumBid { get; set; }
-        //public int BidIncrementDefinitionId { get; set; }
-        //public BidIncrementDefinition BidIncrementDefinition { get; set; }
+        public int BidIncrementDefinitionId { get; set; }
+        public BidIncrementDefinition BidIncrementDefinition { get; set; }
         public ICollection<CategoryItem> CategoryItems { get; set; }
         public ICollection<AccountItem> AccountItems { get; set; }
         public DateTime CreatedAt { get; set; }
