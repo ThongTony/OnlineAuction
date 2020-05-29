@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AuctionOnline.Models
@@ -17,10 +18,10 @@ namespace AuctionOnline.Models
         public int BidIncrementId { get; set; }
         [Column(TypeName="decimal(18,1)")]
         public decimal MinimumBid { get; set; }
-        public int BidIncrementDefinitionId { get; set; }
-        public BidIncrementDefinition BidIncrementDefinition { get; set; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        //public int BidIncrementDefinitionId { get; set; }
+        //public BidIncrementDefinition BidIncrementDefinition { get; set; }
+        public ICollection<CategoryItem> CategoryItems { get; set; }
+        public ICollection<AccountItem> AccountItems { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

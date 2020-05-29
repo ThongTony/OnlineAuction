@@ -14,5 +14,6 @@ namespace AuctionOnline.Models
         public int RoleId { get; set; }
         public int Status { get; set; }
         public DateTime CreatedAt { get; set; }
+        public ICollection<AccountItem> AccountItems { get; set; }
     }
 }
