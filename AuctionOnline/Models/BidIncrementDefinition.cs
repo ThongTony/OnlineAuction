@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AuctionOnline.Models
 {
@@ -10,7 +6,7 @@ namespace AuctionOnline.Models
     {
         public int Id { get; set; }
         [Column(TypeName= "decimal(18,1)")]
-        public decimal CurrentPrice { get; set; }
+        public decimal PriceRange { get; set; }
         [Column(TypeName = "decimal(18,1)")]
         public decimal BidIncrement { get; set; }
 

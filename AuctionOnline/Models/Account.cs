@@ -12,7 +12,8 @@ namespace AuctionOnline.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
-        public int Status { get; set; }
+        public Boolean Status { get; set; }
+        public Boolean IsBlocked { get; set; }
         public DateTime CreatedAt { get; set; }
         public ICollection<AccountItem> AccountItems { get; set; }
     }
