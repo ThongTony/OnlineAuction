@@ -9,12 +9,12 @@ namespace AuctionOnline.Data
         {
             
         }
-        DbSet<Category> Categories { get; set; }
-        DbSet<Item> Items { get; set; }
-        DbSet<Account> Accounts { get; set; }
-        DbSet<AccountItem> AccountItems { get; set; }
-        DbSet<BidIncrementDefinition> BidIncrementDefinitions { get; set; }
-        DbSet<CategoryItem> CategoryItems { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<AccountItem> AccountItems { get; set; }
+        public DbSet<BidIncrementDefinition> BidIncrementDefinitions { get; set; }
+        public DbSet<CategoryItem> CategoryItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AuctionOnline.Models
 {
@@ -11,5 +9,8 @@ namespace AuctionOnline.Models
         public Item Item { get; set; }
         public int AccountId { get; set; }
         public Account Account { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal CurrentBid { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

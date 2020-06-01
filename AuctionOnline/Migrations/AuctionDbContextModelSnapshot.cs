@@ -32,14 +32,17 @@ namespace AuctionOnline.Migrations
                     b.Property<string>("Fullname")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
@@ -56,6 +59,12 @@ namespace AuctionOnline.Migrations
 
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("CurrentBid")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("ItemId", "AccountId");
 
@@ -74,7 +83,7 @@ namespace AuctionOnline.Migrations
                     b.Property<decimal>("BidIncrement")
                         .HasColumnType("decimal(18,1)");
 
-                    b.Property<decimal>("CurrentPrice")
+                    b.Property<decimal>("PriceRange")
                         .HasColumnType("decimal(18,1)");
 
                     b.HasKey("Id");
@@ -122,6 +131,9 @@ namespace AuctionOnline.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("ItemId", "CategoryId");
 
                     b.HasIndex("CategoryId");
@@ -140,9 +152,6 @@ namespace AuctionOnline.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("BidIncrementDefinitionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BidIncrementId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BidStartDate")
@@ -165,6 +174,9 @@ namespace AuctionOnline.Migrations
 
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,1)");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");

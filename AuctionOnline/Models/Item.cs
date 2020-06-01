@@ -10,12 +10,14 @@ namespace AuctionOnline.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        [Column(TypeName = "decimal(18,1)")]
+        public decimal Price { get; set; }
         public int BidStatus { get; set; }
         public string Photo { get; set; }
         public string Document { get; set; }
         public DateTime BidStartDate { get; set; }
         public DateTime BidEndDate { get; set; }
-        public int BidIncrementId { get; set; }
+
         [Column(TypeName="decimal(18,1)")]
         public decimal MinimumBid { get; set; }
         public int BidIncrementDefinitionId { get; set; }
