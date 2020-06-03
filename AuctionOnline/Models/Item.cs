@@ -17,7 +17,6 @@ namespace AuctionOnline.Models
         public string Document { get; set; }
         public DateTime BidStartDate { get; set; }
         public DateTime BidEndDate { get; set; }
-
         [Column(TypeName="decimal(18,1)")]
         public decimal MinimumBid { get; set; }
         public int BidIncrementDefinitionId { get; set; }

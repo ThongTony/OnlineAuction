@@ -10,6 +10,9 @@ namespace AuctionOnline.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
+        public int? ParentId { get; set; }
+        public virtual Category Parent { get; set; }
+        public virtual HashSet<Category> Children { get; set; }
         public ICollection<CategoryItem> CategoryItems { get; set; }
     }
 }

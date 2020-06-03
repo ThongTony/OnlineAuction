@@ -14,6 +14,7 @@ namespace AuctionOnline.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fullname = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
                     Username = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
                     RoleId = table.Column<int>(nullable: false),
@@ -47,11 +48,18 @@ namespace AuctionOnline.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    CreatedAt = table.Column<DateTime>(nullable: false)
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ParentId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_Categories_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,18 +144,23 @@ namespace AuctionOnline.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "CreatedAt", "Name" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Furniture" });
+                columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Furniture", null });
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "CreatedAt", "Name" },
-                values: new object[] { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Electric" });
+                columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
+                values: new object[] { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Electric", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccountItems_AccountId",
                 table: "AccountItems",
                 column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_ParentId",
+                table: "Categories",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryItems_CategoryId",

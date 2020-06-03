@@ -12,8 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200529051539_abc.cs" />
-    <Compile Remove="Migrations\20200529051539_abc.Designer.cs" />
+    <Compile Remove="Migrations\20200602044843_abc.cs" />
+    <Compile Remove="Migrations\20200602044843_abc.Designer.cs" />
+    <Compile Remove="Migrations\20200603012451_abc.cs" />
+    <Compile Remove="Migrations\20200603012451_abc.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

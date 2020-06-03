@@ -13,12 +13,29 @@
             <tr>
                 <td>Name</td>
                 <td><input type="text" asp-for="Name" /></td>
-            </tr>         
-            <tr>
-                <td colspan="2"><input type="submit" value="Add" id="add" /></td>
             </tr>
-        </table>
-    </form>
-    <a asp-controller="category" asp-action="index">Back to Category View</a>
-</body>
+            <tr>
+                <td>Categories</td>
+                <td>
+                    <select type="text" asp-for="ParentId" >
+                        @foreach (var categories in ViewBag.Categories)
+                        {
+                            <option >@categories.Name</option>
+
+                        }
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Created Date</td>
+                    <td><input type="text" asp-for="CreatedAt" value="@DateTime.Now" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Add" id="add" /></td>
+                </tr>
+
+            </table>
+        </form>
+        <a asp-controller="category" asp-action="index">Back to Category View</a>
+    </body>
 </html>

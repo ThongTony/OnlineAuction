@@ -14,6 +14,11 @@ namespace AuctionOnline.Controllers
             db = _category;
         }
         [Route("index")]
+        public IActionResult Index()
+        {
+            return View();
+        }
+        [Route("adminindex")]
         public IActionResult AdminIndex()
         {
             ViewBag.Categories = db.Categories.ToList();

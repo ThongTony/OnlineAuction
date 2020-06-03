@@ -29,6 +29,9 @@ namespace AuctionOnline.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Fullname")
                         .HasColumnType("nvarchar(max)");
 
@@ -104,7 +107,12 @@ namespace AuctionOnline.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
 
@@ -201,6 +209,13 @@ namespace AuctionOnline.Migrations
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AuctionOnline.Models.Category", b =>
+                {
+                    b.HasOne("AuctionOnline.Models.Category", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("AuctionOnline.Models.CategoryItem", b =>
