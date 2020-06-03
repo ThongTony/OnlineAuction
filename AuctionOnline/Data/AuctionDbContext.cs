@@ -7,7 +7,7 @@ namespace AuctionOnline.Data
     {
         public AuctionDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -19,9 +19,14 @@ namespace AuctionOnline.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Category>()
+                .HasOne(x => x.Parent)
+                .WithMany(x => x.Children)
+                .HasForeignKey(x => x.ParentId);
+
+
             modelBuilder.Entity<AccountItem>()
-       .HasKey(bc => new { bc.ItemId, bc.AccountId });
+                .HasKey(bc => new { bc.ItemId, bc.AccountId });
             modelBuilder.Entity<AccountItem>()
                 .HasOne(bc => bc.Item)
                 .WithMany(b => b.AccountItems)
@@ -32,7 +37,7 @@ namespace AuctionOnline.Data
                 .HasForeignKey(bc => bc.AccountId);
 
             modelBuilder.Entity<CategoryItem>()
-       .HasKey(bc => new { bc.ItemId, bc.CategoryId });
+                .HasKey(bc => new { bc.ItemId, bc.CategoryId });
             modelBuilder.Entity<CategoryItem>()
                 .HasOne(bc => bc.Item)
                 .WithMany(b => b.CategoryItems)
