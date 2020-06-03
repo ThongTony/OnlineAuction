@@ -9,7 +9,7 @@
                             <span class="cat_ico_block">Categories</span>
                         </button>
                         <ul class="bot_nav_cat_wrap">
-                            @foreach (var category in ViewBag.Categories)
+                            @foreach (var category in ViewBag.NavCategories)
                             {
                                 <li id="menu-item-5192" class="mega3menu menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-5192">
                                     <a>
@@ -20,31 +20,36 @@
                                             <div class="wpb_column vc_column_container vc_col-sm-6">
                                                 <div class="vc_column-inner vc_custom_1566908578324">
                                                     <div class="wpb_wrapper">
-                                                        @foreach (var cate in ViewBag.cate)
+                                                        @if (category.Children != null)
                                                         {
-                                                            <div class="wpb_text_column wpb_content_element  wpb_animate_when_almost_visible wpb_fadeInUp fadeInUp">
-                                                                <div class="wpb_wrapper">
-                                                                    <p style="font-weight: bold; font-size: 14px; color: #484848;">@cate.Name</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="vc_empty_space" style="height: 5px">
-                                                                <span class="vc_empty_space_inner"></span>
-                                                            </div>
-
-                                                            @foreach (var cate3 in ViewBag.cate)
+                                                            @foreach (var cate2 in category.Children)
                                                             {
-                                                                <div class="wpb_text_column wpb_content_element  menu-cat">
+                                                                <div class="wpb_text_column wpb_content_element  wpb_animate_when_almost_visible wpb_fadeInUp fadeInUp">
                                                                     <div class="wpb_wrapper">
-                                                                        <p>
-                                                                            <a href="#">@cate3.Name</a>
-                                                                            <br />
-                                                                        </p>
-
+                                                                        <p style="font-weight: bold; font-size: 14px; color: #484848;">@cate2.Name</p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="vc_empty_space" style="height: 20px">
+                                                                <div class="vc_empty_space" style="height: 5px">
                                                                     <span class="vc_empty_space_inner"></span>
                                                                 </div>
+                                                                @if (cate2.Children != null)
+                                                                {
+                                                                    @foreach (var cate3 in cate2.Children)
+                                                                    {
+                                                                        <div class="wpb_text_column wpb_content_element  menu-cat">
+                                                                            <div class="wpb_wrapper">
+                                                                                <p>
+                                                                                    <a href="#">@cate3.Name</a>
+                                                                                    <br />
+                                                                                </p>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="vc_empty_space" style="height: 20px">
+                                                                            <span class="vc_empty_space_inner"></span>
+                                                                        </div>
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     </div>

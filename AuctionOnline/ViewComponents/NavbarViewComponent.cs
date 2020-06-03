@@ -1,5 +1,7 @@
 ﻿using AuctionOnline.Data;
+using AuctionOnline.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,9 +17,8 @@ namespace AuctionOnline.ViewComponents
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            ViewBag.Categories = db.Categories.ToList();
-            //ViewBag.cate = db.Categories.Where(c => c.Id == c.Id).ToList();
-            return View("Index", ViewBag.Categories);
+            ViewBag.NavCategories = db.Categories.ToList();
+            return View("Index", ViewBag.NavCategories);
         }
     }
 }
