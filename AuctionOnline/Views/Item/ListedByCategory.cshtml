@@ -12,7 +12,8 @@
                 <div class="row">
                     <div class="col-md-3 sidebar-content">
                         <aside id="woocommerce_product_search-2" class="widget woocommerce widget_product_search">
-                            <h1 class="widget-title">Search for auctions</h1><form role="search" method="get" class="woocommerce-product-search" action="https://ibid.modeltheme.com/">
+                            <h1 class="widget-title">Search for auctions</h1>
+                            <form role="search" method="get" class="woocommerce-product-search" action="https://ibid.modeltheme.com/">
                                 <label class="screen-reader-text" for="woocommerce-product-search-field-0">Search for:</label>
                                 <input type="search" id="woocommerce-product-search-field-0" class="search-field" placeholder="Search products&hellip;" value="" name="s" />
                                 <button type="submit" value="Search">Search</button>
@@ -127,24 +128,24 @@
                         <ul class="products columns-3">
                             @foreach (var item in ViewBag.Item)
                             {
-                                <li class="col-md-4 first post-4452 product type-product status-publish has-post-thumbnail product_cat-electronics product_cat-televisions product_tag-black-friday product_tag-sales  instock sold-individually shipping-taxable product-type-auction">
+                                <li class="col-md-4 first post-4452 product type-product status-publish has-post-thumbnail ">
                                     <div class="products-wrapper">
                                         <div class="thumbnail-and-details">
                                             <div class="overlay-container">
                                                 <div class="thumbnail-overlay"></div>
                                                 <div class="overlay-components">
                                                     <div class="component add-to-cart">
-                                                        <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-quantity="1" data-tooltip="View Auction" class="button product_type_auction" data-product_id="4452" data-product_sku="" aria-label="Read more about &ldquo;Bluetooth Headphones&rdquo;" rel="nofollow">
-                                                            <i class="fa fa-eye"></i>
+                                                    <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-quantity="1" data-tooltip="View Auction" class="button product_type_auction"  data-product_sku="" aria-label="Read more about “@item.Title”" rel="nofollow">
+                                                        <i class="fa fa-eye"></i>
                                                         </a>
-                                                    </div>
+                                                        </div>
                                                     <div class="component wishlist">
                                                         <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4452">
                                                             <div class="yith-wcwl-add-button show" style="display:block">
                                                                 <a href="/shop/?add_to_wishlist=4452" data-product-id="4452" data-product-type="auction" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
                                                                     <i class="fa fa-heart-o"></i>
                                                                 </a>
-                                                                <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+                                                                <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden">
                                                             </div>
 
                                                             <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
@@ -158,22 +159,23 @@
                                                                     <i class="fa fa-heart"></i>
                                                                 </a>
                                                             </div>
+
                                                             <div style="clear:both"></div>
                                                             <div class="yith-wcwl-wishlistaddresponse"></div>
+
                                                         </div>
+
                                                         <div class="clear"></div>
                                                     </div>
                                                     <div class="component quick-view">
-                                                        <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4452">
-                                                            <i class="fa fa-search"></i>
+                                                    <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4452">
+                                                        <i class="fa fa-search"></i>
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <a class="woo_catalog_media_images" title="@item.Title" asp-controller="item" asp-action="details" asp-route-id="@item.Id">
-                                                <img width="300" height="300" src="@item.Photo" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" srcset="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-300x300.jpg 300w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-200x200.jpg 200w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-600x600.jpg 600w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-150x150.jpg 150w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-768x768.jpg 768w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-1024x1024.jpg 1024w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-350x350.jpg 350w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-110x110.jpg 110w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-400x400.jpg 400w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-70x70.jpg 70w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2.jpg 1080w" sizes="(max-width: 300px) 100vw, 300px" />
-                                                <img class="woo_secondary_media_image" src="https://ibid.modeltheme.com/wp-content/uploads/2018/09/laptop-cat1-400x400.jpg" alt="@item.Title" />
-                                            </a>
+                                            <img width="300" height="300" src="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-300x300.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" srcset="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-300x300.jpg 300w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-200x200.jpg 200w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-600x600.jpg 600w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-150x150.jpg 150w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-768x768.jpg 768w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-1024x1024.jpg 1024w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-350x350.jpg 350w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-110x110.jpg 110w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-400x400.jpg 400w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-70x70.jpg 70w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2.jpg 1080w" sizes="(max-width: 300px) 100vw, 300px"><img class="woo_secondary_media_image" src="https://ibid.modeltheme.com/wp-content/uploads/2018/09/laptop-cat1-400x400.jpg" alt="@item.Title"></a>
                                         </div>
 
                                         <div class="woocommerce-title-metas">
@@ -185,41 +187,48 @@
                                             <div class="details-container">
                                                 <div class="details-price-container details-item">
                                                     <div class="product-description" itemprop="description">
-                                                        <p>Product a reality sandwich before you walk back in that boardroom fire up your browser, so come up with something buzzworthy, for it&#8217;s about managing expectations yet baseline into the weeds.</p>
+                                                        <p>@item.Description</p>
                                                     </div>Auction Ended
                                                     <div class="details-review-container details-item"></div>
                                                     <div class="bottom-components">
                                                         <div class="component add-to-cart">
-                                                            <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4452" data-product_sku="" aria-label="Read more about &ldquo;Bluetooth Headphones&rdquo;" rel="nofollow">
-                                                                <i class="fa fa-eye"></i>
-                                                            </a>
-                                                        </div>
-                                                        <div class="component wishlist">
+                                                    <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4452" data-product_sku="" aria-label="Read more about “@item.Title”" rel="nofollow">
+                                                        <i class="fa fa-eye"></i>
+                                                        </a>
+                                                            </div>
+                                                    <div class="component wishlist">
                                                             <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4452">
                                                                 <div class="yith-wcwl-add-button show" style="display:block">
+
+
                                                                     <a href="/shop/?add_to_wishlist=4452" data-product-id="4452" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
                                                                         <i class="fa fa-heart-o"></i>
                                                                     </a>
-                                                                    <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+                                                                    <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden">
                                                                 </div>
+
                                                                 <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
                                                                     <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
                                                                         <i class="fa fa-heart"></i>
                                                                     </a>
                                                                 </div>
+
                                                                 <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
                                                                     <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
                                                                         <i class="fa fa-heart"></i>
                                                                     </a>
                                                                 </div>
+
                                                                 <div style="clear:both"></div>
                                                                 <div class="yith-wcwl-wishlistaddresponse"></div>
+
                                                             </div>
+
                                                             <div class="clear"></div>
                                                         </div>
                                                         <div class="component quick-view">
-                                                            <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4452">
-                                                                <i class="fa fa-search"></i>
+                                                        <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4452">
+                                                        <i class="fa fa-search"></i>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -227,36 +236,41 @@
                                             </div>
                                             <div class="bottom-components-list">
                                                 <div class="component add-to-cart">
-                                                    <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4452" data-product_sku="" aria-label="Read more about &ldquo;Bluetooth Headphones&rdquo;" rel="nofollow">
-                                                        <i class="fa fa-eye"></i>
+                                                <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4452" data-product_sku="" aria-label="Read more about “Bluetooth Headphones”" rel="nofollow">
+                                                    <i class="fa fa-eye"></i>
                                                     </a>
-                                                </div>
+                                                    </div>
                                                 <div class="component wishlist">
                                                     <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4452">
                                                         <div class="yith-wcwl-add-button show" style="display:block">
                                                             <a href="/shop/?add_to_wishlist=4452" data-product-id="4452" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
                                                                 <i class="fa fa-heart-o"></i>
                                                             </a>
-                                                            <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+                                                            <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden">
                                                         </div>
+
                                                         <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
                                                             <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
                                                                 <i class="fa fa-heart"></i>
                                                             </a>
                                                         </div>
+
                                                         <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
                                                             <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
                                                                 <i class="fa fa-heart"></i>
                                                             </a>
                                                         </div>
+
                                                         <div style="clear:both"></div>
                                                         <div class="yith-wcwl-wishlistaddresponse"></div>
+
                                                     </div>
+
                                                     <div class="clear"></div>
                                                 </div>
                                                 <div class="component quick-view">
-                                                    <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4452">
-                                                        <i class="fa fa-search"></i>
+                                                <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="@item.Id">
+                                                    <i class="fa fa-search"></i>
                                                     </a>
                                                 </div>
                                             </div>
@@ -276,14 +290,9 @@
                                 <li><a class="next page-numbers" href="https://ibid.modeltheme.com/shop/page/2/">&rarr;</a></li>
                             </ul>
                         </nav>
-
-
                     </div>
-
-
                 </div>
             </div>
         </div>
-
     </main>
 </div>

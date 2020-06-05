@@ -7,9 +7,9 @@
     <title>Add</title>
 </head>
 <body>
-    <h3>New CAtegory</h3>
+    <h3>New Order</h3>
     <form asp-controller="category" asp-action="add" method="post">
-        <table>
+        <table id="">
             <tr>
                 <td>Name</td>
                 <td><input type="text" asp-for="Name" /></td>
@@ -17,24 +17,21 @@
             <tr>
                 <td>Categories</td>
                 <td>
-                    <select asp-for="Id" name="CategoryId" id="CategoryId">
-                        <option>
-                            -chon thu muc cha-
-                        </option>
-                        @foreach (var category in ViewBag.CategoryAdd)
+                    <select type="text" asp-for="ParentId" >
+                        @foreach (var categories in ViewBag.Categories)
                         {
-                            <option value="@category.Id">@category.Name</option>
+                            <option >@categories.Name</option>
 
                         }
-                        
                     </select>
                     </td>
                 </tr>
-                
                 <tr>
-                    <td colspan="2">
-                    <input type="submit" value="Add" id="add" />
-                    </td>
+                    <td>Created Date</td>
+                    <td><input type="text" asp-for="CreatedAt" value="@DateTime.Now" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Add" id="add" /></td>
                 </tr>
 
             </table>

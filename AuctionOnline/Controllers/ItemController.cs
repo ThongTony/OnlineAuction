@@ -17,23 +17,31 @@ namespace AuctionOnline.Controllers
             db = _db;
         }
         [Route("index")]
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
+            ViewBag.Item = db.Items.Where(i => i.Id == id).ToList();
             return View();
         }
-        [Route("details")]
+        [Route("details/{id}")]
         public IActionResult Details(int id)
         {
             ViewBag.isBreadCrumb = true;
-            ViewBag.Item = db.Items.Where(i => i.Id == id).ToList();
-            return View("Details",ViewBag.Item);
+            ViewBag.DetailItem = db.Items.Find(id);
+            return View("Details");
         }
-        [Route("list")]
-        public IActionResult List()
+        [Route("listedbycategory")]
+        public IActionResult ListedByCategory(int id)
         {
             ViewBag.isBreadCrumb = true;
-            ViewBag.Item = db.Items.ToList();
-            return View("List", ViewBag.Item);
+            ViewBag.CategoryItem = db.Categories.Where(i => i.Id == id);
+            return View();
+        }
+        [Route("listinshop")]
+        public IActionResult ListInShop(int id)
+        {
+            ViewBag.isBreadCrumb = true;
+            ViewBag.AccountItem = db.Accounts.Where(i => i.Id == id);
+            return View();
         }
         [HttpGet]
         [Route("add")]
@@ -62,6 +70,23 @@ namespace AuctionOnline.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        [Route("edit/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var item = db.Items.Find(id);
+            return View("List", item);
+        }
+        [HttpPost]
+        [Route("edit/{id}")]
+        public IActionResult Edit(int id, Item item)
+        {
+            db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("list", "item");
+        }
+
         [Route("odertracking")]
         public IActionResult Odertracking()
         {

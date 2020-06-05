@@ -5,18 +5,20 @@ using System.Threading.Tasks;
 
 namespace AuctionOnline.ViewComponents
 {
-    [ViewComponent(Name = "Navbar")]
-    public class NavbarViewComponent : ViewComponent
+    [ViewComponent(Name = "ExtraBottom")]
+    public class ExtraBottomViewComponent : ViewComponent
     {
         private AuctionDbContext db;
-        public NavbarViewComponent(AuctionDbContext _category)
+        public ExtraBottomViewComponent(AuctionDbContext _category)
         {
             db = _category;
         }
         public async Task<IViewComponentResult> InvokeAsync(int id)
         {
-            ViewBag.NavCategories = db.Categories.FirstOrDefault(a => a.ParentId == id);
-            return View("Index", ViewBag.NavCategories);
+          
+            ViewBag.ExtraBottomItem = db.Items.Find(id);
+            return View();
         }
+
     }
 }

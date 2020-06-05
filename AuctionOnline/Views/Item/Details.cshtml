@@ -1,6 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var user = ViewBag.User;
+    var category = ViewBag.Category;
+    var item= ViewBag.Item;
 }
 
 <div id="primary" class="content-area">
@@ -19,17 +23,26 @@
                                     <div class="col-md-5 product-thumbnails">
                                         <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 0; transition: opacity .25s ease-in-out;">
                                             <figure class="woocommerce-product-gallery__wrapper">
-                                                <div data-thumb="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-200x200.jpg" data-thumb-alt="" class="woocommerce-product-gallery__image"><a href="../../wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg"><img width="600" height="900" src="../../wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-600x900.jpg" class="wp-post-image" alt="" title="jonathan-chng-cDUiVsPMxMk-unsplash" data-caption="" data-src="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg" data-large_image="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg" data-large_image_width="1280" data-large_image_height="1920" srcset="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-600x900.jpg 600w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-200x300.jpg 200w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-768x1152.jpg 768w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-683x1024.jpg 683w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg 1280w" sizes="(max-width: 600px) 100vw, 600px" /></a></div><div data-thumb="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-200x200.jpg" data-thumb-alt="" class="woocommerce-product-gallery__image"><a href="../../wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash.jpg"><img width="200" height="200" src="../../wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-200x200.jpg" class="" alt="" title="tahsin-cebel-Dwdg8h3yz8g-unsplash" data-caption="" data-src="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash.jpg" data-large_image="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash.jpg" data-large_image_width="1280" data-large_image_height="1920" srcset="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-200x200.jpg 200w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-150x150.jpg 150w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-350x350.jpg 350w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-110x110.jpg 110w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-400x400.jpg 400w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-70x70.jpg 70w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-300x300.jpg 300w" sizes="(max-width: 200px) 100vw, 200px" /></a></div>
+                                                <div data-thumb="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-200x200.jpg" data-thumb-alt="" class="woocommerce-product-gallery__image">
+                                                <a href="../../wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg">
+                                                    <img width="600" height="900" src="../../wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-600x900.jpg" class="wp-post-image" alt="" title="jonathan-chng-cDUiVsPMxMk-unsplash" data-caption="" data-src="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg" data-large_image="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg" data-large_image_width="1280" data-large_image_height="1920" srcset="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-600x900.jpg 600w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-200x300.jpg 200w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-768x1152.jpg 768w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-683x1024.jpg 683w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg 1280w" sizes="(max-width: 600px) 100vw, 600px" />
+                                                    </a>
+                                                    </div>
+                                                <div data-thumb="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-200x200.jpg" data-thumb-alt="" class="woocommerce-product-gallery__image">
+                                                    <a href="../../wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash.jpg">
+                                                        <img width="200" height="200" src="../../wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-200x200.jpg" class="" alt="" title="tahsin-cebel-Dwdg8h3yz8g-unsplash" data-caption="" data-src="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash.jpg" data-large_image="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash.jpg" data-large_image_width="1280" data-large_image_height="1920" srcset="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-200x200.jpg 200w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-150x150.jpg 150w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-350x350.jpg 350w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-110x110.jpg 110w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-400x400.jpg 400w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-70x70.jpg 70w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-300x300.jpg 300w" sizes="(max-width: 200px) 100vw, 200px" />
+                                                                                     </a>
+                                                </div>
                                             </figure>
                                         </div>
                                     </div>
 
                                     <div class="summary entry-summary col-md-7">
 
-                                        <h1 itemprop="name" class="product_title entry-title">Red Mercedes AMG</h1>
+                                        <h1 itemprop="name" class="product_title entry-title">@item.Name</h1>
                                         <div class="product-description" itemprop="description">
-                                            <p>Product galati a reality sandwich before you walk back in that boardroom fire up your browser, so come up with something buzzworthy, for it&#8217;s about managing expectations yet baseline into the weeds.</p>
-                                        </div><p class="price"><span class="sold-for auction">Sold for</span>: <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>250.00</span></p>
+                                            <p>@item.Description</p>
+                                        </div><p class="price"><span class="sold-for auction">Sold for</span>: <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>@item.Price</span></p>
 
                                         <p class="auction-condition">Item condition:<span class="curent-bid"> New</span></p>
 
@@ -61,7 +74,8 @@
 
                                         </div>
 
-                                        <div class="clear"></div><div class="wishlist-container">
+                                        <div class="clear"></div>
+                                    <div class="wishlist-container">
                                             <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4450">
                                                 <div class="yith-wcwl-add-button show" style="display:block">
 
@@ -69,11 +83,11 @@
                                                     <a href="indexfc10.html?add_to_wishlist=4450" data-product-id="4450" data-product-type="auction" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
                                                         <i class="fa fa-heart-o"></i>
                                                     </a>
-                                                    <img src="../../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+                                                    <img src="../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
                                                 </div>
 
                                                 <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                    <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
+                                                    <a href="../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
                                                         <i class="fa fa-heart"></i>
                                                     </a>
                                                 </div>
@@ -131,8 +145,7 @@
 
                                         <h2>Description</h2>
 
-                                        <p>Going forward knowledge is power or we need to button up our approach old boys club. Please use &#8220;solutionise&#8221; instead of solution ideas! 🙂 draw a line in the sand, for take five, punch the tree, and come back in here with a clear head. Out of scope data-point work flows , nor critical mass, and time to open the kimono yet move the needle.</p>
-                                        <p>You better eat a reality sandwich before you walk back in that boardroom fire up your browser, so come up with something buzzworthy, for it&#8217;s about managing expectations yet baseline into the weeds. Gain traction product management breakout fastworks we just need to put these last issues to bed, or table the discussion .</p>
+                                        <p>@item.Description</p>
                                     </div>
                                     <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--simle_auction_history panel entry-content wc-tab" id="tab-simle_auction_history" role="tabpanel" aria-labelledby="tab-title-simle_auction_history">
 
@@ -140,7 +153,13 @@
 
 
                                         <p>Auction has finished</p>
-                                        <p>Product sold for buy now price: <span><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>250.00</span></span></p>
+                                        <p>Product sold for buy now price: 
+                                        <span>
+                                            <span class="woocommerce-Price-amount amount">
+                                            <span class="woocommerce-Price-currencySymbol">&#36;</span>
+                                            @item.Price</span>
+                                            </span>
+                                        </p>
 
 
 
@@ -155,15 +174,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr><td class='date'>January 3, 2020 4:33 am</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>200.00</span></td><td class='username'>Auctioner</td> <td class='proxy'></td></tr>
-                                                <tr><td class='date'>December 23, 2019 6:15 am</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>190.00</span></td><td class='username'>ancil</td> <td class='proxy'></td></tr>
-                                                <tr><td class='date'>December 23, 2019 6:15 am</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>170.00</span></td><td class='username'>ancil</td> <td class='proxy'></td></tr>
-                                                <tr><td class='date'>December 16, 2019 6:51 am</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>160.00</span></td><td class='username'>Auctioner</td> <td class='proxy'></td></tr>
-                                                <tr><td class='date'>December 16, 2019 6:50 am</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>150.00</span></td><td class='username'>Auctioner</td> <td class='proxy'></td></tr>
-                                                <tr><td class='date'>December 4, 2019 12:05 am</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>140.00</span></td><td class='username'>Auctioner</td> <td class='proxy'></td></tr>
-                                                <tr><td class='date'>December 4, 2019 12:03 am</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>130.00</span></td><td class='username'>Auctioner</td> <td class='proxy'></td></tr>
-                                                <tr><td class='date'>December 4, 2019 12:03 am</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>111.00</span></td><td class='username'>Auctioner</td> <td class='proxy'></td></tr>
-                                                <tr><td class='date'>November 23, 2019 3:00 pm</td><td class='bid'><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>101.00</span></td><td class='username'>tonsyn</td> <td class='proxy'></td></tr>
+                                                <!-- Foreach -->
+                                                <tr>
+                                                    <td class='date'>January 3, 2020 4:33 am</td>
+                                                    <td class='bid'>
+                                                        <span class="woocommerce-Price-amount amount">
+                                                            <span class="woocommerce-Price-currencySymbol">&#36;</span>200.00
+                                                        </span>
+                                                    </td>
+                                                    <td class='username'>Auctioner</td>
+                                                    <td class='proxy'></td>
+                                                </tr>
+                                                <!-- end Foreach -->
                                             </tbody>
 
 
@@ -182,7 +204,7 @@
                                             <li class="store-name">
                                                 <span>Store Name:</span>
                                                 <span class="details">
-                                                    modeltheme
+                                                    @user.Username
                                                 </span>
                                             </li>
 
@@ -192,13 +214,13 @@
                                                 </span>
 
                                                 <span class="details">
-                                                    <a href="../../store/admin/index.html">James Colins</a>
+                                                    <a href="../../store/admin/index.html">@user.Fullname</a>
                                                 </span>
                                             </li>
                                             <li class="store-address">
                                                 <span><b>Address:</b></span>
                                                 <span class="details">
-                                                    Manchester
+                                                    @user.Address
                                                 </span>
                                             </li>
 
@@ -661,7 +683,8 @@
                                                                     </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4458"><i class="fa fa-search"></i></a></div>
                                                                 </div>
                                                             </div>
-                                                        </div><div class="bottom-components-list">
+                                                        </div>
+                                                        <div class="bottom-components-list">
                                                             <div class="component add-to-cart"><a href="../nissan-gtr-2000/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple" data-product_id="4458" data-product_sku="BF013" aria-label="Read more about &ldquo;Nissan GTR 2000&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
                                                                 <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4458">
                                                                     <div class="yith-wcwl-add-button show" style="display:block">
@@ -706,8 +729,7 @@
                                     <h2>Related products</h2>
 
                                     <ul class="products columns-4">
-
-
+                                        <!--Foreach here-->
                                         <li class="col-md-3 first post-4451 product type-product status-publish has-post-thumbnail product_cat-tesla product_cat-televisions product_tag-black-friday product_tag-sales  outofstock sold-individually shipping-taxable product-type-auction">
                                             <div class="products-wrapper">
 
@@ -828,385 +850,6 @@
                                                 </div>
                                             </div>
                                         </li>
-
-                                        <li class="col-md-3 post-4472 product type-product status-publish has-post-thumbnail product_cat-audi product_cat-protection-phones product_cat-mobile-phones product_cat-protection-tablets product_cat-power-bank product_cat-mobile-phone-chargers product_cat-data-cables-phones product_cat-selfie-stickers product_cat-tablets product_cat-console-gaming product_tag-black-friday product_tag-sales  instock sold-individually shipping-taxable product-type-auction">
-                                            <div class="products-wrapper">
-
-
-
-                                                <div class="thumbnail-and-details">
-                                                    <div class="overlay-container">
-                                                        <div class="thumbnail-overlay"></div><div class="overlay-components">
-                                                            <div class="component add-to-cart"><a href="../auction-vintage-car/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_auction" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Auction Vintage Car&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                                <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                                    <div class="yith-wcwl-add-button show" style="display:block">
-
-
-                                                                        <a href="index9e8e.html?add_to_wishlist=4472" data-product-id="4472" data-product-type="auction" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                            <i class="fa fa-heart-o"></i>
-                                                                        </a>
-                                                                        <img src="../../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                    </div>
-
-                                                                    <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                        <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                            <i class="fa fa-heart"></i>
-                                                                        </a>
-                                                                    </div>
-
-                                                                    <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                        <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                            <i class="fa fa-heart"></i>
-                                                                        </a>
-                                                                    </div>
-
-                                                                    <div style="clear:both"></div>
-                                                                    <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                </div>
-
-                                                                <div class="clear"></div>
-                                                            </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472"><i class="fa fa-search"></i></a></div>
-                                                        </div>
-                                                    </div><a class="woo_catalog_media_images" title="Auction Vintage Car" href="../auction-vintage-car/index.html"><img width="300" height="300" src="../../wp-content/uploads/2018/09/vintage-car1-300x300.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" srcset="https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car1-300x300.jpg 300w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car1-150x150.jpg 150w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car1-350x350.jpg 350w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car1-110x110.jpg 110w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car1-400x400.jpg 400w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car1-70x70.jpg 70w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car1-200x200.jpg 200w" sizes="(max-width: 300px) 100vw, 300px" /></a>
-                                                </div>
-
-                                                <div class="woocommerce-title-metas">
-                                                    <h3 class="archive-product-title">
-                                                        <a href="../auction-vintage-car/index.html">
-                                                            Auction Vintage Car
-                                                        </a>
-                                                    </h3>
-                                                    <div class="details-container">
-                                                        <div class="details-price-container details-item">
-                                                            <div class="product-description" itemprop="description">
-                                                                <p>The Ragdoll is a cat breed with blue eyes and a distinct colorpoint coat. It is a large and muscular semi-longhair cat with a soft and silky coat. Like all long haired cats, Ragdolls need grooming to ensure their fur does not mat.</p>
-                                                            </div>Auction Ended<div class="details-review-container details-item"></div><div class="bottom-components">
-                                                                <div class="component add-to-cart"><a href="../auction-vintage-car/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Auction Vintage Car&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                                    <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                                        <div class="yith-wcwl-add-button show" style="display:block">
-
-
-                                                                            <a href="index9e8e.html?add_to_wishlist=4472" data-product-id="4472" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                                <i class="fa fa-heart-o"></i>
-                                                                            </a>
-                                                                            <img src="../../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                        </div>
-
-                                                                        <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                            <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                                <i class="fa fa-heart"></i>
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                            <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                                <i class="fa fa-heart"></i>
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <div style="clear:both"></div>
-                                                                        <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                    </div>
-
-                                                                    <div class="clear"></div>
-                                                                </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472"><i class="fa fa-search"></i></a></div>
-                                                            </div>
-                                                        </div>
-                                                    </div><div class="bottom-components-list">
-                                                        <div class="component add-to-cart"><a href="../auction-vintage-car/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Auction Vintage Car&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                            <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                                <div class="yith-wcwl-add-button show" style="display:block">
-
-
-                                                                    <a href="index9e8e.html?add_to_wishlist=4472" data-product-id="4472" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                        <i class="fa fa-heart-o"></i>
-                                                                    </a>
-                                                                    <img src="../../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                </div>
-
-                                                                <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                    <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                    <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div style="clear:both"></div>
-                                                                <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                            </div>
-
-                                                            <div class="clear"></div>
-                                                        </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472"><i class="fa fa-search"></i></a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li class="col-md-3 post-4473 product type-product status-publish has-post-thumbnail product_cat-audi product_cat-protection-phones product_cat-console-gaming product_cat-data-cables-phones product_cat-mobile-phone-chargers product_cat-mobile-phones product_cat-power-bank product_cat-selfie-stickers product_cat-tablets product_cat-protection-tablets product_tag-black-friday product_tag-sales last instock sold-individually shipping-taxable product-type-auction">
-                                            <div class="products-wrapper">
-
-
-
-                                                <div class="thumbnail-and-details">
-                                                    <div class="overlay-container">
-                                                        <div class="thumbnail-overlay"></div><div class="overlay-components">
-                                                            <div class="component add-to-cart"><a href="../vintage-gearbox/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_auction" data-product_id="4473" data-product_sku="BF002" aria-label="Read more about &ldquo;Vintage Gearbox&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                                <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4473">
-                                                                    <div class="yith-wcwl-add-button show" style="display:block">
-
-
-                                                                        <a href="index08c4.html?add_to_wishlist=4473" data-product-id="4473" data-product-type="auction" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                            <i class="fa fa-heart-o"></i>
-                                                                        </a>
-                                                                        <img src="../../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                    </div>
-
-                                                                    <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                        <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                            <i class="fa fa-heart"></i>
-                                                                        </a>
-                                                                    </div>
-
-                                                                    <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                        <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                            <i class="fa fa-heart"></i>
-                                                                        </a>
-                                                                    </div>
-
-                                                                    <div style="clear:both"></div>
-                                                                    <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                </div>
-
-                                                                <div class="clear"></div>
-                                                            </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4473"><i class="fa fa-search"></i></a></div>
-                                                        </div>
-                                                    </div><a class="woo_catalog_media_images" title="Vintage Gearbox" href="../vintage-gearbox/index.html"><img width="300" height="300" src="../../wp-content/uploads/2018/09/vintage-car3-1-300x300.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" srcset="https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car3-1-300x300.jpg 300w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car3-1-150x150.jpg 150w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car3-1-350x350.jpg 350w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car3-1-110x110.jpg 110w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car3-1-400x400.jpg 400w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car3-1-70x70.jpg 70w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2018/09/vintage-car3-1-200x200.jpg 200w" sizes="(max-width: 300px) 100vw, 300px" /></a>
-                                                </div>
-
-                                                <div class="woocommerce-title-metas">
-                                                    <h3 class="archive-product-title">
-                                                        <a href="../vintage-gearbox/index.html">
-                                                            Vintage Gearbox
-                                                        </a>
-                                                    </h3>
-                                                    <div class="details-container">
-                                                        <div class="details-price-container details-item">
-                                                            <div class="product-description" itemprop="description">
-                                                                <p>The Ragdoll is a cat breed with blue eyes and a distinct colorpoint coat. It is a large and muscular semi-longhair cat with a soft and silky coat. Like all long haired cats, Ragdolls need grooming to ensure their fur does not mat.</p>
-                                                            </div>Auction Ended<div class="details-review-container details-item"></div><div class="bottom-components">
-                                                                <div class="component add-to-cart"><a href="../vintage-gearbox/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4473" data-product_sku="BF002" aria-label="Read more about &ldquo;Vintage Gearbox&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                                    <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4473">
-                                                                        <div class="yith-wcwl-add-button show" style="display:block">
-
-
-                                                                            <a href="index08c4.html?add_to_wishlist=4473" data-product-id="4473" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                                <i class="fa fa-heart-o"></i>
-                                                                            </a>
-                                                                            <img src="../../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                        </div>
-
-                                                                        <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                            <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                                <i class="fa fa-heart"></i>
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                            <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                                <i class="fa fa-heart"></i>
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <div style="clear:both"></div>
-                                                                        <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                    </div>
-
-                                                                    <div class="clear"></div>
-                                                                </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4473"><i class="fa fa-search"></i></a></div>
-                                                            </div>
-                                                        </div>
-                                                    </div><div class="bottom-components-list">
-                                                        <div class="component add-to-cart"><a href="../vintage-gearbox/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4473" data-product_sku="BF002" aria-label="Read more about &ldquo;Vintage Gearbox&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                            <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4473">
-                                                                <div class="yith-wcwl-add-button show" style="display:block">
-
-
-                                                                    <a href="index08c4.html?add_to_wishlist=4473" data-product-id="4473" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                        <i class="fa fa-heart-o"></i>
-                                                                    </a>
-                                                                    <img src="../../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                </div>
-
-                                                                <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                    <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                    <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div style="clear:both"></div>
-                                                                <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                            </div>
-
-                                                            <div class="clear"></div>
-                                                        </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4473"><i class="fa fa-search"></i></a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li class="col-md-3 last post-4331 product type-product status-publish has-post-thumbnail product_cat-tesla product_cat-televisions product_tag-accessories product_tag-gaming first instock featured sold-individually shipping-taxable product-type-auction">
-                                            <div class="products-wrapper">
-
-
-
-                                                <div class="thumbnail-and-details">
-                                                    <div class="overlay-container">
-                                                        <div class="thumbnail-overlay"></div><div class="overlay-components">
-                                                            <div class="component add-to-cart"><a href="../dual-sim-smartphone/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_auction" data-product_id="4331" data-product_sku="BF006" aria-label="Read more about &ldquo;Orange Fiat 500&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                                <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4331">
-                                                                    <div class="yith-wcwl-add-button hide" style="display:none">
-
-
-                                                                        <!-- BROWSE WISHLIST MESSAGE -->
-                                                                        <div class="yith-wcwl-wishlistexistsbrowse">
-                                                                            <span class="feedback">
-                                                                            </span>
-                                                                            <a href="../../wishlist/index.html" rel="nofollow" data-title="Browse Wishlist">
-                                                                                Browse Wishlist
-                                                                            </a>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                        <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                            <i class="fa fa-heart"></i>
-                                                                        </a>
-                                                                    </div>
-
-                                                                    <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
-                                                                        <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                            <i class="fa fa-heart"></i>
-                                                                        </a>
-                                                                    </div>
-
-                                                                    <div style="clear:both"></div>
-                                                                    <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                </div>
-
-                                                                <div class="clear"></div>
-                                                            </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4331"><i class="fa fa-search"></i></a></div>
-                                                        </div>
-                                                    </div><a class="woo_catalog_media_images" title="Orange Fiat 500" href="../dual-sim-smartphone/index.html"><img width="300" height="300" src="../../wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-300x300.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" srcset="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-300x300.jpg 300w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-150x150.jpg 150w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-350x350.jpg 350w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-110x110.jpg 110w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-400x400.jpg 400w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-70x70.jpg 70w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-200x200.jpg 200w" sizes="(max-width: 300px) 100vw, 300px" /><img class="woo_secondary_media_image" src="../../wp-content/uploads/2017/06/tuce-dus_-8CyBJ8-unsplash-400x400.jpg" alt="Orange Fiat 500" /></a>
-                                                </div>
-
-                                                <div class="woocommerce-title-metas">
-                                                    <h3 class="archive-product-title">
-                                                        <a href="../dual-sim-smartphone/index.html">
-                                                            Orange Fiat 500
-                                                        </a>
-                                                    </h3>
-                                                    <div class="details-container">
-                                                        <div class="details-price-container details-item">
-                                                            <div class="product-description" itemprop="description">
-                                                                <p>Samsung Galaxy S9 smartphone was launched in March 2018. The phone comes with a 5.80-inch touchscreen display with a resolution of 1440 pixels by 2960 pixels at a PPI of 568 pixels per inch. Samsung Galaxy S9 price in India starts from Rs. 51,990.</p>
-                                                            </div>Auction Ended<div class="details-review-container details-item"></div><div class="bottom-components">
-                                                                <div class="component add-to-cart"><a href="../dual-sim-smartphone/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4331" data-product_sku="BF006" aria-label="Read more about &ldquo;Orange Fiat 500&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                                    <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4331">
-                                                                        <div class="yith-wcwl-add-button hide" style="display:none">
-
-
-                                                                            <!-- BROWSE WISHLIST MESSAGE -->
-                                                                            <div class="yith-wcwl-wishlistexistsbrowse">
-                                                                                <span class="feedback">
-                                                                                </span>
-                                                                                <a href="../../wishlist/index.html" rel="nofollow" data-title="Browse Wishlist">
-                                                                                    Browse Wishlist
-                                                                                </a>
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                        <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                            <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                                <i class="fa fa-heart"></i>
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
-                                                                            <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                                <i class="fa fa-heart"></i>
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <div style="clear:both"></div>
-                                                                        <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                    </div>
-
-                                                                    <div class="clear"></div>
-                                                                </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4331"><i class="fa fa-search"></i></a></div>
-                                                            </div>
-                                                        </div>
-                                                    </div><div class="bottom-components-list">
-                                                        <div class="component add-to-cart"><a href="../dual-sim-smartphone/index.html" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4331" data-product_sku="BF006" aria-label="Read more about &ldquo;Orange Fiat 500&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                            <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4331">
-                                                                <div class="yith-wcwl-add-button hide" style="display:none">
-
-
-                                                                    <!-- BROWSE WISHLIST MESSAGE -->
-                                                                    <div class="yith-wcwl-wishlistexistsbrowse">
-                                                                        <span class="feedback">
-                                                                        </span>
-                                                                        <a href="../../wishlist/index.html" rel="nofollow" data-title="Browse Wishlist">
-                                                                            Browse Wishlist
-                                                                        </a>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                    <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
-                                                                    <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div style="clear:both"></div>
-                                                                <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                            </div>
-
-                                                            <div class="clear"></div>
-                                                        </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4331"><i class="fa fa-search"></i></a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-
                                     </ul>
 
                                 </section>

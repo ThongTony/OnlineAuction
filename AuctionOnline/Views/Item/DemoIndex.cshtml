@@ -14,13 +14,13 @@
             <th>Name</th>
             <th>Date Creation</th>
         </tr>
-        @foreach (var category in ViewBag.Categories)
+        @foreach (var categories in ViewBag.Category)
         {
             <tr>
-                <td>@category.Id</td>
-                <td>@category.Name</td>
-                <td>@category.CreatedAt</td>
-                <td><a asp-controller="category" asp-action="delete" asp-route-id="@category.Id">Delete</a></td>
+                <td>@categories.Id</td>
+                <td>@categories.Name</td>
+                <td>@categories.CreatedAt</td>
+                <td><a asp-controller="category" asp-action="delete" asp-route-id="@categories.Id">Delete</a></td>
             </tr>
             <br />
         }

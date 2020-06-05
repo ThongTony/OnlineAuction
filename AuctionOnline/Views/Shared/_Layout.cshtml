@@ -1023,11 +1023,11 @@
                     </div>
                     <!-- RIGHT SIDE LINKS -->
                     <div class="col-md-5 col-sm-12 account-urls">
-                        <a class="top-order" asp-controller="item" asp-action="ordertracking">
+                        <a class="top-order" herf="">
                             <i class="fa fa-truck"></i>
                             Order Tracking
                         </a>
-                        <a class="top-payment" asp-controller="item" asp-action="wishlist">
+                        <a class="top-payment" href="">
                             <i class="fa fa-heart-o"></i>
                             Wishlist
                         </a>
@@ -1047,7 +1047,7 @@
                         </button>
                         <h1 class="logo logo-image">
                             <a href="">
-                                <img src="" alt="iBid" />
+                                <img src="" alt="" />
                             </a>
                         </h1>
                     </div>
@@ -1251,6 +1251,7 @@
                 }
             }
         })();</script>
+    <!--await  Component.InvokeAsync("ExtraBottom")-->
     <script type="text/javascript">
         function fetch() {
             jQuery.ajax({
@@ -1268,41 +1269,6 @@
         c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
         document.body.className = c;
     </script>
-
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="pswp__bg"></div>
-        <div class="pswp__scroll-wrap">
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-            <div class="pswp__ui pswp__ui--hidden">
-                <div class="pswp__top-bar">
-                    <div class="pswp__counter"></div>
-                    <button class="pswp__button pswp__button--close" aria-label="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--share" aria-label="Share"></button>
-                    <button class="pswp__button pswp__button--fs" aria-label="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" aria-label="Zoom in/out"></button>
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-                <button class="pswp__button pswp__button--arrow--left" aria-label="Previous (arrow left)"></button>
-                <button class="pswp__button pswp__button--arrow--right" aria-label="Next (arrow right)"></button>
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
-            </div>
-        </div>
-    </div>
     <script type="text/template" id="tmpl-variation-template">
         <div class="woocommerce-variation-description">{{{ data.variation.variation_description }}}</div>
         <div class="woocommerce-variation-price">{{{ data.variation.price_html }}}</div>
@@ -1396,7 +1362,7 @@
     <script type='text/javascript'>
         /* <![CDATA[ */
         var _wpUtilSettings = { "ajax": { "url": "\/wp-admin\/admin-ajax.php" } };
-                                            /* ]]> */
+                                                    /* ]]> */
     </script>
     <script type='text/javascript' src='https://ibid.modeltheme.com/wp-includes/js/wp-util.min.js?ver=5.3.3'></script>
 

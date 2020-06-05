@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\wp-admin\js\password-strength-meter.minc225.js" />
     <None Include="wwwroot\wp-json\oembed\1.0\embed01a0" />
     <None Include="wwwroot\wp-json\oembed\1.0\embed0774" />
     <None Include="wwwroot\wp-json\oembed\1.0\embed0f1f" />
@@ -87,6 +88,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
       <PrivateAssets>all</PrivateAssets>

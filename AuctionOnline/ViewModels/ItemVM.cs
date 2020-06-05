@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AuctionOnline.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 
 namespace AuctionOnline.ViewModels
