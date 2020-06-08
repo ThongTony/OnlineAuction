@@ -703,7 +703,6 @@
                     e.gh = e.el === undefined || e.el === "" || (Array.isArray(e.el) && e.el.length == 0) ? e.gh : e.el;
                     e.gh = Array.isArray(e.gh) ? e.gh : [e.gh];
                     for (var i in e.rl) if (e.gh[i] === undefined || e.gh[i] === 0) e.gh[i] = e.gh[i - 1];
-
                     var nl = new Array(e.rl.length),
                         ix = 0,
                         sl;
@@ -715,10 +714,8 @@
                     sl = nl[0];
                     for (var i in nl) if (sl > nl[i] && nl[i] > 0) { sl = nl[i]; ix = i; }
                     var m = pw > (e.gw[ix] + e.tabw + e.thumbw) ? 1 : (pw - (e.tabw + e.thumbw)) / (e.gw[ix]);
-
                     newh = (e.type === "carousel" && e.justify === "true" ? e.gh[ix] : (e.gh[ix] * m)) + (e.tabh + e.thumbh);
                 }
-
                 if (window.rs_init_css === undefined) window.rs_init_css = document.head.appendChild(document.createElement("style"));
                 document.getElementById(e.c).height = newh;
                 window.rs_init_css.innerHTML += "#" + e.c + "_wrapper { height: " + newh + "px }";
@@ -1048,36 +1045,17 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <h1 class="logo logo-image"><a href="https://ibid.modeltheme.com"><img src="https://ibid.modeltheme.com/wp-content/uploads/2019/12/ibid_red.png" alt="iBid" /></a></h1>
+                        <h1 class="logo logo-image">
+                            <a href="">
+                                <img src="" alt="iBid" />
+                            </a>
+                        </h1>
                     </div>
                     <div class="first-part col-md-9 col-sm-12">
                         <div class="col-md-8 search-form-product">
                             <div class="ibid-header-searchform">
-                                <form name="header-search-form" method="GET" class="woocommerce-product-search menu-search" action="https://ibid.modeltheme.com/">
-                                    <!--await Component.InvokeAsync("Categories/Dropdown")-->
-                                    <select name='product_cat' id='product_cat' class='form-control1'>
-                                        <option value=''>Category</option>
-                                        <option class="level-0" value="kids-toys">Kids Toys</option>
-                                        <option class="level-0" value="electronics">Electronics</option>
-                                        <option class="level-0" value="laptops">Laptops IT Products</option>
-                                        <option class="level-0" value="home-appliances">Home Appliances</option>
-                                        <option class="level-0" value="phones">Phones</option>
-                                        <option class="level-0" value="fashion-sports">Fashion &amp; Sports</option>
-                                        <option class="level-0" value="mobile-phones">Mobile Phones</option>
-                                        <option class="level-0" value="protection-phones">Cases &amp; Protection</option>
-                                        <option class="level-0" value="power-bank">Power Banks</option>
-                                        <option class="level-0" value="mobile-phone-chargers">Mobile Chargers</option>
-                                        <option class="level-0" value="data-cables-phones">Data Cables</option>
-                                        <option class="level-0" value="selfie-stickers">Selfie Sticks</option>
-                                        <option class="level-0" value="tablets">Tablets</option>
-                                        <option class="level-0" value="protection-tablets">Tablets Protection</option>
-                                        <option class="level-0" value="console-gaming">Console Gaming</option>
-                                        <option class="level-0" value="televisions">Televisions</option>
-                                        <option class="level-0" value="refrigerators">Refrigerators</option>
-                                        <option class="level-0" value="accessories">Accessories</option>
-                                        <option class="level-0" value="ladies-clothing">Ladies clothing</option>
-                                        <option class="level-0" value="bags-watches-mens-accessories">Men Accessories</option>
-                                    </select>
+                                <form name="header-search-form" method="GET" class="woocommerce-product-search menu-search" action="">
+                                    @await Component.InvokeAsync("CategorySearch")
                                     <input type="hidden" value="product" name="post_type">
                                     <input type="text" name="s" class="search-field" id="keyword" onkeyup="fetch()" maxlength="128" value="" placeholder="Search products...">
                                     <button type="submit" class="btn btn-primary">
@@ -1093,7 +1071,10 @@
                                 My Cart
                             </a>
                             <a class="cart-contents" asp-controller="account" asp-action="cart" title="View your shopping cart">
-                                0 items , <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>0.00</span>
+                                0 items ,
+                                <span class="woocommerce-Price-amount amount">
+                                    <span class="woocommerce-Price-currencySymbol">&#36;</span>0.00
+                                </span>
                             </a>
                             <!-- Shop Minicart -->
                             <div class="header_mini_cart">
@@ -1107,156 +1088,8 @@
                 </div>
             </div>
             <!-- BOTTOM BAR -->
-            <nav class="navbar bottom-navbar-default" id="modeltheme-main-head">
-                <div class="container">
-                    <div class="row row-0">
-                        <!-- NAV MENU -->
-                        <div id="navbar" class="navbar-collapse collapse col-md-10">
-                            <div class="bot_nav_cat_inner">
-                                <div class="bot_nav_cat">
-                                    <button class="bot_cat_button">
-                                        <span class="cat_ico_block">Categories</span>
-                                    </button>
-                                    <ul class="bot_nav_cat_wrap">
-                                        @await Component.InvokeAsync("Categories")
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="bot_nav_wrap">
-                                <ul class="menu nav navbar-nav pull-left nav-effect nav-menu">
-                                    <li id="menu-item-6467" class="mega_menu menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-6467">
-                                        <a asp-controller="home" asp-action="index">Home</a><div class="cf-mega-menu sub-menu">
-                                            <div class="vc_row wpb_row vc_row-fluid no-margin vc_custom_1528793566052 vc_row-has-fill">
-                                                <div class="wpb_column vc_column_container vc_col-sm-4">
-                                                    <div class="vc_column-inner">
-                                                        <div class="wpb_wrapper">
-                                                            <div class="wpb_text_column wpb_content_element  menu-cat">
-                                                                <div class="wpb_wrapper">
-                                                                    <p>
-                                                                        <a href="https://ibid.modeltheme.com/antiques-collectibles/art-auctions/">Art Auctions</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/antiques-collectibles/">Antiques &amp; Collectibles</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/automotive/">Automotive Auctions</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/books-comics/">Books &amp; Comics</a>
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="wpb_column vc_column_container vc_col-sm-4">
-                                                    <div class="vc_column-inner vc_custom_1568113992630">
-                                                        <div class="wpb_wrapper">
-                                                            <div class="wpb_text_column wpb_content_element  menu-cat">
-                                                                <div class="wpb_wrapper">
-                                                                    <p>
-                                                                        <a href="https://ibid.modeltheme.com/antiques-collectibles/coins-auction/">Coins Auctions</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/">Electronics Auctions</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/fundraising-auctions/">Fundraising Auctions</a><br />
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
-                                                        </div>
-                                                    </div>
-                                                </div><div class="wpb_column vc_column_container vc_col-sm-4">
-                                                    <div class="vc_column-inner vc_custom_1568113998351">
-                                                        <div class="wpb_wrapper">
-                                                            <div class="wpb_text_column wpb_content_element  menu-cat">
-                                                                <div class="wpb_wrapper">
-                                                                    <p>
-                                                                        <a href="https://ibid.modeltheme.com/real-estate">Real Estate Auctions</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/shop-only">Shop (No Auctions)</a><br />
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li id="menu-item-5308" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5308"><a href="https://ibid.modeltheme.com/store-listing/">Vendors - List of Sellers</a></li>
-                                    <li id="menu-item-4628" class="mega_menu col_1 menu-item menu-item-type-post_type menu-item-object-page menu-item-4628">
-                                        <a href="https://ibid.modeltheme.com/blog/">Blog</a><div class="cf-mega-menu sub-menu">
-                                            <div class="vc_row wpb_row vc_row-fluid no-margin vc_custom_1528793566052 vc_row-has-fill">
-                                                <div class="wpb_column vc_column_container vc_col-sm-12">
-                                                    <div class="vc_column-inner vc_custom_1568113992630">
-                                                        <div class="wpb_wrapper">
-                                                            <div class="wpb_text_column wpb_content_element  vc_custom_1568114205449">
-                                                                <div class="wpb_wrapper">
-                                                                    <h3 class="title16 text-uppercase font-semibold" style="font-weight: bold; font-size: 14px; color: #484848;">BLOG TYPES</h3>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="vc_empty_space" style="height: 5px"><span class="vc_empty_space_inner"></span></div>
-                                                            <div class="wpb_text_column wpb_content_element  menu-cat">
-                                                                <div class="wpb_wrapper">
-                                                                    <p>
-                                                                        <a href="https://ibid.modeltheme.com/blog/blog-boxed-layout/"><i class="fa fa-pencil"></i> Boxed Layout</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/blog/blog-carousel-type/"><i class="fa fa-long-arrow-right"></i> Posts Carousel</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/blog/blog-filtered/"><i class="fa fa-filter"></i> News Filtered</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/blog/blog-minimal-type/"><i class="fa fa-table"></i> Blog Minimal</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/blog/blog-simple-type/"><i class="fa fa-clone"></i> Simple Layout</a><br />
-                                                                        <a href="https://ibid.modeltheme.com/vr-boxes-sales-for-black-friday/"><i class="fa fa-file-text-o"></i> Article Details</a>
-                                                                    </p>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li id="menu-item-5401" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-5401">
-                                        <a href="#">Media</a>
-                                        <ul class="sub-menu">
-                                            <li id="menu-item-5593" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-5593">
-                                                <a href="https://ibid.modeltheme.com/media/">Media</a>
-                                                <ul class="sub-menu">
-                                                    <li id="menu-item-5594" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5594"><a href="https://ibid.modeltheme.com/media/4-columns/">4 columns</a></li>
-                                                    <li id="menu-item-5595" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5595"><a href="https://ibid.modeltheme.com/media/3-columns/">3 columns</a></li>
-                                                    <li id="menu-item-5596" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5596"><a href="https://ibid.modeltheme.com/media/2-columns/">2 columns</a></li>
-                                                </ul>
-                                            </li>
-                                            <li id="menu-item-5589" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-5589">
-                                                <a href="https://ibid.modeltheme.com/projects/">Projects</a>
-                                                <ul class="sub-menu">
-                                                    <li id="menu-item-5590" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5590"><a href="https://ibid.modeltheme.com/projects/4-columns/">4 columns</a></li>
-                                                    <li id="menu-item-5591" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5591"><a href="https://ibid.modeltheme.com/projects/3-columns/">3 columns</a></li>
-                                                    <li id="menu-item-5592" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5592"><a href="https://ibid.modeltheme.com/projects/2-columns/">2 columns</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li id="menu-item-4992" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4992">
-                                        <a asp-controller="home" asp-action="about">About</a>
-                                    </li>
-                                    <li id="menu-item-4630" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4630">
-                                        <a asp-controller="home" asp-action="contact">Contact</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-2 my-account-navbar">
-                            <ul>
-                                <!-- logged out -->
-                                <li id="nav-menu-login" class="ibid-logoin">
-                                    <a href="#" data-modal="modal-log-in" class="modeltheme-trigger">
-                                        Sign In
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+            @await Component.InvokeAsync("Navbar")
+            <!-- END BOTTOM BAR -->
         </div>
 
         <!-- Revolution slider -->
@@ -1278,10 +1111,12 @@
                     <div class="row">
                         <div class="col-md-8 left">Browse through our products library!</div>
                         <div class="col-md-4">
-                            <form name="myform" method="GET" class="woocommerce-product-search menu-search" action="https://ibid.modeltheme.com/">
+                            <form name="myform" method="GET" class="woocommerce-product-search menu-search" action="">
                                 <input type="hidden" value="product" name="post_type">
                                 <input type="text" name="s" class="search-field" maxlength="128" value="" placeholder="Search products...">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
                                 <input type="hidden" name="post_type" value="product" />
                             </form>
                         </div>
@@ -1295,9 +1130,15 @@
                     <div class="col-md-3 widget widget_text">
                         <aside id="text-3" class="widget vc_column_vc_container widget_text">
                             <div class="textwidget">
-                                <h1 class="logo"><a href="/"><img style="max-width: 105px;" src="https://ibid.modeltheme.com/wp-content/uploads/2019/08/logo-ibid.png" alt="Footer Logo" /></a></h1>
+                                <h1 class="logo">
+                                    <a href="/">
+                                        <img style="max-width: 105px;" src="" alt="Footer Logo" />
+                                    </a>
+                                </h1>
                                 <p>
-                                    <span style="color: #606060;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fe9d91908a9f9d8abe9b869f938e929bd09d9193">[email&#160;protected]</a></span><br />
+                                    <span style="color: #606060;">
+                                        <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fe9d91908a9f9d8abe9b869f938e929bd09d9193">[email&#160;protected]</a>
+                                    </span><br />
                                     <span style="color: #606060;">+84-999-999-999</span>
                                 </p>
                             </div>
@@ -1321,17 +1162,19 @@
                                 </ul>
                             </div>
                         </aside>
-                    </div><div class="col-md-3 widget widget_text">
+                    </div>
+                    <div class="col-md-3 widget widget_text">
                         <aside id="nav_menu-6" class="widget vc_column_vc_container widget_nav_menu">
                             <h1 class="widget-title">Our Policy</h1><div class="menu-menu-container">
                                 <ul id="menu-menu" class="menu">
-                                    <li id="menu-item-4567" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-4567"><a href="https://ibid.modeltheme.com/">Homepage</a></li>
-                                    <li id="menu-item-4569" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4569"><a href="https://ibid.modeltheme.com/blog/">Blog</a></li>
+                                    <li id="menu-item-4567" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-4567"><a href="">Homepage</a></li>
+                                    <li id="menu-item-4569" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4569"><a href="">Blog</a></li>
                                     <li id="menu-item-4570" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4570"><a href="#">Services</a></li>
                                 </ul>
                             </div>
                         </aside>
-                    </div><div class="col-md-3 widget widget_text">
+                    </div>
+                    <div class="col-md-3 widget widget_text">
                         <aside id="mc4wp_form_widget-2" class="widget vc_column_vc_container widget_mc4wp_form_widget">
                             <h1 class="widget-title">Subscribe to our Newsletter</h1>
                             <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
@@ -1352,7 +1195,6 @@
                                     }
                                 })();
                             </script>
-                            <!-- Mailchimp for WordPress v4.7.5 - https://wordpress.org/plugins/mailchimp-for-wp/ -->
                             <form id="mc4wp-form-1" class="mc4wp-form mc4wp-form-4260" method="post" data-id="4260" data-name="Newsletter">
                                 <div class="mc4wp-form-fields">
                                     <div class="newsletter-footer">
@@ -1363,7 +1205,11 @@
                                 <label style="display: none !important;">
                                     Leave this field empty if you're human:
                                     <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off" />
-                                </label><input type="hidden" name="_mc4wp_timestamp" value="1590897231" /><input type="hidden" name="_mc4wp_form_id" value="4260" /><input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-1" /><div class="mc4wp-response"></div>
+                                </label>
+                                <input type="hidden" name="_mc4wp_timestamp" value="1590897231" />
+                                <input type="hidden" name="_mc4wp_form_id" value="4260" />
+                                <input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-1" />
+                                <div class="mc4wp-response"></div>
                             </form><!-- / Mailchimp for WordPress Plugin -->
                         </aside>
                     </div>
@@ -1398,7 +1244,6 @@
                     this.value = "http://" + this.value;
                 }
             }
-
             var urlFields = document.querySelectorAll('.mc4wp-form input[type="url"]');
             if (urlFields) {
                 for (var j = 0; j < urlFields.length; j++) {
@@ -1408,7 +1253,6 @@
         })();</script>
     <script type="text/javascript">
         function fetch() {
-
             jQuery.ajax({
                 url: 'https://ibid.modeltheme.com/wp-admin/admin-ajax.php',
                 type: 'post',
@@ -1417,7 +1261,6 @@
                     jQuery('#datafetch').html(data);
                 }
             });
-
         }
     </script>
     <script type="text/javascript">
@@ -1553,7 +1396,7 @@
     <script type='text/javascript'>
         /* <![CDATA[ */
         var _wpUtilSettings = { "ajax": { "url": "\/wp-admin\/admin-ajax.php" } };
-                                    /* ]]> */
+                                            /* ]]> */
     </script>
     <script type='text/javascript' src='https://ibid.modeltheme.com/wp-includes/js/wp-util.min.js?ver=5.3.3'></script>
 

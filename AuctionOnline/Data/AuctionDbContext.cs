@@ -7,7 +7,7 @@ namespace AuctionOnline.Data
     {
         public AuctionDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items { get; set; }
@@ -19,9 +19,14 @@ namespace AuctionOnline.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Category>()
+                .HasOne(x => x.Parent)
+                .WithMany(x => x.Children)
+                .HasForeignKey(x => x.ParentId);
+
+
             modelBuilder.Entity<AccountItem>()
-       .HasKey(bc => new { bc.ItemId, bc.AccountId });
+                .HasKey(bc => new { bc.ItemId, bc.AccountId });
             modelBuilder.Entity<AccountItem>()
                 .HasOne(bc => bc.Item)
                 .WithMany(b => b.AccountItems)
@@ -32,7 +37,7 @@ namespace AuctionOnline.Data
                 .HasForeignKey(bc => bc.AccountId);
 
             modelBuilder.Entity<CategoryItem>()
-       .HasKey(bc => new { bc.ItemId, bc.CategoryId });
+                .HasKey(bc => new { bc.ItemId, bc.CategoryId });
             modelBuilder.Entity<CategoryItem>()
                 .HasOne(bc => bc.Item)
                 .WithMany(b => b.CategoryItems)
@@ -45,6 +50,9 @@ namespace AuctionOnline.Data
             modelBuilder.Entity<Category>().HasData(
                 new Category() { Id = 1, Name = "Furniture" },
                 new Category() { Id = 2, Name = "Electric" }
+                );
+            modelBuilder.Entity<Account>().HasData(
+                new Account() { Id = 1, Fullname = "Admin", Username = "admin123", Password = "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", Email = "admin@gmail.com", RoleId = 0, IsBlocked = false, Status = true } // password: admin123
                 );
 
         }
