@@ -51,6 +51,9 @@ namespace AuctionOnline.Data
                 new Category() { Id = 1, Name = "Furniture" },
                 new Category() { Id = 2, Name = "Electric" }
                 );
+            modelBuilder.Entity<Account>().HasData(
+                new Account() { Id = 1, Fullname = "Admin", Username = "admin123", Password = "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", Email = "admin@gmail.com", RoleId = 0, IsBlocked = false, Status = true } // password: admin123
+                );
 
         }
     }
