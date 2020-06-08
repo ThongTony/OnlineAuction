@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuctionOnline.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20200603013723_abc")]
-    partial class abc
+    [Migration("20200605025022_database")]
+    partial class database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
