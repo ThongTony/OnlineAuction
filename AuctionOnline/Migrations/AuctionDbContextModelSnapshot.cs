@@ -53,6 +53,20 @@ namespace AuctionOnline.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@gmail.com",
+                            Fullname = "Admin",
+                            IsBlocked = false,
+                            Password = "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG",
+                            RoleId = 0,
+                            Status = true,
+                            Username = "admin123"
+                        });
                 });
 
             modelBuilder.Entity("AuctionOnline.Models.AccountItem", b =>

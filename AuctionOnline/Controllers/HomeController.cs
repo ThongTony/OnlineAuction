@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AuctionOnline.Controllers
 {
-
     [Route("home")]
     public class HomeController : Controller
     {
@@ -22,6 +25,11 @@ namespace AuctionOnline.Controllers
         public IActionResult Contact()
         {
             return View();
+        }
+        [Route("logout")]
+        public IActionResult Logout()
+        {
+            return View("index");
         }
     }
 }
