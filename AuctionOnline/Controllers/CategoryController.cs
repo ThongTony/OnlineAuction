@@ -2,6 +2,8 @@
 using AuctionOnline.Models;
 using AuctionOnline.Models.Business;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AuctionOnline.Controllers
@@ -15,12 +17,6 @@ namespace AuctionOnline.Controllers
             db = _category;
         }
         [Route("index")]
-        public IActionResult Index()
-        {
-            ViewBag.Category = new CategoryBus(db).GetAll().ToList();            
-            return View();
-        }
-        [Route("adminindex")]
         public IActionResult AdminIndex()
         {
             ViewBag.Categories = db.Categories.ToList();
@@ -30,19 +26,42 @@ namespace AuctionOnline.Controllers
         [Route("add")]
         public IActionResult AdminAdd()       
         {
-            ViewBag.CategoryAdd = db.Categories.ToList();
-            return View("AdminAdd");
+            //ViewBag.CategoryAdd = db.Categories.ToList();
+            return View("AdminAdd", new Category());
         }
         [HttpPost]
         [Route("add")]
         public IActionResult AdminAdd(Category category)
         {
             ViewBag.CategoryAdd = "Failed";
+            category.CreatedAt = DateTime.Now;
             if (category != null)
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
-                ViewBag.result = "Success";
+                ViewBag.CategoryAdd = "Success";
+            }
+            return RedirectToAction("AdminAdd");
+        }
+        [HttpGet]
+        [Route("addchild/{id}")]
+        public IActionResult AdminAddChild(int id)
+        {
+            ViewBag.CategoryAddChild = db.Categories.Find(id);
+            return View("AdminAddChild");
+        }
+        [HttpPost]
+        [Route("addchild")]
+        public IActionResult AdminAddChild(Category category)
+        {
+            ViewBag.CategoryAddChild = "Failed";
+            category.CreatedAt = DateTime.Now;
+
+            if (category != null)
+            {
+                db.Categories.Add(category);
+                db.SaveChanges();
+                ViewBag.CategoryAddChild = "Success";
             }
             return RedirectToAction("AdminAdd");
         }
@@ -52,22 +71,23 @@ namespace AuctionOnline.Controllers
             var category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
-            return RedirectToAction("adminindex");
+            return RedirectToAction("AdminIndex");
         }
         [HttpGet]
         [Route("edit/{id}")]
-        public IActionResult Edit(int id)
+        public IActionResult AdminEdit(int id)
         {
-            var category = db.Categories.Find(id);
-            return View("Adminindex", category);
+            ViewBag.Edit = db.Categories.Find(id);
+            return View("AdminEdit", ViewBag.Edit);
         }
         [HttpPost]
-        [Route("edit/{id}")]
-        public IActionResult Edit(int id, Category category)
+        [Route("edit")]
+        public IActionResult AdminEdit(Category category)
         {
             db.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //category.CreatedAt = this.db.Categories.Where(c => c.CreatedAt);
             db.SaveChanges();
-            return RedirectToAction("adminindex", "category");
+            return RedirectToAction("AdminIndex", "category");
         }
     }
 }

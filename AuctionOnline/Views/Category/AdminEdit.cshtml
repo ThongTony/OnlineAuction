@@ -1,4 +1,7 @@
 ﻿@model AuctionOnline.Models.Category;
+@{ 
+    var cate = ViewBag.Edit;
+}
 <!DOCTYPE html>
 
 <html>
@@ -7,24 +10,18 @@
     <title>Edit</title>
 </head>
 <body>
-    <h3>Edit Category</h3>
+    <h3>Edit Category @cate.Name</h3>
     <form asp-controller="category" asp-action="edit" method="post">
-        <table id="">
+        <table>
             <tr>
                 <td>Name</td>
                 <td><input type="text" asp-for="Name" /></td>
             </tr>
             <tr>
-                <td>Categories</td>
-                <td>
-                    <select type="text" asp-for="ParentId">
-                        @foreach (var categories in ViewBag.Categories)
-                        {
-                            <option>@categories.Name</option>
-
-                        }
-                    </select>
-                </td>
+                <td><input type="hidden" asp-for="ParentId" value="@cate.ParentId" /></td>
+            </tr>
+            <tr>
+                <td><input type="hidden" asp-for="CreatedAt" value="@cate.CreatedAt" /></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -36,6 +33,6 @@
 
         </table>
     </form>
-    <a asp-controller="category" asp-action="index">Back to Category View</a>
+    <a asp-controller="category" asp-action="adminindex">Back to Category View</a>
 </body>
 </html>

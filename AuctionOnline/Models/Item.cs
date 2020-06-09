@@ -14,11 +14,11 @@ namespace AuctionOnline.Models
         public decimal Price { get; set; }
         public int BidStatus { get; set; }
         public string Photo { get; set; }
-        public string? Document { get; set; }
-        public DateTime BidStartDate { get; set; }
-        public DateTime BidEndDate { get; set; }
+        public string Document { get; set; }
+        public DateTime? BidStartDate { get; set; }
+        public DateTime? BidEndDate { get; set; }
         [Column(TypeName="decimal(18,1)")]
-        public decimal MinimumBid { get; set; }
+        public decimal? MinimumBid { get; set; }
         public int? BidIncrementDefinitionId { get; set; }
         public BidIncrementDefinition BidIncrementDefinition { get; set; }
         public ICollection<CategoryItem> CategoryItems { get; set; }
