@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("~/")]
-    [Route("")]
     [Route("home")]
     public class HomeController : Controller
     {
+        [Route("~/")]
+        [Route("")]
         [Route("index")]
         public IActionResult Index()
         {
@@ -25,6 +25,11 @@ namespace AuctionOnline.Controllers
         public IActionResult Contact()
         {
             return View();
+        }
+        [Route("logout")]
+        public IActionResult Logout()
+        {
+            return View("index");
         }
     }
 }
