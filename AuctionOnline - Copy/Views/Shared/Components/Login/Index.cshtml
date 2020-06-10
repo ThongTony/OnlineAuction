@@ -1,0 +1,155 @@
+﻿<div class="modeltheme-modal" id="modal-log-in">
+
+    <div class="modeltheme-content" id="login-modal-content">
+        <h3 class="relative">
+            Login to Your Account
+        </h3>
+        <div class="modal-content row">
+            <div class="col-md-12">
+
+                <form name="loginform" id="loginform" action="https://ibid.modeltheme.com/wp-login.php" method="post">
+
+                    <p class="login-username">
+                        <label for="user_login">Username or Email Address</label>
+                        <i class="fa fa-user-o" aria-hidden="true"></i>
+                        <input type="text" name="log" id="user_login" class="input" value="" required size="20" placeholder="Username">
+                    </p>
+                    <p class="login-password">
+                        <label for="user_pass">Password</label>
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        <input type="password" name="pwd" id="user_pass" class="input" value="" required size="20" placeholder="Password">
+                    </p>
+
+                    <p class="login-remember">
+                        <label>
+                            <input name="rememberme" type="checkbox" id="rememberme" value="forever">
+                            Remember Me
+                        </label>
+                    </p>
+                    <div class="row-buttons">
+                        <p class="login-submit">
+                            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary" value="Log In">
+                            <input type="hidden" name="redirect_to" value="https://ibid.modeltheme.com">
+                        </p>
+                        <p class="btn-register-p">
+                            <a class="btn btn-register" id="register-modal">Register</a>
+                        </p>
+                        <p class="woocommerce-LostPassword lost_password">
+                            <a href="https://ibid.modeltheme.com/my-account/lost-password/">Lost your password?</a>
+                        </p>
+                    </div>
+
+                </form>
+                <div class="separator-modal">OR </div>
+
+                <div class="wc-social-login">
+                    <style>
+                        a.ywsl-social {
+                            text-decoration: none;
+                            display: inline-block;
+                            margin-right: 2px;
+                        }
+                    </style>
+                    <p class="ywsl-label">Login with:</p>
+                    <p class="socials-list">
+                        <a class="ywsl-social ywsl-facebook" href="https://ibid.modeltheme.com/wp-login.php?ywsl_social=facebook&#038;redirect=https%3A%2F%2Fibid.modeltheme.com%3A443%2Fcountdown-auctions%2F%3Ffbclid%3DIwAR0fKBtjH6GNkdvJXoRl987cJupshudzIPFzTg8R7zfh37nFB-x3mi91BmU"><img src="https://ibid.modeltheme.com/wp-content/plugins/yith-woocommerce-social-login/assets/images/facebook.png" alt="Facebook" /></a><a class="ywsl-social ywsl-twitter" href="https://ibid.modeltheme.com/wp-login.php?ywsl_social=twitter&#038;redirect=https%3A%2F%2Fibid.modeltheme.com%3A443%2Fcountdown-auctions%2F%3Ffbclid%3DIwAR0fKBtjH6GNkdvJXoRl987cJupshudzIPFzTg8R7zfh37nFB-x3mi91BmU"><img src="https://ibid.modeltheme.com/wp-content/plugins/yith-woocommerce-social-login/assets/images/twitter.png" alt="Twitter" /></a><a class="ywsl-social ywsl-google" href="https://ibid.modeltheme.com/wp-login.php?ywsl_social=google&#038;redirect=https%3A%2F%2Fibid.modeltheme.com%3A443%2Fcountdown-auctions%2F%3Ffbclid%3DIwAR0fKBtjH6GNkdvJXoRl987cJupshudzIPFzTg8R7zfh37nFB-x3mi91BmU"><img src="https://ibid.modeltheme.com/wp-content/plugins/yith-woocommerce-social-login/assets/images/google.png" alt="Google" /></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modeltheme-content" id="signup-modal-content">
+        <h3 class="relative">
+            Personal Details
+        </h3>
+        <div class="modal-content row">
+            <div class="col-md-12">
+                <div class="u-column2 col-2">
+                    <form method="post" class="woocommerce-form woocommerce-form-register register">
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="reg_username" autocomplete="username" value="" placeholder="Username" />
+                        </p>
+                        <p class="form-row form-row-first">
+                            <input type="text" class="input-text" name="billing_first_name" id="billing_first_name" value="" placeholder="First name" />
+                        </p>
+                        <p class="form-row form-row-last">
+                            <input type="text" class="input-text" name="billing_last_name" id="billing_last_name" value="" placeholder="Last name" />
+                        </p>
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="" placeholder="Email address" />
+                        </p>
+                        <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                            <input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password" id="reg_password" autocomplete="new-password" placeholder="Password" />
+                        </p>
+
+                        <div class="show_if_seller" style="display:none">
+
+                            <div class="split-row form-row-wide">
+                                <p class="form-row form-group">
+                                    <label for="first-name">First Name <span class="required">*</span></label>
+                                    <input type="text" class="input-text form-control" name="fname" id="first-name" value="" required="required" />
+                                </p>
+
+                                <p class="form-row form-group">
+                                    <label for="last-name">Last Name <span class="required">*</span></label>
+                                    <input type="text" class="input-text form-control" name="lname" id="last-name" value="" required="required" />
+                                </p>
+                            </div>
+
+                            <p class="form-row form-group form-row-wide">
+                                <label for="company-name">Shop Name <span class="required">*</span></label>
+                                <input type="text" class="input-text form-control" name="shopname" id="company-name" value="" required="required" />
+                            </p>
+
+                            <p class="form-row form-group form-row-wide">
+                                <label for="seller-url" class="pull-left">Shop URL <span class="required">*</span></label>
+                                <strong id="url-alart-mgs" class="pull-right"></strong>
+                                <input type="text" class="input-text form-control" name="shopurl" id="seller-url" value="" required="required" />
+                                <small>https://ibid.modeltheme.com/store/<strong id="url-alart"></strong></small>
+                            </p>
+
+                            <p class="form-row form-group form-row-wide">
+                                <label for="shop-phone">Phone Number<span class="required">*</span></label>
+                                <input type="text" class="input-text form-control" name="phone" id="shop-phone" value="" required="required" />
+                            </p>
+
+                        </div>
+
+
+                        <p class="form-row form-group user-role">
+                            <label class="radio">
+                                <input type="radio" name="role" value="customer" checked='checked'>
+                                I am a customer
+                            </label>
+
+                            <label class="radio">
+                                <input type="radio" name="role" value="seller">
+                                I am a vendor
+                            </label>
+                        </p>
+                        <div class="woocommerce-privacy-policy-text"></div>                                        <p class="woocommerce-FormRow form-row">
+                            <input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="0f0d4c4a8b" /><input type="hidden" name="_wp_http_referer" value="/countdown-auctions/?fbclid=IwAR0fKBtjH6GNkdvJXoRl987cJupshudzIPFzTg8R7zfh37nFB-x3mi91BmU" />                                            <button type="submit" class="woocommerce-Button button" name="register" value="Register">Register</button>
+                            <!-- Back to login -->
+                            <a class="btn btn-login btn-login-p" id="login-modal">Back to Login</a>
+                        </p>
+                    </form>
+                    <div class="separator-modal">OR </div>
+
+                    <div class="wc-social-login">
+                        <style>
+                            a.ywsl-social {
+                                text-decoration: none;
+                                display: inline-block;
+                                margin-right: 2px;
+                            }
+                        </style>
+                        <p class="ywsl-label">Login with:</p>
+                        <p class="socials-list">
+                            <a class="ywsl-social ywsl-facebook" href="https://ibid.modeltheme.com/wp-login.php?ywsl_social=facebook&#038;redirect=https%3A%2F%2Fibid.modeltheme.com%3A443%2Fcountdown-auctions%2F%3Ffbclid%3DIwAR0fKBtjH6GNkdvJXoRl987cJupshudzIPFzTg8R7zfh37nFB-x3mi91BmU"><img src="https://ibid.modeltheme.com/wp-content/plugins/yith-woocommerce-social-login/assets/images/facebook.png" alt="Facebook" /></a><a class="ywsl-social ywsl-twitter" href="https://ibid.modeltheme.com/wp-login.php?ywsl_social=twitter&#038;redirect=https%3A%2F%2Fibid.modeltheme.com%3A443%2Fcountdown-auctions%2F%3Ffbclid%3DIwAR0fKBtjH6GNkdvJXoRl987cJupshudzIPFzTg8R7zfh37nFB-x3mi91BmU"><img src="https://ibid.modeltheme.com/wp-content/plugins/yith-woocommerce-social-login/assets/images/twitter.png" alt="Twitter" /></a><a class="ywsl-social ywsl-google" href="https://ibid.modeltheme.com/wp-login.php?ywsl_social=google&#038;redirect=https%3A%2F%2Fibid.modeltheme.com%3A443%2Fcountdown-auctions%2F%3Ffbclid%3DIwAR0fKBtjH6GNkdvJXoRl987cJupshudzIPFzTg8R7zfh37nFB-x3mi91BmU"><img src="https://ibid.modeltheme.com/wp-content/plugins/yith-woocommerce-social-login/assets/images/google.png" alt="Google" /></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

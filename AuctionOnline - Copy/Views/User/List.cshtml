@@ -1,0 +1,504 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Page content -->
+<div id="primary" class=" content-area no-sidebar">
+    <div class="container">
+        <main id="main" class="col-md_12 site-main main-content">
+            <article id="post-4868" class="post-4868 page type-page status-publish hentry">
+                <div class="entry-content">
+                <div id="dokan-store-listing-filter-wrap">
+                        <div class="left">
+                            <p class="item store-count">
+                                Total store showing: 20
+                            </p>
+                        </div>
+
+                        <div class="right">
+                            <div class="item">
+                                <div class="dokan-icons">
+                                    <div class="dokan-icon-div"></div>
+                                    <div class="dokan-icon-div"></div>
+                                    <div class="dokan-icon-div"></div>
+                                </div>
+
+                                <button class="dokan-store-list-filter-button dokan-btn dokan-btn-theme">
+                                    Filter
+                                </button>
+                            </div>
+
+                            <form name="stores_sorting" class="sort-by item" method="get">
+                                <label>Sort by:</label>
+
+                                <select name="stores_orderby" id="stores_orderby" aria-label="Sort by">
+                                    <option value='most_recent'>Most Recent</option>
+                                    <option value='total_orders'>Most Popular</option>
+                                </select>
+                            </form>
+
+                            <div class="toggle-view item">
+                                <span class="dashicons dashicons-screenoptions" data-view="grid-view"></span>
+                                <span class="dashicons dashicons-menu-alt" data-view="list-view"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <form role="store-list-filter" name="dokan_store_lists_filter_form" id="dokan-store-listing-filter-form-wrap" style="display: none">
+
+                        <div class="store-search grid-item">
+                            <input type="search" class="store-search-input" name="dokan_seller_search" placeholder="Search Vendors">
+                        </div>
+
+                        <div class="apply-filter">
+                            <button id="cancel-filter-btn" class="dokan-btn dokan-btn-theme">Cancel</button>
+                            <button id="apply-filter-btn" class="dokan-btn dokan-btn-theme" type="submit">Apply</button>
+                        </div>
+
+                    </form>
+                    <div id="dokan-seller-listing-wrap" class="grid-view">
+                        <div class="seller-listing-content">
+                            <ul class="dokan-seller-wrap">
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/admin/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/admin/index.html">modeltheme</a></h2>
+
+                                                    <div class="dokan-seller-rating" title="Rated 5.00 out of 5">
+                                                        <i class='dashicons dashicons-star-filled'></i><i class='dashicons dashicons-star-filled'></i><i class='dashicons dashicons-star-filled'></i><i class='dashicons dashicons-star-filled'></i><i class='dashicons dashicons-star-filled'></i>                                                <p class="rating">
+                                                            5.00 out of 5
+                                                        </p>
+                                                    </div>
+
+                                                    <p class="store-address"><span class='state'> Manchester,</span><span class='country'> United Kingdom (UK) </span></p>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/754c6ee286e3075a18320477d4261baf?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/754c6ee286e3075a18320477d4261baf?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/admin/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/auctioner/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/auctioner/index.html">Auctioner</a></h2>
+
+
+                                                    <p class="store-address"><span class='state'> Queensland,</span><span class='country'> Australia </span></p>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/0642d9332946a6dfdfd3e814fc9291f5?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/0642d9332946a6dfdfd3e814fc9291f5?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/auctioner/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/boutique/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+                                                    <div class="featured-label">Featured</div>
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/boutique/index.html">Boutique</a></h2>
+
+
+                                                    <p class="store-address"><span class='street_1'> Bray Street,</span><br><span class='city'> Bray City,</span><br><span class='state'> Clare,</span><span class='country'> Ireland </span></p>
+
+                                                    <p class="store-phone">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i> 0039434324234
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/e34e8480505a5d3852a4fb649fb42120?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/e34e8480505a5d3852a4fb649fb42120?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/boutique/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/www-artehispanico-com/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/www-artehispanico-com/index.html">antiqyes</a></h2>
+
+
+
+                                                    <p class="store-phone">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i> 664058667
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/3b0d54cf0c395d5443915e2e353f4a19?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/3b0d54cf0c395d5443915e2e353f4a19?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/www-artehispanico-com/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/nesatyorsun/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/nesatyorsun/index.html">asrven</a></h2>
+
+
+                                                    <p class="store-address"><span class='street_1 street_2'> aksaray, nakkaş mah</span><br><span class='city'> aksaray,</span><br><span class='state'> Yozgat,</span><span class='country'> Turkey </span></p>
+
+                                                    <p class="store-phone">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i> 05052576179
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/e1277e8cc424e78b23544bcd868eb60d?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/e1277e8cc424e78b23544bcd868eb60d?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/nesatyorsun/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 ">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/fusca22empreexample-com/index.html">
+                                                    <img src="../wp-content/uploads/2019/12/cropped-fundo-amarelo40.jpg">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content ">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/fusca22empreexample-com/index.html">fusquinha</a></h2>
+
+
+                                                    <p class="store-address"><span class='street_1 street_2'> sxfdvdfvzfvfzxsxs, saxsaxsax</span><br><span class='city'> dfzvcdzczd,</span><br><span class='country'> Afghanistan </span></p>
+
+                                                    <p class="store-phone">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i> +557199093792
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/cfedcfb4f417760bd067f73eea421048?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/cfedcfb4f417760bd067f73eea421048?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/fusca22empreexample-com/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/httpsibid-modeltheme-comautomotivestore/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/httpsibid-modeltheme-comautomotivestore/index.html">Aaa</a></h2>
+
+
+
+                                                    <p class="store-phone">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i> 0755588808
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/a668b4103bc340d56b9f5d315cf30b1f?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/a668b4103bc340d56b9f5d315cf30b1f?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/httpsibid-modeltheme-comautomotivestore/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/mdrstore/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/mdrstore/index.html">MdrStore</a></h2>
+
+
+
+                                                    <p class="store-phone">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i> 51999530554
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/91c1d53311cd0b0362877ebe40c1dc49?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/91c1d53311cd0b0362877ebe40c1dc49?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/mdrstore/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/httpsibid-modeltheme-comautomotivestore-2/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/httpsibid-modeltheme-comautomotivestore-2/index.html">bags</a></h2>
+
+
+
+                                                    <p class="store-phone">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i> 1313
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/929ab95ca7a04537913909f17ad620ec?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/929ab95ca7a04537913909f17ad620ec?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/httpsibid-modeltheme-comautomotivestore-2/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+
+                                <li class="dokan-single-seller woocommerce coloum-3 no-banner-img">
+                                    <div class="store-wrapper">
+                                        <div class="store-header">
+                                            <div class="store-banner">
+                                                <a href="../store/httpsibid-modeltheme-comautomotivestore-3/index.html">
+                                                    <img src="../wp-content/plugins/dokan-lite/assets/images/default-store-banner.png">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-content default-store-banner">
+                                            <div class="store-data-container">
+                                                <div class="featured-favourite">
+
+                                                </div>
+
+                                                <div class="store-data">
+                                                    <h2><a href="../store/httpsibid-modeltheme-comautomotivestore-3/index.html">emitr</a></h2>
+
+
+                                                    <p class="store-address"><span class='street_1 street_2'> em, em2</span><br><span class='city'> simf,</span><br><span class='state'> moscow,</span><span class='country'> Russia </span></p>
+
+                                                    <p class="store-phone">
+                                                        <i class="fa fa-phone" aria-hidden="true"></i> +79780761562
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="store-footer">
+                                            <div class="seller-avatar">
+                                                <img alt='' src='https://secure.gravatar.com/avatar/1f7294a53f4a2ce3b3ea10cfc1e04824?s=150&amp;d=mm&amp;r=g' srcset='https://secure.gravatar.com/avatar/1f7294a53f4a2ce3b3ea10cfc1e04824?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' />
+                                            </div>
+                                            <a href="../store/httpsibid-modeltheme-comautomotivestore-3/index.html" title="Visit Store">
+                                                <span class="dashicons dashicons-arrow-right-alt2 dokan-btn-theme dokan-btn-round"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <div class="dokan-clearfix"></div>
+                            </ul> <!-- .dokan-seller-wrap -->
+
+                            <div class="pagination-container clearfix">
+                                <div class="pagination-wrap">
+                                    <ul class="pagination">
+                                        <li><span aria-current="page" class="page-numbers current">1</span></li>
+                                        <li><a class="page-numbers" href="page/2/index.html">2</a></li>
+                                        <li><a class="next page-numbers" href="page/2/index.html">Next &rarr;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="clearfix"></div>
+                </div><!-- .entry-content -->
+
+                <footer class="entry-footer">
+                </footer><!-- .entry-footer -->
+            </article><!-- #post-## -->
+
+        </main>
+    </div>
+</div>

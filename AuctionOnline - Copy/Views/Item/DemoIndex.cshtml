@@ -1,0 +1,29 @@
+﻿@model AuctionOnline.ViewModels.CategoryVM;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h3>Category Add</h3>
+    <table border="1">
+        <tr>
+            <th> ID</th>
+            <th>Name</th>
+            <th>Date Creation</th>
+        </tr>
+        @foreach (var categories in ViewBag.Category)
+        {
+            <tr>
+                <td>@categories.Id</td>
+                <td>@categories.Name</td>
+                <td>@categories.CreatedAt</td>
+                <td><a asp-controller="category" asp-action="delete" asp-route-id="@categories.Id">Delete</a></td>
+            </tr>
+            <br />
+        }
+    </table>
+</body>
+</html>

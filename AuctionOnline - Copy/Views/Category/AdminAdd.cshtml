@@ -1,0 +1,30 @@
+﻿@model AuctionOnline.Models.Category;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+</head>
+<body>
+    <h3>New Category</h3>
+    <form asp-controller="category" asp-action="add" method="post">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" asp-for="Name" /></td>
+            </tr>
+            <tr>
+                <td>Created Date</td> @DateTime.Now
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Add" id="add" />
+                </td>
+            </tr>
+
+        </table>
+    </form>
+    <a asp-controller="category" asp-action="index">Back to Category View</a>
+</body>
+</html>
