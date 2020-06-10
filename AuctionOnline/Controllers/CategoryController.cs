@@ -1,9 +1,7 @@
 ﻿using AuctionOnline.Data;
 using AuctionOnline.Models;
-using AuctionOnline.Models.Business;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AuctionOnline.Controllers
@@ -26,7 +24,6 @@ namespace AuctionOnline.Controllers
         [Route("add")]
         public IActionResult AdminAdd()       
         {
-            //ViewBag.CategoryAdd = db.Categories.ToList();
             return View("AdminAdd", new Category());
         }
         [HttpPost]
@@ -85,7 +82,6 @@ namespace AuctionOnline.Controllers
         public IActionResult AdminEdit(Category category)
         {
             db.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            //category.CreatedAt = this.db.Categories.Where(c => c.CreatedAt);
             db.SaveChanges();
             return RedirectToAction("AdminIndex", "category");
         }

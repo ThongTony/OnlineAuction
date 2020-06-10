@@ -20,7 +20,7 @@ namespace AuctionOnline.ViewComponents
         {
             //ViewBag.NavCategories = db.Categories.FirstOrDefault(a => a.ParentId == id);
             ViewBag.NavCategories = db.Categories.ToList();
-            return View(GetMenuItem(ViewBag.NavCategories, null));
+            return View();//GetMenuItem(ViewBag.NavCategories, null)
         }
         private IList<Category> GetChildrenMenu(IList<Category> menuList, int parentId)
         {
