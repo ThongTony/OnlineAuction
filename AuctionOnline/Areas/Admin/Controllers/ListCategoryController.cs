@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuctionOnline.Areas.Admin.Controllers
 {
     [Area("admin")]
-    [Route("admin/formuser")]
-    public class FormUserController : Controller
+    [Route("admin/listcategory")]
+    public class ListCategoryController : Controller
     {
         [Route("")]
         [Route("index")]
