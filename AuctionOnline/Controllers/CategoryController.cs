@@ -14,18 +14,21 @@ namespace AuctionOnline.Controllers
         {
             db = _category;
         }
+
         [Route("index")]
         public IActionResult AdminIndex()
         {
             ViewBag.Categories = db.Categories.ToList();
             return View();
         }
+
         [HttpGet]
         [Route("add")]
         public IActionResult AdminAdd()       
         {
             return View("AdminAdd", new Category());
         }
+
         [HttpPost]
         [Route("add")]
         public IActionResult AdminAdd(Category category)
@@ -40,6 +43,7 @@ namespace AuctionOnline.Controllers
             }
             return RedirectToAction("AdminAdd");
         }
+
         [HttpGet]
         [Route("addchild/{id}")]
         public IActionResult AdminAddChild(int id)
@@ -47,6 +51,7 @@ namespace AuctionOnline.Controllers
             ViewBag.CategoryAddChild = db.Categories.Find(id);
             return View("AdminAddChild");
         }
+
         [HttpPost]
         [Route("addchild")]
         public IActionResult AdminAddChild(Category category)
@@ -62,14 +67,7 @@ namespace AuctionOnline.Controllers
             }
             return RedirectToAction("AdminAdd");
         }
-        [Route("delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            var category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
-            return RedirectToAction("AdminIndex");
-        }
+
         [HttpGet]
         [Route("edit/{id}")]
         public IActionResult AdminEdit(int id)
@@ -77,6 +75,7 @@ namespace AuctionOnline.Controllers
             ViewBag.Edit = db.Categories.Find(id);
             return View("AdminEdit", ViewBag.Edit);
         }
+
         [HttpPost]
         [Route("edit")]
         public IActionResult AdminEdit(Category category)
@@ -84,6 +83,15 @@ namespace AuctionOnline.Controllers
             db.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("AdminIndex", "category");
+        }
+
+        [Route("delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var category = db.Categories.Find(id);
+            db.Categories.Remove(category);
+            db.SaveChanges();
+            return RedirectToAction("AdminIndex");
         }
     }
 }

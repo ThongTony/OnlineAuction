@@ -17,6 +17,6 @@ namespace AuctionOnline.Models
         public Boolean Status { get; set; }
         public Boolean IsBlocked { get; set; }
         public DateTime CreatedAt { get; set; }
-        //public ICollection<AccountItem> AccountItems { get; set; }
+        public ICollection<Bid> Bids { get; set; }
     }
 }

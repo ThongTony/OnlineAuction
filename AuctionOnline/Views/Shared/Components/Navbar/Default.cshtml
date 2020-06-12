@@ -13,7 +13,7 @@
                         <ul class="bot_nav_cat_wrap">
                             @foreach (var cate in ViewBag.NavCategories)
                             {
-                                @if (cate.Children.Any())
+                                @if (cate.Children != null)
                                 {
                                     <li id="menu-item-5192" class="mega3menu menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-5192">
                                         <a href="#">
@@ -29,7 +29,7 @@
                                                             foreach (var cate2 in cate.Children)
                                                             {
                                                                 -->
-                                                            @if ((cate.Children).Children.Any())
+                                                            @if ((cate.Children).Children != null)
                                                             {
                                                                 <div class="wpb_text_column wpb_content_element  wpb_animate_when_almost_visible wpb_fadeInUp fadeInUp">
                                                                     <div class="wpb_wrapper">
