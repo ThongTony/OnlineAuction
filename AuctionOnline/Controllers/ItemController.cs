@@ -45,7 +45,7 @@ namespace AuctionOnline.Controllers
         public IActionResult Add(int id)
         {
             var model = new ItemVM();
-            ViewBag.Account = db.Accounts.Find(id);
+            ViewBag.Account = db.Accounts.Find(2);
             //ViewBag.Category = db.Categories.ToList();
             model.Categories = db.Categories.Select(a =>
                                   new SelectListItem
@@ -81,7 +81,7 @@ namespace AuctionOnline.Controllers
                     });
                 }
                 //var iduser = 
-                //item.AccountId = 1;
+                item.AccountId = 2;
 
                 db.Items.Add(item);
                 db.SaveChanges();

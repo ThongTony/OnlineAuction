@@ -25,6 +25,8 @@
     <Compile Remove="Migrations\20200612013102_abc.Designer.cs" />
     <Compile Remove="Migrations\20200612014827_abc.cs" />
     <Compile Remove="Migrations\20200612014827_abc.Designer.cs" />
+    <Compile Remove="Migrations\20200612020631_abc.cs" />
+    <Compile Remove="Migrations\20200612020631_abc.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
