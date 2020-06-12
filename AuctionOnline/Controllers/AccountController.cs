@@ -114,5 +114,6 @@ namespace AuctionOnline.Controllers
             ViewBag.SellerList = db.Accounts.Where(x => x.RoleId == 1).ToList();
             return View("List");
         }
+
     }
 }
