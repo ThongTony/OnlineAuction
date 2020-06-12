@@ -1,0 +1,32 @@
+﻿@model AuctionOnline.Models.Account;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h3>User</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var user in ViewBag.Account)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Fullname</td>
+                <td>
+                    <a asp-controller="item" asp-action="add" asp-route-id="@user.Id">Add item</a>
+                    <br />
+
+                </td>
+            </tr>
+            <br />
+        }
+    </table>
+</body>
+</html>

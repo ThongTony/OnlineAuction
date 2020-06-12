@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("item")]
     public class ItemController : Controller
     {
         private AuctionDbContext db;
@@ -16,63 +17,109 @@ namespace AuctionOnline.Controllers
         {
             db = _db;
         }
-        [Route("index")]
-        public IActionResult Index()
-        {
-            return View();
-        }
-        [Route("details")]
-        public IActionResult Details(int id)
-        {
-            ViewBag.isBreadCrumb = true;
-            ViewBag.Item = db.Items.Where(i => i.Id == id).ToList();
-            return View("Details",ViewBag.Item);
-        }
-        [Route("list")]
-        public IActionResult List()
-        {
-            ViewBag.isBreadCrumb = true;
-            ViewBag.Item = db.Items.ToList();
-            return View("List", ViewBag.Item);
-        }
+        //public async Task<IActionResult> DemoIndex()
+        //{
+        //    ViewBag.Item = db.Items.ToList();
+        //    return View();
+        //}
+        //public async Task<IActionResult> Details(int id)
+        //{
+        //    ViewBag.isBreadCrumb = true;
+        //    ViewBag.DetailItem = db.Items.Find(id);
+        //    return View("Details");
+        //}
+        //public async Task<IActionResult> ListedByCategory(int id)
+        //{
+        //    ViewBag.isBreadCrumb = true;
+        //    ViewBag.CategoryItem = db.Categories.Where(i => i.Id == id).ToList();
+        //    return View();
+        //}
+        //public async Task<IActionResult> ListInShop(int id)
+        //{
+        //    ViewBag.isBreadCrumb = true;
+        //    ViewBag.AccountItem = db.Accounts.Where(i => i.Id == id);
+        //    return View();
+        //}
+
         [HttpGet]
-        [Route("add")]
-        public IActionResult Add()
+        public IActionResult Add(int id)
         {
-            return View("Add", new Item());
+            var model = new ItemVM();
+            ViewBag.Account = db.Accounts.Find(2);
+            //ViewBag.Category = db.Categories.ToList();
+            model.Categories = db.Categories.Select(a =>
+                                  new SelectListItem
+                                  {
+                                      Value = a.Id.ToString(),
+                                      Text = a.Name
+                                  }).ToList();
+            return View(model);
         }
+
         [HttpPost]
-        [Route("add")]
-        public IActionResult Add(Item items)
+        public async Task<IActionResult> Add(ItemVM itemVM)
         {
-            ViewBag.result = "Failed";
-            if (items != null)
+            ViewBag.Item = "Failed";
+            itemVM.CreatedAt = DateTime.Now;
+            
+            if (itemVM != null)
             {
-                db.Items.Add(items);
+                var item = new Item()
+                {
+                    Title = itemVM.Title,
+                    Price = itemVM.Price,
+                    CategoryItems = new List<CategoryItem>()
+                };
+                
+                foreach (var id in itemVM.SelectedCategoryIds)
+                {
+                    item.CategoryItems.Add(new CategoryItem
+                    {
+                        CategoryId = id,
+                        ItemId = item.Id
+
+                    });
+                }
+                //var iduser = 
+                item.AccountId = 2;
+
+                db.Items.Add(item);
                 db.SaveChanges();
-                ViewBag.result = "Success";
+                ViewBag.Item = "Success";
             }
-            return View();
+            return RedirectToAction("Add");
         }
-        [Route("delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            var items = db.Items.Find(id);
-            db.Items.Remove(items);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        [Route("odertracking")]
-        public IActionResult Odertracking()
-        {
-            ViewBag.isBreadCrumb = true;
-            return View();
-        }
-        [Route("featured")]
-        public IActionResult Featured()
-        {
-            ViewBag.isBreadCrumb = true;
-            return View();
-        }
+
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var items = db.Items.Find(id);
+        //    db.Items.Remove(items);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    var item = db.Items.Find(id);
+        //    return View("List", item);
+        //}
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(Item item)
+        //{
+        //    db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        //    db.SaveChanges();
+        //    return RedirectToAction("Edit", "item");
+        //}
+        //public IActionResult Odertracking()
+        //{
+        //    ViewBag.isBreadCrumb = true;
+        //    return View();
+        //}
+        //public IActionResult Featured()
+        //{
+        //    ViewBag.isBreadCrumb = true;
+        //    return View();
+        //}
     }
 }

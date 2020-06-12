@@ -1,0 +1,100 @@
+﻿<!--Quick View Modal-->
+@{ 
+    var item = ViewBag.Item;
+}
+<div id="yith-quick-view-modal" class="open">
+    
+    <div class="yith-quick-view-overlay"></div>
+
+    <div class="yith-wcqv-wrapper" style="left: 146.5px; top: 484.5px; width: 1000px; height: 0px;">
+
+        <div class="yith-wcqv-main">
+
+            <div class="yith-wcqv-head">
+                <a href="#" id="yith-quick-view-close" class="yith-wcqv-close">X</a>
+            </div>
+            <div id="yith-quick-view-content" class="woocommerce single-product">
+                <div class="product">
+                    <div itemscope="" itemtype="http://schema.org/Product" id="product-4452" class="post-4452 type-product status-publish has-post-thumbnail product_cat-electronics product_cat-televisions product_tag-black-friday product_tag-sales product first instock sold-individually shipping-taxable product-type-auction">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 1; transition: opacity 0.25s ease-in-out 0s;">
+                                    <a href="#" class="woocommerce-product-gallery__trigger">🔍</a>
+                                    <figure class="woocommerce-product-gallery__wrapper">
+                                        <div data-thumb="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-200x200.jpg" data-thumb-alt="" class="woocommerce-product-gallery__image" style="position: relative; overflow: hidden;">
+                                            <a asp-controller="item" asp-action="details" asp-route-id="@item.Id">
+                                                <img width="600" height="600" src="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-600x600.jpg" class="wp-post-image" alt="" title="electronic-cat2" data-caption="" data-src="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2.jpg" data-large_image="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2.jpg" data-large_image_width="1080" data-large_image_height="1080" srcset="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-600x600.jpg 600w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-200x200.jpg 200w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-150x150.jpg 150w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-300x300.jpg 300w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-768x768.jpg 768w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-1024x1024.jpg 1024w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-350x350.jpg 350w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-110x110.jpg 110w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-400x400.jpg 400w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2-70x70.jpg 70w, https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2.jpg 1080w" sizes="(max-width: 600px) 100vw, 600px">
+                                            </a><img role="presentation" alt="" src="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2.jpg" class="zoomImg" style="position: absolute; top: -361.9px; left: -619.741px; opacity: 0; width: 1080px; height: 1080px; border: none; max-width: none; max-height: none;">
+                                        </div>
+                                        <div class="ibid-auction-no-reserve">No reserve</div>
+                                    </figure>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="summary entry-summary">
+                                    <h1 itemprop="name" class="product_title entry-title">@item.Name</h1>
+                                    <p class="price"><span class="winned-for auction">Auction Ended</span> </p>
+                                    <div class="product-description" itemprop="description">
+                                        <p>@item.Description</p>
+                                    </div><div class="product_meta">
+                                        <span class="posted_in">Categories: <a rel="tag">category.Nam</a> | <a asp-controller="item" asp-action="list" asp-route-id="category.Id" rel="tag">category.Name3</a></span>
+                                        <span class="tagged_as">Tags: <a href="#" rel="tag">black friday</a> | <a href="#" rel="tag">sales</a></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--End Quick View Modal-->
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container" style="transform: translate3d(0px, 0px, 0px);">
+            <div class="pswp__item" style="display: block; transform: translate3d(-1448px, 0px, 0px);"></div>
+            <div class="pswp__item" style="transform: translate3d(0px, 0px, 0px);"><div class="pswp__zoom-wrap" style="transform: translate3d(206px, 44px, 0px) scale(1);">
+                <div class="pswp__img pswp__img--placeholder pswp__img--placeholder--blank" style="width: 881px; height: 881px; display: none;"></div>
+                <img class="pswp__img" src="https://ibid.modeltheme.com/wp-content/uploads/2018/09/electronic-cat2.jpg" style="display: block; width: 881px; height: 881px;"></div>
+            </div>
+            <div class="pswp__item" style="display: block; transform: translate3d(1448px, 0px, 0px);"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--one-slide pswp__ui--fit pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter">1 / 1</div>
+                <button class="pswp__button pswp__button--close" aria-label="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share pswp__element--disabled" aria-label="Share"></button>
+                <button class="pswp__button pswp__button--fs" aria-label="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" aria-label="Zoom in/out"></button>
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap pswp__element--disabled">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" aria-label="Previous (arrow left)"></button>
+            <button class="pswp__button pswp__button--arrow--right" aria-label="Next (arrow right)"></button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center">electronic-cat2</div>
+            </div>
+        </div>
+    </div>
+</div>
+

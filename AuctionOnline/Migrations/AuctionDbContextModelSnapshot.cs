@@ -26,6 +26,9 @@ namespace AuctionOnline.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -66,16 +69,54 @@ namespace AuctionOnline.Migrations
                             RoleId = 0,
                             Status = true,
                             Username = "admin123"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user1@gmail.com",
+                            Fullname = "User 1",
+                            IsBlocked = false,
+                            Password = "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG",
+                            RoleId = 1,
+                            Status = true,
+                            Username = "user1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user2@gmail.com",
+                            Fullname = "User 2",
+                            IsBlocked = false,
+                            Password = "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG",
+                            RoleId = 1,
+                            Status = true,
+                            Username = "user2"
                         });
                 });
 
-            modelBuilder.Entity("AuctionOnline.Models.AccountItem", b =>
+            modelBuilder.Entity("AuctionOnline.Models.Bid", b =>
                 {
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("BidEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("BidIncrementDefinitionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("BidStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("BidStatus")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -83,11 +124,21 @@ namespace AuctionOnline.Migrations
                     b.Property<decimal>("CurrentBid")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.HasKey("ItemId", "AccountId");
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("MinimumBid")
+                        .HasColumnType("decimal(18,1)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("AccountItems");
+                    b.HasIndex("BidIncrementDefinitionId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Bids");
                 });
 
             modelBuilder.Entity("AuctionOnline.Models.BidIncrementDefinition", b =>
@@ -142,6 +193,20 @@ namespace AuctionOnline.Migrations
                             Id = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Electric"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Smarts",
+                            ParentId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Laptops & Macs",
+                            ParentId = 3
                         });
                 });
 
@@ -170,16 +235,7 @@ namespace AuctionOnline.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("BidEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("BidIncrementDefinitionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("BidStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("BidStatus")
+                    b.Property<int>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -191,37 +247,43 @@ namespace AuctionOnline.Migrations
                     b.Property<string>("Document")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("MinimumBid")
-                        .HasColumnType("decimal(18,1)");
-
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,1)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BidIncrementDefinitionId");
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("AuctionOnline.Models.AccountItem", b =>
+            modelBuilder.Entity("AuctionOnline.Models.Bid", b =>
                 {
                     b.HasOne("AuctionOnline.Models.Account", "Account")
-                        .WithMany("AccountItems")
+                        .WithMany("Bids")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AuctionOnline.Models.Item", "Item")
-                        .WithMany("AccountItems")
-                        .HasForeignKey("ItemId")
+                    b.HasOne("AuctionOnline.Models.BidIncrementDefinition", "BidIncrementDefinition")
+                        .WithMany()
+                        .HasForeignKey("BidIncrementDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AuctionOnline.Models.Item", "Item")
+                        .WithMany("Bids")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -249,9 +311,9 @@ namespace AuctionOnline.Migrations
 
             modelBuilder.Entity("AuctionOnline.Models.Item", b =>
                 {
-                    b.HasOne("AuctionOnline.Models.BidIncrementDefinition", "BidIncrementDefinition")
+                    b.HasOne("AuctionOnline.Models.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("BidIncrementDefinitionId")
+                        .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

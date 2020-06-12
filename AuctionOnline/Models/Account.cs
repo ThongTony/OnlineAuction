@@ -9,6 +9,7 @@ namespace AuctionOnline.Models
     {
         public int Id { get; set; }
         public string Fullname { get; set; }
+        public string Address { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -16,6 +17,6 @@ namespace AuctionOnline.Models
         public Boolean Status { get; set; }
         public Boolean IsBlocked { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ICollection<AccountItem> AccountItems { get; set; }
+        public ICollection<Bid> Bids { get; set; }
     }
 }

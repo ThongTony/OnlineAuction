@@ -1,0 +1,200 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+        <!-- Page content -->
+        <div class="high-padding">
+            <!-- Blog content -->
+            <div class="container blog-posts">
+                <div class="row">
+                    <div class="col-md-3 sidebar-content">
+                    </div>
+                    <div class="col-md-9 main-content">
+                        <div class="ibid-shop-sort-group">
+                            <div class="woocommerce-notices-wrapper"></div>
+                            <p class="woocommerce-result-count">
+                                Showing all 4 results
+                            </p>
+                            <form class="woocommerce-ordering" method="get">
+                                <select name="orderby" class="orderby" aria-label="Shop order">
+                                    <option value="menu_order" selected='selected'>Default sorting</option>
+                                    <option value="popularity">Sort by popularity</option>
+                                    <option value="date">Sort by latest</option>
+                                    <option value="price">Sort by price: low to high</option>
+                                    <option value="price-desc">Sort by price: high to low</option>
+                                    <option value="bid_asc">Sort by current bid: Low to high</option>
+                                    <option value="bid_desc">Sort by current bid: High to low</option>
+                                    <option value="auction_end">Sort auction by ending soonest</option>
+                                    <option value="auction_started">Sort auction by recently started</option>
+                                    <option value="auction_activity">Sort auction by most active</option>
+                                </select>
+                                <input type="hidden" name="paged" value="1" />
+                            </form>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <ul class="products columns-3">
+                            @foreach(var item in ViewBag.Item)
+                            {
+                            <li class="col-md-4 first post-4472 product type-product status-publish has-post-thumbnail product_cat-audi product_cat-protection-phones product_cat-console-gaming product_cat-data-cables-phones product_cat-mobile-phone-chargers product_cat-mobile-phones product_cat-power-bank product_cat-selfie-stickers product_cat-tablets product_cat-protection-tablets product_tag-black-friday product_tag-sales  instock sold-individually shipping-taxable product-type-auction">
+                                <div class="products-wrapper">
+                                    <div class="thumbnail-and-details">
+                                        <div class="overlay-container">
+                                            <div class="thumbnail-overlay"></div>
+                                            <div class="overlay-components">
+                                                <div class="component add-to-cart">
+                                                <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-quantity="1" data-tooltip="View Auction" class="button product_type_auction" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Auction Vintage Car&rdquo;" rel="nofollow">
+                                                    <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    </div>
+                                                <div class="component wishlist">
+                                                    <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
+                                                        <div class="yith-wcwl-add-button show" style="display:block">
+                                                            <a href="index9e8e.html?add_to_wishlist=4472" data-product-id="4472" data-product-type="auction" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
+                                                                <i class="fa fa-heart-o"></i>
+                                                            </a>
+                                                            <img src="../../wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+                                                        </div>
+
+                                                        <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+                                                            <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
+                                                                <i class="fa fa-heart"></i>
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+                                                            <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
+                                                                <i class="fa fa-heart"></i>
+                                                            </a>
+                                                        </div>
+
+                                                        <div style="clear:both"></div>
+                                                        <div class="yith-wcwl-wishlistaddresponse"></div>
+
+                                                    </div>
+
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="component quick-view">
+                                            <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472"><i class="fa fa-search"></i></a></div>
+                                            </div>
+                                        </div>
+                                        <a class="woo_catalog_media_images" title="@item.Tile" asp-controller="item" asp-action="details" asp-route-id="@item.Id">
+                                            <img width="300" height="300" src="@item.Photo" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" sizes="(max-width: 300px) 100vw, 300px" />
+                                        </a>
+                                    </div>
+
+                                    <div class="woocommerce-title-metas">
+                                        <h3 class="archive-product-title">
+                                            <a asp-controller="item" asp-action="details" asp-route-id="@item.Id">
+                                                @item.Tile
+                                            </a>
+                                        </h3>
+                                        <div class="details-container">
+                                            <div class="details-price-container details-item">
+                                                <div class="product-description" itemprop="description">
+                                                    <p>@item.Description</p>
+                                                </div>Auction Ended
+                                                <div class="details-review-container details-item"></div>
+                                                <div class="bottom-components">
+                                                    <div class="component add-to-cart">
+                                                        <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;@item.Tile;" rel="nofollow">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="component wishlist">
+                                                        <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
+                                                            <div class="yith-wcwl-add-button show" style="display:block">
+                                                                <a href="index.cshtml?add_to_wishlist=4472" data-product-id="@item.Id" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
+                                                                    <i class="fa fa-heart-o"></i>
+                                                                </a>
+                                                                <img src="@item.Photo" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+                                                            </div>
+
+                                                            <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+                                                                <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
+                                                                    <i class="fa fa-heart"></i>
+                                                                </a>
+                                                            </div>
+
+                                                            <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+                                                                <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
+                                                                    <i class="fa fa-heart"></i>
+                                                                </a>
+                                                            </div>
+
+                                                            <div style="clear:both"></div>
+                                                            <div class="yith-wcwl-wishlistaddresponse"></div>
+
+                                                        </div>
+
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <div class="component quick-view">
+                                                    <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472">
+                                                        <i class="fa fa-search"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="bottom-components-list">
+                                            <div class="component add-to-cart">
+                                                <a asp-controller="item" asp-action="details" asp-route-id="@item.Id" data-tooltip="View Auction" class="button product_type_simple add_to_cart_button" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Auction Vintage Car&rdquo;" rel="nofollow">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+                                            <div class="component wishlist">
+                                                <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
+                                                    <div class="yith-wcwl-add-button show" style="display:block">
+
+
+                                                        <a href="index9e8e.html?add_to_wishlist=4472" data-product-id="4472" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
+                                                            <i class="fa fa-heart-o"></i>
+                                                        </a>
+                                                        <img src="~/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
+                                                    </div>
+
+                                                    <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+                                                        <a href="../../wishlist/index.html" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
+                                                            <i class="fa fa-heart"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
+                                                        <a href="../../wishlist/index.html" data-tooltip="Check Wishlist" class="button">
+                                                            <i class="fa fa-heart"></i>
+                                                        </a>
+                                                    </div>
+
+                                                    <div style="clear:both"></div>
+                                                    <div class="yith-wcwl-wishlistaddresponse"></div>
+
+                                                </div>
+
+                                                <div class="clear"></div>
+                                            </div>
+                                            <div class="component quick-view">
+                                                <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="@item.Id">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            }
+                            
+                            <!--end foreach-->
+                            <li class="clearfix hide-on-mobile"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>

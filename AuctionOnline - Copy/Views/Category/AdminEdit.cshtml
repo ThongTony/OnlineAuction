@@ -1,0 +1,38 @@
+﻿@model AuctionOnline.Models.Category;
+@{ 
+    var cate = ViewBag.Edit;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    <h3>Edit Category @cate.Name</h3>
+    <form asp-controller="category" asp-action="edit" method="post">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" asp-for="Name" /></td>
+            </tr>
+            <tr>
+                <td><input type="hidden" asp-for="ParentId" value="@cate.ParentId" /></td>
+            </tr>
+            <tr>
+                <td><input type="hidden" asp-for="CreatedAt" value="@cate.CreatedAt" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="2">
+                    <input type="submit" value="Save" />
+                    <input type="hidden" asp-for="Id" />
+                </td>
+            </tr>
+
+        </table>
+    </form>
+    <a asp-controller="category" asp-action="adminindex">Back to Category View</a>
+</body>
+</html>

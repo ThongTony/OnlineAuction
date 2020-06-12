@@ -1,0 +1,169 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Page content -->
+@model AuctionOnline.Models.Item
+<div id="primary" class="no-padding content-area no-sidebar">
+    <div class="container">
+        <main id="main" class="col-md_12 site-main main-content">
+            <article id="post-11" class="post-11 page type-page status-publish hentry">
+
+                <div class="entry-content">
+                    <div class="vc_row wpb_row vc_row-fluid vc_custom_1567511231494">
+                        <div class="wpb_column vc_column_container vc_col-sm-12">
+                            <div class="vc_column-inner">
+                                <div class="wpb_wrapper">
+                                    <div class="woocommerce">
+                                        <div class="woocommerce-notices-wrapper"></div>
+                                        <div class="u-columns col2-set" id="customer_login">
+                                            <div class="u-column1 col-1">
+                                                <h2>Sell an item</h2>
+
+                                                <form class="woocommerce-form woocommerce-form-login login" method="post" asp-controller="item" asp-action="add">
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="title">Title&nbsp;<span class="required">*</span></label>
+                                                        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="Title" />
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="description">Description</label>
+                                                        <textarea asp-for="Description" rows="5" cols="20" /></textarea>
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="price">Price&nbsp;<span class="required">*</span></label>
+                                                        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="Price" />
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="photo">Photo&nbsp;<span class="required">*</span></label>
+                                                        <input type="file" id="myFile" name="filename" asp-for="Photo" />
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="document">Document</label>
+                                                        <input type="file" id="myFile" name="filename" asp-for="Document" />
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="price">Minimum Bid</label>
+                                                        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="MinimumBid" />
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="bidstatus">Bid Active</label>
+                                                        <input type="checkbox" checked="checked" disabled="disabled" asp-for="BidStatus" />
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="">Start Date</label>
+                                                        <input type="datetime-local" asp-for="BidStartDate" />
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="">End Date</label>
+                                                        <input type="date" min="datetime-local" max="2000-01-01" asp-for="BidEndDate" />
+                                                    </p>
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="">Bid Increment</label>
+                                                        <input type="text" asp-for="BidIncrementDefinition" />
+                                                    </p>
+                                                    <p class="form-row">
+                                                        <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="062592022b" />
+                                                        <input type="hidden" name="_wp_http_referer" value="/my-account/" />
+                                                        <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" value="Save">Create New Item</button>
+                                                    </p>
+                                                </form>
+                                            </div>
+
+                                            <div class="u-column2 col-2">
+
+                                                <h2>BID Status</h2>
+
+                                                <form method="post" class="woocommerce-form woocommerce-form-register register">
+
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="reg_username">Username&nbsp;<span class="required">*</span></label>
+                                                        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="reg_username" autocomplete="username" value="" />
+                                                    </p>
+
+
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="reg_email">Email address&nbsp;<span class="required">*</span></label>
+                                                        <input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="" />
+                                                    </p>
+
+
+                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                        <label for="reg_password">Password&nbsp;<span class="required">*</span></label>
+                                                        <input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password" id="reg_password" autocomplete="new-password" />
+                                                    </p>
+
+
+
+                                                    <div class="show_if_seller" style="display:none">
+
+                                                        <div class="split-row form-row-wide">
+                                                            <p class="form-row form-group">
+                                                                <label for="first-name">First Name <span class="required">*</span></label>
+                                                                <input type="text" class="input-text form-control" name="fname" id="first-name" value="" required="required" />
+                                                            </p>
+
+                                                            <p class="form-row form-group">
+                                                                <label for="last-name">Last Name <span class="required">*</span></label>
+                                                                <input type="text" class="input-text form-control" name="lname" id="last-name" value="" required="required" />
+                                                            </p>
+                                                        </div>
+
+                                                        <p class="form-row form-group form-row-wide">
+                                                            <label for="company-name">Shop Name <span class="required">*</span></label>
+                                                            <input type="text" class="input-text form-control" name="shopname" id="company-name" value="" required="required" />
+                                                        </p>
+
+                                                        <p class="form-row form-group form-row-wide">
+                                                            <label for="seller-url" class="pull-left">Shop URL <span class="required">*</span></label>
+                                                            <strong id="url-alart-mgs" class="pull-right"></strong>
+                                                            <input type="text" class="input-text form-control" name="shopurl" id="seller-url" value="" required="required" />
+                                                            <small>https://ibid.modeltheme.com/store/<strong id="url-alart"></strong></small>
+                                                        </p>
+
+                                                        <p class="form-row form-group form-row-wide">
+                                                            <label for="shop-phone">Phone Number<span class="required">*</span></label>
+                                                            <input type="text" class="input-text form-control" name="phone" id="shop-phone" value="" required="required" />
+                                                        </p>
+
+                                                    </div>
+
+
+                                                    <p class="form-row form-group user-role">
+                                                        <label class="radio">
+                                                            <input type="radio" name="role" value="customer" checked='checked'>
+                                                            I am a customer
+                                                        </label>
+
+                                                        <label class="radio">
+                                                            <input type="radio" name="role" value="seller">
+                                                            I am a vendor
+                                                        </label>
+                                                    </p>
+                                                    <div class="woocommerce-privacy-policy-text"></div>
+                                                    <p class="woocommerce-FormRow form-row">
+                                                        <input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="e1334e5b27" /><input type="hidden" name="_wp_http_referer" value="/my-account/" />				<button type="submit" class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit" name="register" value="Register">Register</button>
+                                                    </p>
+
+
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div><!-- .entry-content -->
+
+                <footer class="entry-footer">
+                </footer><!-- .entry-footer -->
+            </article><!-- #post-## -->
+
+        </main>
+    </div>
+</div>
