@@ -16,14 +16,12 @@ namespace AuctionOnline.ViewModels
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int Status { get; set; }
-        public string Photo { get; set; }
-        public string Document { get; set; }
-        public DateTime? BidStartDate { get; set; }
-        public DateTime? BidEndDate { get; set; }
-        public decimal? MinimumBid { get; set; }
-        public ICollection<CategoryItem> CategoryItems { get; set; }
-        //public int? BidIncrementDefinitionId { get; set; }
-        //public BidIncrementDefinition BidIncrementDefinition { get; set; }
+        public int AccountId { get; set; }
+        public IFormFile Photo { get; set; }
+        public IFormFile Document { get; set; }
+
+        public ICollection<CategoryItemVM> CategoryItems { get; set; }
+
         public DateTime CreatedAt { get; set; }
     }
 }
