@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\images\**" />
-    <Content Remove="wwwroot\images\**" />
-    <EmbeddedResource Remove="wwwroot\images\**" />
-    <None Remove="wwwroot\images\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Controllers\ItemsController.cs" />
     <Compile Remove="Migrations\20200610123621_abc.cs" />
     <Compile Remove="Migrations\20200610123621_abc.Designer.cs" />

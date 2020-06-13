@@ -8,9 +8,14 @@ namespace AuctionOnline.ViewModels
     public class Bid
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
+        public int AccountId { get; set; }
         public int ItemId { get; set; }
         public decimal CurrentBid { get; set; }
+        public DateTime? BidStartDate { get; set; }
+        public DateTime? BidEndDate { get; set; }
+        public decimal? MinimumBid { get; set; }
+        //public int? BidIncrementDefinitionId { get; set; }
+        //public BidIncrementDefinition BidIncrementDefinition { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

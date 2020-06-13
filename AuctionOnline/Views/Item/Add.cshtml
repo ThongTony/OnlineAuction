@@ -11,17 +11,17 @@
 </head>
 <body>
     <h3>New Item</h3>
-    <form asp-action="Add" method="post">
+    <form enctype="multipart/form-data" asp-action="Add">
         <table>
             <tr>
-                <td>User: @user.Fullname</td>
+                <td>User: @user.Fullname ID: @user.Id</td>
             </tr>
             <tr>
                 <td>Title</td>
                 <td><input name="title" id="title" type="text" asp-for="Title" /></td>
             </tr>
             <tr>
-                <td>Categories</td> 
+                <td>Categories</td>
                 <td>
                     <select asp-for="SelectedCategoryIds" asp-items="Model.Categories" multiple="multiple">
                         <option value="">Choose a category</option>
@@ -29,6 +29,22 @@
                 </td>
             </tr>
 
+            <tr>
+
+                <td>
+                    <input asp-for="Photo" /><label>Choose an image</label>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <input asp-for="Document" /><label>Choose a document</label>
+                </td>
+            </tr>
+            <tr>
+
+                <td><input type="hidden" asp-for="AccountId" value="@user.Id" /></td>
+            </tr>
             <tr>
                 <td>Price</td>
                 <td><input name="price" id="price" type="text" asp-for="Price" /></td>
