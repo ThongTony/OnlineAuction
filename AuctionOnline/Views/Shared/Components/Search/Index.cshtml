@@ -1,0 +1,71 @@
+﻿<div id="search-block" style="margin-bottom:10px" class="panel panel-default">
+    <div class="panel-body">
+        <form id="marketsearch" role="search" action="/toan-quoc/search" method="get">
+            <div class="col-sm-2 hidden-xs hidden-sm">
+
+                <select name="cat_id" class="form-control">
+                    <option value="0"><< Tất cả >></option>
+
+                    <option value="2">
+                        -- Nội thất gia đình --
+
+                    <option value="8">Bàn</option>
+
+                    <option value="9">Ghế</option>
+
+                    <option value="10">Tủ</option>
+
+                    <option value="11">Giường</option>
+
+                    <option value="12">Sofa</option>
+
+                    </option>
+
+                    <option value="7">
+                        -- Đồ trang trí --
+
+                    </option>
+
+                    <option value="6">
+                        -- Chân bàn --
+
+                    </option>
+
+                    <option value="3">
+                        -- Tranh ảnh --
+
+                    </option>
+
+                    <option value="5">
+                        -- Nệm,Drap giường --
+
+                    </option>
+
+                    <option value="4">
+                        -- Thảm --
+
+                    </option>
+
+                </select>
+            </div>
+            <div class="col-md-2 visible-md-block">
+                <select name="price" class="form-control">
+                    <option value="0">- Chọn mức giá -</option>
+                    <option value="1">Duới 1 triệu</option>
+                    <option value="2">Từ 1 tới 2 triệu</option>
+                    <option value="3">Trên 2 triệu</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input name="keyword" placeholder="Tìm sản phẩm" class="form-control">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

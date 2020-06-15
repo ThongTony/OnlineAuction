@@ -15,6 +15,7 @@ namespace AuctionOnline.Models
         public int Status { get; set; }
         public string Photo { get; set; }
         public string Document { get; set; }
+        //seller account id
         public int AccountId { get; set; }
         public Account Account { get; set; }
 

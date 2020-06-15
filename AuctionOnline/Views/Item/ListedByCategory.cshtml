@@ -1,236 +1,113 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var item = ViewBag.Items;
 }
 
+<div class="row">
+    @await Component.InvokeAsync("Search")
+    <div class="spacer"></div>
+    <div style="margin-bottom:10px" class="panel panel-default">
+        <div class="topiclist panel-body">
+            <div class="row">
+                <div class="col-xs-6">
 
-<div id="primary" class="content-area">
-    <main id="main" class="site-main" role="main">
-        <!-- Page content -->
-        <div class="high-padding">
-            <!-- Blog content -->
-            <div class="container blog-posts">
-                <div class="row">
+                    <h1>Thảm</h1>
 
-                    <div class="col-md-3 sidebar-content">
-                        <aside id="woocommerce_product_search-2" class="widget woocommerce widget_product_search">
-                            <h3 class="widget-title">Search for auctions</h3>
-                            <form role="search" method="get" class="woocommerce-product-search" action="https://ibid.modeltheme.com/">
-                                <label class="screen-reader-text" for="woocommerce-product-search-field-0">Search for:</label>
-                                <input type="search" id="woocommerce-product-search-field-0" class="search-field" placeholder="Search products&hellip;" value="" name="s" />
-                                <button type="submit" value="Search">Search</button>
-                                <input type="hidden" name="post_type" value="product" />
-                            </form>
-                        </aside>
-                        <aside id="woocommerce_price_filter-2" class="widget woocommerce widget_price_filter">
-                            <h3 class="widget-title">Filter by price</h3>
-                            <form method="get" action="">
-                                <div class="price_slider_wrapper">
-                                    <div class="price_slider" style="display:none;"></div>
-                                    <div class="price_slider_amount" data-step="10">
-                                        <input type="text" id="min_price" name="min_price" value="0" data-min="0" placeholder="Min price" />
-                                        <input type="text" id="max_price" name="max_price" value="10000" data-max="10000" placeholder="Max price" />
-                                        <button type="submit" class="button">Filter</button>
-                                        <div class="price_label" style="display:none;">
-                                            Price: <span class="from"></span> &mdash; <span class="to"></span>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div>
-                                </div>
-                            </form>
+                </div>
+                <div class="col-xs-6">
+                    <div class="dropdown pull-right">
+                        Sắp xếp theo:&nbsp;
+                        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
 
-                        </aside>
-                        <aside id="woocommerce_layered_nav-2" class="widget woocommerce widget_layered_nav woocommerce-widget-layered-nav">
-                            <h3 class="widget-title">Color</h3>
-                            <form method="get" action="https://ibid.modeltheme.com/shop/" class="woocommerce-widget-layered-nav-dropdown">
-                                <select class="woocommerce-widget-layered-nav-dropdown dropdown_layered_nav_color" multiple="multiple">
-                                    <option value="">Any Color</option>
-                                    <option value="blue">Blue</option>
-                                    <option value="dark">Dark</option>
-                                    <option value="gray">Gray</option>
-                                    <option value="green">Green</option>
-                                    <option value="red">Red</option>
-                                    <option value="white">White</option>
-                                    <option value="yellow">Yellow</option>
-                                </select>
-                                <button class="woocommerce-widget-layered-nav-dropdown__submit" type="submit" value="Apply">Apply</button>
-                                <input type="hidden" name="query_type_color" value="or" />
-                                <input type="hidden" name="filter_color" value="" />
-                            </form>
-                        </aside>
-                        <aside id="woocommerce_layered_nav-3" class="widget woocommerce widget_layered_nav woocommerce-widget-layered-nav">
-                            <h3 class="widget-title">Condition</h3>
-                            <form method="get" action="https://ibid.modeltheme.com/shop/" class="woocommerce-widget-layered-nav-dropdown">
-                                <select class="woocommerce-widget-layered-nav-dropdown dropdown_layered_nav_condition" multiple="multiple">
-                                    <option value="">Any Condition</option>
-                                    <option value="new">New</option>
-                                    <option value="used">Used</option>
-                                </select><button class="woocommerce-widget-layered-nav-dropdown__submit" type="submit" value="Apply">Apply</button>
-                                <input type="hidden" name="query_type_condition" value="or" /><input type="hidden" name="filter_condition" value="" />
-                            </form>
-                        </aside>
-                        <aside id="woocommerce_layered_nav-4" class="widget woocommerce widget_layered_nav woocommerce-widget-layered-nav">
-                            <h3 class="widget-title">Size</h3>
-                            <ul class="woocommerce-widget-layered-nav-list">
-                                <li class="woocommerce-widget-layered-nav-list__item wc-layered-nav-term ">
-                                    <a rel="nofollow" href="https://ibid.modeltheme.com/shop/?filter_size=large&#038;query_type_size=or">Large</a>
-                                    <span class="count">(5)</span>
-                                </li>
-                                <li class="woocommerce-widget-layered-nav-list__item wc-layered-nav-term ">
-                                    <a rel="nofollow" href="https://ibid.modeltheme.com/shop/?filter_size=medium&#038;query_type_size=or">Medium</a>
-                                    <span class="count">(4)</span>
-                                </li>
-                                <li class="woocommerce-widget-layered-nav-list__item wc-layered-nav-term ">
-                                    <a rel="nofollow" href="https://ibid.modeltheme.com/shop/?filter_size=small&#038;query_type_size=or">Small</a>
-                                    <span class="count">(2)</span>
-                                </li>
-                            </ul>
-                        </aside>
-                        <aside id="woocommerce_product_tag_cloud-2" class="widget woocommerce widget_product_tag_cloud">
-                            <h3 class="widget-title">Product tags</h3>
-                            <div class="tagcloud">
-                                <a href="" class="tag-cloud-link tag-link-105 tag-link-position-1" style="font-size: 8pt;" aria-label="Accessories (2 products)">Accessories</a>
-                                <a href="" class="tag-cloud-link tag-link-111 tag-link-position-2" style="font-size: 22pt;" aria-label="black friday (19 products)">black friday</a>
-                                <a href="" class="tag-cloud-link tag-link-109 tag-link-position-3" style="font-size: 8pt;" aria-label="Gaming (2 products)">Gaming</a>
-                                <a href="" class="tag-cloud-link tag-link-112 tag-link-position-4" style="font-size: 21.658536585366pt;" aria-label="sales (18 products)">sales</a>
-                            </div>
-                        </aside>
-                    </div>
+                            Tin mới nhất
 
+                            <div style="margin-left:5px" class="caret"></div>
+                        </button>
+                        <ul class="dropdown-menu">
 
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham">Tin mới nhất</a></li>
 
-                    <div class="col-md-9 main-content">
-
-
-
-                        <div class="ibid-shop-sort-group">
-                            <div class="woocommerce-notices-wrapper"></div>
-                            <p class="woocommerce-result-count">
-                                Showing 1&ndash;9 of 20 results
-                            </p>
-                            <form class="woocommerce-ordering" method="get">
-                                <select name="orderby" class="orderby" aria-label="Shop order">
-                                    <option value="menu_order" selected='selected'>Default sorting</option>
-                                    <option value="popularity">Sort by popularity</option>
-                                    <option value="date">Sort by latest</option>
-                                    <option value="price">Sort by price: low to high</option>
-                                    <option value="price-desc">Sort by price: high to low</option>
-                                    <option value="bid_asc">Sort by current bid: Low to high</option>
-                                    <option value="bid_desc">Sort by current bid: High to low</option>
-                                    <option value="auction_end">Sort auction by ending soonest</option>
-                                    <option value="auction_started">Sort auction by recently started</option>
-                                    <option value="auction_activity">Sort auction by most active</option>
-                                </select>
-                                <input type="hidden" name="paged" value="1" />
-                            </form>
-                            <nav class="gridlist-toggle">
-                                <a href="#" id="grid" title="Grid view">
-                                    <span class="dashicons dashicons-grid-view"></span>
-                                    <em>Grid view</em>
-                                </a>
-                                <a href="#" id="list" title="List view">
-                                    <span class="dashicons dashicons-exerpt-view"></span>
-                                    <em>List view</em>
-                                </a>
-                            </nav>
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                        <ul class="products columns-3">
-
-
-
-
-                            <li class=" first post-4452 product type-product status-publish has-post-thumbnail product_cat-electronics product_cat-televisions product_tag-black-friday product_tag-sales instock sold-individually shipping-taxable purchasable product-type-auction">
-                                <div class="products-wrapper">
-
-
-
-                                    <div class="thumbnail-and-details">
-                                        <div class="overlay-container">
-                                            <div class="thumbnail-overlay"></div>
-                                            <div class="overlay-components">
-                                                <div class="component add-to-cart">
-                                                    <a asp-action="Details" asp-route-id="@item.Id" data-tooltip="Bid Now" class="button product_type_auction add_to_cart_button" rel="nofollow">
-                                                        <i class="fa fa-gavel"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a class="woo_catalog_media_images" title="@item.Title">
-                                            <img width="300" height="300" src="~/images/items/@item.Photo" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" />
-                                        </a>
-                                    </div>
-
-                                    <div class="woocommerce-title-metas">
-                                        <h3 class="archive-product-title">
-                                            <a>
-                                                @item.Title
-                                            </a>
-                                        </h3>
-                                        <div class="details-container">
-                                            <div class="details-price-container details-item">
-                                                <div>
-                                                    <p>@item.Description</p>
-                                                </div>
-                                                <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-                                                <script type="text/javascript">
-                                                    var clock;
-
-                                                    jQuery(document).ready(function () {
-
-                                                        // Grab the current date
-                                                        var currentDate = new Date();
-
-                                                        // Grab the date inserted by user
-                                                        var inserted_date = new Date("2020-10-19");
-
-                                                        // Calculate the difference in seconds between the future and current date
-                                                        var diff = inserted_date.getTime() / 1000 - currentDate.getTime() / 1000;
-
-                                                        // Instantiate a coutdown FlipClock
-                                                        clock = jQuery("#countdown_5ee5ecb88783b").FlipClock(diff, {
-                                                            clockFace: "DailyCounter",
-                                                            countdown: true
-                                                        });
-                                                    });
-                                                </script>
-                                                <label>Auction ended</label>
-                                                <div class="countdownv2_holder ">
-                                                    <div class="countdownv2 clock " id="countdown_5ee5ecb88783b"></div>
-                                                </div>Current Bid:
-                                                <span class="woocommerce-Price-amount amount">
-                                                    <span class="woocommerce-Price-currencySymbol">&#36;</span>15.08
-                                                </span>
-                                                <div class="details-review-container details-item"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="clearfix hide-on-mobile"></li>
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-desc">Giá cao nhất</a></li>
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Giá thấp nhất</a></li>
                         </ul>
+                    </div>
+                    <!--.btn-group.btn-group-justified
+                                        a.btn.btn-default(href='#{sortURL[0]}', class=(!$sort) ? 'active' : '')
+                                            i.fa.fa-clock-o.fa-lg(data-toggle="tooltip" data-placement="top", title="Tin mới nhất")
+                                        a.btn.btn-default(href='#{sortURL[1]}sort=price', class=($sort=='price') ? 'active' : '')
+                                            span(data-toggle="tooltip" data-placement="top", title="Giá thấp nhất")
+                                                | VNĐ
+                                                i.fa.fa-angle-down.fa-lg
+                    -->
+                </div>
+            </div>
+            <hr>
+            <script src="https://sohot.vn/library/javascript/infinite-scroll.pkgd.min.js"></script>
+            <div id="mainTopiclist" class="topiclist">
+                <div class="topiclist-wrapper">
+                    <!--foreach-->
+                    <div class="item grid col-md-5ths col-xs-6">
+                        <div class="itemcontainer">
+                            <div class="col-md-4 col-sm-3 col-xs-5">
+                                <div style="padding-left:15px" class="row">
+                                    <a href="https://sohot.vn/tp-ho-chi-minh/gach-tham-chieu-nghi-cau-thang-4979.html" class="thumb">
+                                        <img src="https://sohot.vn/uploads/market/avatar/49/497/4979.jpg">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-sm-9 col-xs-7">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <h3>
+                                            <a href="https://sohot.vn/tp-ho-chi-minh/gach-tham-chieu-nghi-cau-thang-4979.html" class="f-black">Gạch thảm - chiếu nghỉ cầu thang</a>
+                                        </h3>
+                                        <!--.infoline
+                                                                    if !$byUser
+                                                                        //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
+                                                                        //&nbsp;
+                                                                        span.f-grey=$i->up_date_h
+                                                                    else
+                                                                        span.f-grey=$i->up_date_h
+                                        -->
+                                    </div>
+                                    <div class="col-sm-3 f-red text-right">
 
-                        <nav class="woocommerce-pagination">
-                            <ul class='page-numbers'>
-                                <li><span aria-current="page" class="page-numbers current">1</span></li>
-                                <li><a class="page-numbers" href="https://ibid.modeltheme.com/shop/page/2/">2</a></li>
-                                <li><a class="page-numbers" href="https://ibid.modeltheme.com/shop/page/3/">3</a></li>
-                                <li><a class="next page-numbers" href="https://ibid.modeltheme.com/shop/page/2/">&rarr;</a></li>
-                            </ul>
-                        </nav>
+                                        <strong>1.8 triệu</strong>
+                                        <div class="text-nowrap">
 
+                                        </div>
+                                        <div class="spacer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--foreach-->
+
+                </div>
+                <div class="clearfix"></div>
+
+                <!--.center.text-center!=pagestr-->
+
+                <div class="col-xs-4 text-left">
+                    <div class="row">
 
                     </div>
+                </div>
+                <div style="line-height:35px" class="col-xs-4 text-center">1 / 2</div>
+                <div class="col-xs-4 text-right">
+                    <div class="row">
 
-
+                        <a id="nextpage" href="https://sohot.vn/tp-ho-chi-minh/tham?page=2" class="btn btn-default f-red">
+                            <i style="margin-right:5px" class="fa fa-chevron-circle-right fa-lg"></i>
+                            Tiếp
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="spacer">
 
-    </main>
+        </div>
+    </div>
 </div>
