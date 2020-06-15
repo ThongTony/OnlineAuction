@@ -24,6 +24,8 @@
     <Compile Remove="Migrations\20200612023734_abc.Designer.cs" />
     <Compile Remove="Migrations\20200615022906_khoa.cs" />
     <Compile Remove="Migrations\20200615022906_khoa.Designer.cs" />
+    <Compile Remove="Migrations\20200615064618_khoa1.cs" />
+    <Compile Remove="Migrations\20200615064618_khoa1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

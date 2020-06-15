@@ -106,18 +106,6 @@ namespace AuctionOnline.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("BidEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("BidIncrementDefinitionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("BidStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("BidStatus")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -127,14 +115,9 @@ namespace AuctionOnline.Migrations
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("MinimumBid")
-                        .HasColumnType("decimal(18,1)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
-
-                    b.HasIndex("BidIncrementDefinitionId");
 
                     b.HasIndex("ItemId");
 
@@ -238,6 +221,18 @@ namespace AuctionOnline.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("BidEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("BidIncrement")
+                        .HasColumnType("decimal(18,1)");
+
+                    b.Property<DateTime?>("BidStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("BidStatus")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -246,6 +241,9 @@ namespace AuctionOnline.Migrations
 
                     b.Property<string>("Document")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("MinimumBid")
+                        .HasColumnType("decimal(18,1)");
 
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
@@ -295,12 +293,6 @@ namespace AuctionOnline.Migrations
                     b.HasOne("AuctionOnline.Models.Account", "Account")
                         .WithMany("Bids")
                         .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AuctionOnline.Models.BidIncrementDefinition", "BidIncrementDefinition")
-                        .WithMany()
-                        .HasForeignKey("BidIncrementDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

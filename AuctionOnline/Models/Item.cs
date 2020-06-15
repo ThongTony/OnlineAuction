@@ -21,5 +21,16 @@ namespace AuctionOnline.Models
         public ICollection<CategoryItem> CategoryItems { get; set; }
         public ICollection<Bid> Bids { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public bool BidStatus { get; set; }
+        public DateTime? BidStartDate { get; set; }
+        public DateTime? BidEndDate { get; set; }
+
+        [Column(TypeName = "decimal(18,1)")]
+        public decimal? MinimumBid { get; set; }
+
+        [Column(TypeName = "decimal(18,1)")]
+        public decimal BidIncrement { get; set; }
+
     }
 }
