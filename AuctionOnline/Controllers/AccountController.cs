@@ -20,12 +20,15 @@ namespace AuctionOnline.Controllers
         }
 
         [HttpGet]
+        [Route("login")]
         public IActionResult Login()
         {
             return View("Login");
         }
 
+      
         [HttpPost]
+        [Route("login")]
         public IActionResult Login(string username, string password)
         {
             var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username) && a.Status == true);
@@ -48,19 +51,22 @@ namespace AuctionOnline.Controllers
             return View("Login");
         }
 
-
+        [Route("resetpassword")]
         public IActionResult Resetpassword()
         {
             return View();
         }
 
         [HttpGet]
+        [Route("register")]
         public IActionResult Register()
         {
             return View("Register");
         }
 
+      
         [HttpPost]
+        [Route("register")]
         public IActionResult Register(string fullname, string username, string email, string password)
         {
             var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
@@ -93,17 +99,20 @@ namespace AuctionOnline.Controllers
             }
         }
 
+        [Route("adminwelcome")]
         public IActionResult Adminwelcome()
         {
             return View();
         }
 
+        [Route("logoout")]
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("username");
             return RedirectToAction("Index", "Home");
         }
 
+        [Route("forgotpassword")]
         public IActionResult Forgotpassword()
         {
             return View("Resetpassword");

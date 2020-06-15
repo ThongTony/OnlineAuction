@@ -3,6 +3,7 @@ using AuctionOnline.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AuctionOnline.Controllers
 {
@@ -78,9 +79,15 @@ namespace AuctionOnline.Controllers
 
         [HttpPost]
         [Route("edit")]
-        public IActionResult AdminEdit(Category category)
+        public async Task<IActionResult> AdminEditAsync(Category categoryform, int? id)
         {
-            db.Entry(category).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var categoryDb = db.Categories.FirstOrDefault(c => c.Id == id);
+            db.Entry(categoryDb).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //category.CreatedAt = db.Categories.FirstOrDefault(c => c.CreatedAt);
             db.SaveChanges();
             return RedirectToAction("AdminIndex", "category");
         }
@@ -89,6 +96,11 @@ namespace AuctionOnline.Controllers
         public IActionResult Delete(int id)
         {
             var category = db.Categories.Find(id);
+            var categoryitems = db.CategoryItems.Where(c => c.CategoryId == id);
+            foreach (var categoryitem in categoryitems)
+            {
+                category.CategoryItems.Remove(categoryitem);
+            }
             db.Categories.Remove(category);
             db.SaveChanges();
             return RedirectToAction("AdminIndex");

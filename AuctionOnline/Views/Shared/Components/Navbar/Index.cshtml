@@ -1,0 +1,66 @@
+﻿@model System.Collections.Generic.List<AuctionOnline.Models.Category>
+@await Html.PartialAsync("~/Views/Shared/Components/Navbar/_CategoryPartial.cshtml", Model)
+@foreach (var cate in ViewBag.NavCategories)
+{
+    @if (cate.Children.Any())
+    {
+        <li id="menu-item-5192" class="mega3menu menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-5192">
+            <a href="#">
+                <i class="fa fa-desktop"></i>@cate.Name
+            </a>
+            <div class="cf-mega-menu sub-menu">
+                <div class="vc_row wpb_row vc_row-fluid no-margin vc_custom_1528793566052 vc_row-has-fill">
+                    @*foreach*@
+                    <div class="wpb_column vc_column_container vc_col-sm-6">
+                        <div class="vc_column-inner vc_custom_1566908578324">
+                            <div class="wpb_wrapper">
+                                level 2
+                                @foreach (var cate2 in cate.Children)
+                                {
+
+                                    @if ((cate.Children).Children != null)
+                                    {
+                                        <div class="wpb_text_column wpb_content_element  wpb_animate_when_almost_visible wpb_fadeInUp fadeInUp">
+                                            <div class="wpb_wrapper">
+                                                <p style="font-weight: bold; font-size: 14px; color: #484848;">@(cate.Children).Children.Name</p>
+                                            </div>
+                                        </div>
+                                        <div class="vc_empty_space" style="height: 5px">
+                                            <span class="vc_empty_space_inner"></span>
+                                        </div>
+                                        <div class="wpb_text_column wpb_content_element  menu-cat">
+                                            <div class="wpb_wrapper">
+                                                @*level 3*@
+                                                <p>
+                                                    @foreach (var cate3 in cate2.Children)
+                                                    {
+                                                        <a asp-controller="item" asp-action="listedbycategory" asp-route-id="@*@(cate.Children)Children.Id*@">@(cate.Children).Children @cate3.Name</a>
+                                                        <br />
+                                                        //................
+                                                    }
+                                                </p>
+                                                @*endlevel 3*@
+                                            </div>
+                                        </div>
+                                        <div class="vc_empty_space" style="height: 20px">
+                                            <span class="vc_empty_space_inner"></span>
+                                        </div>
+                                    }
+                                }
+                                endlevel 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    }
+    else
+    {
+        <li id="menu-item-5192" class="mega3menu menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-5192">
+            <a href="">
+                <i class="fa fa-desktop"></i>@cate.Name
+            </a>
+        </li>
+    }
+}

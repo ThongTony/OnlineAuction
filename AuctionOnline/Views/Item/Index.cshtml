@@ -1,0 +1,38 @@
+﻿@model AuctionOnline.ViewModels.ItemVM;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h3>List Items</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Account</th>
+            <th>Date Creation</th>
+            <th>Photo</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var item in ViewBag.Item)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Title</td>
+                <td>@item.AccountId</td>
+                <td>@item.CreatedAt</td>
+                <td>
+                    <img src="~/images/items/@item.Photo" width="50" height="50"/>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+            <br />
+        }
+    </table>
+</body>
+</html>
