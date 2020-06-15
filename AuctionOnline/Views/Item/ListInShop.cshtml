@@ -1,202 +1,286 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = ViewBag.Account;
 }
-<div id="primary" class="high-padding content-area no-sidebar">
-    <div class="container">
-        <main id="main" class="col-md_12 site-main main-content">
-            <article id="post-1639" class="post-1639 page type-page status-publish hentry">
-                <div class="entry-content">
-                    <div class="vc_row wpb_row vc_row-fluid">
-                        <div class="wpb_column vc_column_container vc_col-sm-12">
-                            <div class="vc_column-inner">
-                                <div class="wpb_wrapper">
-                                    <div class="woocommerce_categories list">
-                                        <div class="categories-list categories_shortcode categories_shortcode_4 owl-carousel owl-theme">
-                                            @foreach (var category in ViewBag.Category)
-                                            {
-                                                <!--vong lap 00-->
-                                                <div class="category item ">
-                                                    <a class="@category.Id">
-                                                        <span class="cat-name">@category.Name</span>
-                                                    </a>
-                                                </div>
-                                                <!--foreach1-->
-                                                <!--vong lap 00-->
-                                                <div id="@category.Id" @*class="products_by_category Phones"*@>
-                                                    <div class="woocommerce columns-1 ">
-                                                        <ul class="products columns-1">
-                                                            @foreach (var item in ViewBag.Item)
-                                                            {
-                                                                <!--vong lap 01-->
-                                                                <li class="first last post-4472 product type-product status-publish has-post-thumbnail product_cat-protection-phones product_cat-console-gaming product_cat-data-cables-phones product_cat-mobile-phone-chargers product_cat-mobile-phones product_cat-phones product_cat-power-bank product_cat-selfie-stickers product_cat-tablets product_cat-protection-tablets product_tag-black-friday product_tag-sales outofstock sold-individually shipping-taxable product-type-auction">
-                                                                    <div class="products-wrapper">
-                                                                        <div class="thumbnail-and-details">
-                                                                            <div class="overlay-container">
-                                                                                <div class="thumbnail-overlay"></div><div class="overlay-components">
-                                                                                    <div class="component add-to-cart">
-                                                                                        <a href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/" data-quantity="1" data-tooltip="View Auction" class="button product_type_auction" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;@item.Title&rdquo;" rel="nofollow">
-                                                                                            <i class="fa fa-eye"></i>
+
+<div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+        <!-- Page content -->
+        <div class="high-padding">
+            <!-- Blog content -->
+            <div class="container blog-posts">
+                <div class="row">
+
+                    <div class="col-md-3 sidebar-content">
+                        User : @user.Fullname
+                    </div>
+
+
+
+                    <div class="col-md-9 main-content">
+
+
+
+                        <div class="ibid-shop-sort-group">
+                            <div class="woocommerce-notices-wrapper"></div>
+                            <p class="woocommerce-result-count">
+                                Showing 1&ndash;9 of 12 results
+                            </p>
+                            <form class="woocommerce-ordering" method="get">
+                                <select name="orderby" class="orderby" aria-label="Shop order">
+                                    <option value="menu_order" selected='selected'>Default sorting</option>
+                                    <option value="popularity">Sort by popularity</option>
+                                    <option value="date">Sort by latest</option>
+                                    <option value="price">Sort by price: low to high</option>
+                                    <option value="price-desc">Sort by price: high to low</option>
+                                    <option value="bid_asc">Sort by current bid: Low to high</option>
+                                    <option value="bid_desc">Sort by current bid: High to low</option>
+                                    <option value="auction_end">Sort auction by ending soonest</option>
+                                    <option value="auction_started">Sort auction by recently started</option>
+                                    <option value="auction_activity">Sort auction by most active</option>
+                                </select>
+                                <input type="hidden" name="paged" value="1" />
+                            </form>
+                            <nav class="gridlist-toggle">
+                                <a href="#" id="grid" title="Grid view">
+                                    <span class="dashicons dashicons-grid-view"></span>
+                                    <em>Grid view</em>
+                                </a>
+                                <a href="#" id="list" title="List view">
+                                    <span class="dashicons dashicons-exerpt-view"></span>
+                                    <em>List view</em>
+                                </a>
+                            </nav>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <ul class="products columns-3">
+                            @foreach (var item in ViewBag.Items)
+                            {
+                                <li class=" first post-4472 product type-product status-publish has-post-thumbnail product_cat-protection-phones product_cat-console-gaming product_cat-data-cables-phones product_cat-mobile-phone-chargers product_cat-mobile-phones product_cat-phones product_cat-power-bank product_cat-selfie-stickers product_cat-tablets product_cat-protection-tablets product_tag-black-friday product_tag-sales instock sold-individually shipping-taxable purchasable product-type-auction">
+                                    <div class="products-wrapper">
+                                        <div class="thumbnail-and-details">
+                                            <div class="overlay-container">
+                                                <div class="thumbnail-overlay"></div>
+                                                <div class="overlay-components">
+                                                    <div class="component add-to-cart">
+                                                        <a asp-action="Details" asp-route-id="@item.Id" data-tooltip="Bid Now" class="button product_type_auction add_to_cart_button" aria-label="Read more about &ldquo;@item.Title&rdquo;" rel="nofollow">
+                                                            <i class="fa fa-gavel"></i>
+                                                        </a>
+                                                    </div>
+                                                    <!--if acution ended-->
+                                                    <div class="component add-to-cart">
+                                                        <a asp-action="Details" asp-route-id="@item.Id" data-tooltip="View Acution" class="button product_type_auction add_to_cart_button" aria-label="Read more about &ldquo;@item.Title&rdquo;" rel="nofollow">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </div>
+                                                    <!--<div class="component wishlist">
+                                                    <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
+                                                        <div class="yith-wcwl-add-button hide" style="display:none">
+
+                                                            <!-- BROWSE WISHLIST MESSAGE --
+                                                                                    <div class="yith-wcwl-wishlistexistsbrowse">
+                                                                                        <span class="feedback">
+                                                                                        </span>
+                                                                                        <a href="https://ibid.modeltheme.com/wishlist/" rel="nofollow" data-title="Browse Wishlist">
+                                                                                            Browse Wishlist
                                                                                         </a>
                                                                                     </div>
-                                                                                    <div class="component wishlist">
-                                                                                        <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                                                            <div class="yith-wcwl-add-button show" style="display:block">
-                                                                                                <a href="/shortcodes/products-by-categories/?add_to_wishlist=4472" data-product-id="4472" data-product-type="auction" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                                                    <i class="fa fa-heart-o"></i>
-                                                                                                </a>
-                                                                                                <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                                            </div>
 
-                                                                                            <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                                                <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                                                    <i class="fa fa-heart"></i>
-                                                                                                </a>
-                                                                                            </div>
+                                                                                </div>
 
-                                                                                            <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                                                <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
-                                                                                                    <i class="fa fa-heart"></i>
-                                                                                                </a>
-                                                                                            </div>
-
-                                                                                            <div style="clear:both"></div>
-                                                                                            <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                                        </div>
-
-                                                                                        <div class="clear"></div>
-                                                                                    </div>
-                                                                                <div class="component quick-view">
-                                                                                <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="">
-                                                                                    <i class="fa fa-search"></i>
+                                                                                <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+                                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
+                                                                                        <i class="fa fa-heart"></i>
                                                                                     </a>
                                                                                 </div>
+
+                                                                                <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
+                                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
+                                                                                        <i class="fa fa-heart"></i>
+                                                                                    </a>
                                                                                 </div>
+
+                                                                                <div style="clear:both"></div>
+                                                                                <div class="yith-wcwl-wishlistaddresponse"></div>
+
                                                                             </div>
-                                                                            <a class="woo_catalog_media_images">
-                                                                            <img width="300" height="300" src="~/images/@item.Photo" alt="@item.Title"/>
-                                                                            <img class="woo_secondary_media_image" src="" alt="@item.Title" />
+
+                                                                            <div class="clear"></div>
+                                                                        </div>
+                                                                        <div class="component quick-view">
+                                                                            <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472">
+                                                                                <i class="fa fa-search"></i>
+                                                                            </a>
+                                                                        </div>-->
+
+                                                </div>
+                                            </div>
+                                            <a class="woo_catalog_media_images" title="Desktop Gamer Las Vegas" href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/">
+                                            <img width="300" height="300" src="~/images/items/@item.Photo" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" />
+                                            <img class="woo_secondary_media_image" src="" alt="@item.Title" /></a>
+                                        </div>
+
+                                        <div class="woocommerce-title-metas">
+                                            <h3 class="archive-product-title">
+                                                <a asp-action="Details" asp-route-id="@item.Id">
+                                                    @item.Title
+                                                </a>
+                                            </h3>
+                                            <div class="details-container">
+                                                <div class="details-price-container details-item">
+                                                    <div class="product-description" itemprop="description">
+                                                        <p>@item.Description</p>
+                                                    </div>
+                                                    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+                                                    <script type="text/javascript">
+                                                        var clock;
+
+                                                        jQuery(document).ready(function () {
+
+                                                            // Grab the current date
+                                                            var currentDate = new Date();
+
+                                                            // Grab the date inserted by user
+                                                            var inserted_date = new Date("2020-10-31");
+
+                                                            // Calculate the difference in seconds between the future and current date
+                                                            var diff = inserted_date.getTime() / 1000 - currentDate.getTime() / 1000;
+
+                                                            // Instantiate a coutdown FlipClock
+                                                            clock = jQuery("#countdown_5ee5cdcc22c76").FlipClock(diff, {
+                                                                clockFace: "DailyCounter",
+                                                                countdown: true
+                                                            });
+                                                        });
+                                                    </script>
+                                                    <div class="countdownv2_holder ">
+                                                        <div class="countdownv2 clock " id="countdown_5ee5cdcc22c76"></div>
+                                                    </div>
+                                                    Current Bid:
+                                                    <span class="woocommerce-Price-amount amount">
+                                                        <span class="woocommerce-Price-currencySymbol">&#36;</span>
+                                                        420.00
+                                                    </span>
+                                                    <p>Acution Ended</p>
+                                                    <div class="details-review-container details-item"></div>
+                                                    <!--<div class="bottom-components">
+                                                    <div class="component add-to-cart">
+                                                        <a href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/" data-quantity="1" data-tooltip="Bid Now" class="button product_type_simple add_to_cart_button" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Desktop Gamer Las Vegas&rdquo;" rel="nofollow">
+                                                            <i class="fa fa-gavel"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="component wishlist">
+                                                        <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
+                                                            <div class="yith-wcwl-add-button hide" style="display:none">
+
+
+                                                                <!-- BROWSE WISHLIST MESSAGE --
+                                                                            <div class="yith-wcwl-wishlistexistsbrowse">
+                                                                                <span class="feedback">
+                                                                                </span>
+                                                                                <a href="https://ibid.modeltheme.com/wishlist/" rel="nofollow" data-title="Browse Wishlist">
+                                                                                    Browse Wishlist
+                                                                                </a>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+                                                                            <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
+                                                                                <i class="fa fa-heart"></i>
                                                                             </a>
                                                                         </div>
 
-                                                                        <div class="woocommerce-title-metas">
-                                                                            <h3 class="archive-product-title">
-                                                                                <a href="">
-                                                                                    @item.Title
-                                                                                </a>
-                                                                            </h3>
-                                                                            <div class="details-container">
-                                                                                <div class="details-price-container details-item">
-                                                                                    <div class="product-description" itemprop="description">
-                                                                                        <p>The Ragdoll is a cat breed with blue eyes and a distinct colorpoint coat. It is a large and muscular semi-longhair cat with a soft and silky coat. Like all long haired cats, Ragdolls need grooming to ensure their fur does not mat.</p>
-                                                                                    </div>Auction Ended<div class="details-review-container details-item"></div><div class="bottom-components">
-                                                                                        <div class="component add-to-cart"><a href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Desktop Gamer Las Vegas&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                                                            <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                                                                <div class="yith-wcwl-add-button show" style="display:block">
-
-
-                                                                                                    <a href="/shortcodes/products-by-categories/?add_to_wishlist=4472" data-product-id="4472" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                                                        <i class="fa fa-heart-o"></i>
-                                                                                                    </a>
-                                                                                                    <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                                                </div>
-
-                                                                                                <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                                                        <i class="fa fa-heart"></i>
-                                                                                                    </a>
-                                                                                                </div>
-
-                                                                                                <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
-                                                                                                        <i class="fa fa-heart"></i>
-                                                                                                    </a>
-                                                                                                </div>
-
-                                                                                                <div style="clear:both"></div>
-                                                                                                <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                                            </div>
-
-                                                                                            <div class="clear"></div>
-                                                                                        </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472"><i class="fa fa-search"></i></a></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="bottom-components-list">
-                                                                                <div class="component add-to-cart"><a href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/" data-quantity="1" data-tooltip="View Auction" class="button product_type_simple" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Desktop Gamer Las Vegas&rdquo;" rel="nofollow"><i class="fa fa-eye"></i></a></div><div class="component wishlist">
-                                                                                    <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                                                        <div class="yith-wcwl-add-button show" style="display:block">
-
-
-                                                                                            <a href="/shortcodes/products-by-categories/?add_to_wishlist=4472" data-product-id="4472" data-product-type="simple" class="add_to_wishlist single_add_to_wishlist button " data-tooltip="Add to Wishlist">
-                                                                                                <i class="fa fa-heart-o"></i>
-                                                                                            </a>
-                                                                                            <img src="https://ibid.modeltheme.com/wp-admin/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden" />
-                                                                                        </div>
-
-                                                                                        <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                                            <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                                                <i class="fa fa-heart"></i>
-                                                                                            </a>
-                                                                                        </div>
-
-                                                                                        <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                                                            <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
-                                                                                                <i class="fa fa-heart"></i>
-                                                                                            </a>
-                                                                                        </div>
-
-                                                                                        <div style="clear:both"></div>
-                                                                                        <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                                    </div>
-
-                                                                                    <div class="clear"></div>
-                                                                                </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472"><i class="fa fa-search"></i></a></div>
-                                                                            </div>
+                                                                        <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
+                                                                            <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
+                                                                                <i class="fa fa-heart"></i>
+                                                                            </a>
                                                                         </div>
+
+                                                                        <div style="clear:both"></div>
+                                                                        <div class="yith-wcwl-wishlistaddresponse"></div>
+
                                                                     </div>
-                                                                </li>
-                                                            }<!--end foreach-->
-                                                        </ul>
-                                                    </div>
+
+                                                                    <div class="clear"></div>
+                                                                </div>
+                                                                <div class="component quick-view">
+                                                                    <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472">
+                                                                        <i class="fa fa-search"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>-->
+
                                                 </div>
-                                            }
+                                            </div>
+                                            <!--<div class="bottom-components-list">
+                                                            <div class="component add-to-cart">
+                                                                <a href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/" data-quantity="1" data-tooltip="Bid Now" class="button product_type_simple add_to_cart_button" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Desktop Gamer Las Vegas&rdquo;" rel="nofollow">
+                                                                <i class="fa fa-gavel"></i></a>
+                                                            </div><div class="component wishlist">
+                                                                <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
+                                                                    <div class="yith-wcwl-add-button hide" style="display:none">
+
+
+                                                                        <!-- BROWSE WISHLIST MESSAGE --
+                                                                    <div class="yith-wcwl-wishlistexistsbrowse">
+                                                                        <span class="feedback">
+                                                                        </span>
+                                                                        <a href="https://ibid.modeltheme.com/wishlist/" rel="nofollow" data-title="Browse Wishlist">
+                                                                            Browse Wishlist
+                                                                        </a>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
+                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
+                                                                        <i class="fa fa-heart"></i>
+                                                                    </a>
+                                                                </div>
+
+                                                                <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
+                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
+                                                                        <i class="fa fa-heart"></i>
+                                                                    </a>
+                                                                </div>
+
+                                                                <div style="clear:both"></div>
+                                                                <div class="yith-wcwl-wishlistaddresponse"></div>
+
+                                                            </div>
+
+                                                            <div class="clear"></div>
+                                                </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472"><i class="fa fa-search"></i></a></div>
+                                            </div>-->
+
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                </li>
+
+                                <li class="clearfix hide-on-mobile"></li>
+                            }
+                        </ul>
+
+                        <nav class="woocommerce-pagination">
+                            <ul class='page-numbers'>
+                                <li><span aria-current="page" class="page-numbers current">1</span></li>
+                                <li><a class="page-numbers" href="https://ibid.modeltheme.com/product-category/phones/page/2/">2</a></li>
+                                <li><a class="next page-numbers" href="https://ibid.modeltheme.com/product-category/phones/page/2/">&rarr;</a></li>
+                            </ul>
+                        </nav>
+
+
                     </div>
 
-                    <div class="clearfix"></div>
-                </div><!-- .entry-content -->
 
-                <footer class="entry-footer">
-                </footer><!-- .entry-footer -->
-            </article><!-- #post-## -->
-
-            <div id="comments" class="comments-area">
-
-
-
-
-                <div id="respond" class="comment-respond">
-                    <h3 id="reply-title" class="comment-reply-title">Leave a comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/shortcodes/products-by-categories/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://ibid.modeltheme.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
-                        <p class="comment-notes"></p><div class=" form-comment"><p class="comment-form-author relative "><textarea cols="45" rows="5" aria-required="true" placeholder="Your comment" name="comment" id="comment"></textarea></div><div class="row form-fields">
-                            <p class="comment-form-author relative col-md-4"><input class="focus-me" placeholder="Your name" id="author" name="author" type="text" value="" size="30" /></p>
-                            <p class="comment-form-author relative col-md-4"><input class="focus-me" placeholder="Your email" id="email" name="email" type="text" value="" size="30" /></p>
-                            <p class="comment-form-author relative col-md-4"><input class="focus-me" placeholder="Your website" id="url" name="url" type="text" value="" size="30" /></p>
-                        </div>
-                        <p class="form-submit">
-                            <input name="submit" type="submit" id="submit" class="submit" value="Add comment" /> <input type='hidden' name='comment_post_ID' value='1639' id='comment_post_ID' />
-                            <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
-                        </p>
-                    </form>
-                </div><!-- #respond -->
+                </div>
             </div>
-        </main>
-    </div>
+        </div>
+
+    </main>
 </div>

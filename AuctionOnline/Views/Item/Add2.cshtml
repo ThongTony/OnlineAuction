@@ -1,0 +1,60 @@
+﻿@model AuctionOnline.ViewModels.ItemVM;
+@{
+    var user = ViewBag.Account;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add</title>
+</head>
+<body>
+    <h3>New Item</h3>
+    <form enctype="multipart/form-data" asp-action="Add">
+        <table>
+            <tr>
+                <td>User: @user.Fullname ID: @user.Id</td>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td><input name="title" id="title" type="text" asp-for="Title" /></td>
+            </tr>
+            <tr>
+                <td>Categories</td>
+                <td>
+                    <select asp-for="SelectedCategoryIds" asp-items="Model.Categories" multiple="multiple">
+                        <option value="">Choose a category</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+
+                <td>
+                    <input asp-for="Photo" /><label>Choose an image</label>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <input asp-for="Document" /><label>Choose a document</label>
+                </td>
+            </tr>
+            <tr>
+
+                <td><input type="hidden" asp-for="AccountId" value="@user.Id" /></td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td><input name="price" id="price" type="text" asp-for="Price" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Add" id="add" /></td>
+            </tr>
+
+        </table>
+    </form>
+    <a asp-controller="category" asp-action="index">Back to Category View</a>
+</body>
+</html>

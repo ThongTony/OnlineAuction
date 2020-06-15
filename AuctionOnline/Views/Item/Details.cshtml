@@ -1,10 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var user = ViewBag.User;
-    var category = ViewBag.Category;
-    var item= ViewBag.Item;
+    var item = ViewBag.DetailItem;
+    var seller = ViewBag.Account;
 }
 
 <div id="primary" class="content-area">
@@ -25,7 +23,7 @@
                                             <figure class="woocommerce-product-gallery__wrapper">
                                                 <div data-thumb="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-200x200.jpg" data-thumb-alt="" class="woocommerce-product-gallery__image">
                                                 <a href="../../wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg">
-                                                    <img width="600" height="900" src="../../wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-600x900.jpg" class="wp-post-image" alt="" title="jonathan-chng-cDUiVsPMxMk-unsplash" data-caption="" data-src="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg" data-large_image="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg" data-large_image_width="1280" data-large_image_height="1920" srcset="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-600x900.jpg 600w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-200x300.jpg 200w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-768x1152.jpg 768w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash-683x1024.jpg 683w, https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/jonathan-chng-cDUiVsPMxMk-unsplash.jpg 1280w" sizes="(max-width: 600px) 100vw, 600px" />
+                                                    <img width="600" height="900" src="~/images/items/@item.Photo" class="wp-post-image" alt="" title="@item.Title" />
                                                     </a>
                                                     </div>
                                                 <div data-thumb="https://ibid.modeltheme.com/automotive/wp-content/uploads/2017/06/tahsin-cebel-Dwdg8h3yz8g-unsplash-200x200.jpg" data-thumb-alt="" class="woocommerce-product-gallery__image">
@@ -39,10 +37,17 @@
 
                                     <div class="summary entry-summary col-md-7">
 
-                                        <h1 itemprop="name" class="product_title entry-title">@item.Name</h1>
+                                        <h1 itemprop="name" class="product_title entry-title">@item.Title</h1>
                                         <div class="product-description" itemprop="description">
                                             <p>@item.Description</p>
-                                        </div><p class="price"><span class="sold-for auction">Sold for</span>: <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>@item.Price</span></p>
+                                        </div>
+                                    <p class="price">
+                                        <span class="sold-for auction">Sold for :</span>          
+                                        <span class="woocommerce-Price-amount amount">
+                                        <span class="woocommerce-Price-currencySymbol">&#36;</span>
+                                        @item.Price
+                                            </span>
+                                    </p>
 
                                         <p class="auction-condition">Item condition:<span class="curent-bid"> New</span></p>
 
@@ -204,7 +209,7 @@
                                             <li class="store-name">
                                                 <span>Store Name:</span>
                                                 <span class="details">
-                                                    @user.Username
+                                                    @seller.Username 's Store
                                                 </span>
                                             </li>
 
@@ -214,13 +219,13 @@
                                                 </span>
 
                                                 <span class="details">
-                                                    <a href="../../store/admin/index.html">@user.Fullname</a>
+                                                    <a href="../../store/admin/index.html">@seller.Fullname</a>
                                                 </span>
                                             </li>
                                             <li class="store-address">
                                                 <span><b>Address:</b></span>
                                                 <span class="details">
-                                                    @user.Address
+                                                    @seller.Address
                                                 </span>
                                             </li>
 
