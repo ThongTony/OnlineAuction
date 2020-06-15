@@ -1,4 +1,5 @@
-﻿@*@model AuctionOnline.Models.Category*@
+﻿@using Microsoft.AspNetCore.Http;
+@*@model AuctionOnline.Models.Category*@
 @model System.Collections.Generic.List<AuctionOnline.Models.Category>
 <nav class="navbar bottom-navbar-default" id="modeltheme-main-head">
     <div class="container">
@@ -93,16 +94,37 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-2 my-account-navbar">
-                <ul>
-                    logged out
-                    <li id="nav-menu-login" class="login">
-                        <a href="#" data-modal="modal-log-in" class="modeltheme-trigger">
-                            Sign In
-                        </a>
-                    </li>
-                </ul>
-            </div>
+
+            @if (@Context.Session.GetString("username") == null)
+            {
+
+                <div class="col-md-2 my-account-navbar">
+                    <ul>
+                        <!-- logged out -->
+                        <li id="nav-menu-login" class="ibid-logoin">
+                            <a href="#" data-modal="modal-log-in" class="modeltheme-trigger">
+                                Sign In
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-2 my-account-navbar">
+                    <ul>
+                        <!-- logged out -->
+                        <li id="nav-menu-login" class="ibid-logoin">
+                            <a asp-action="Logout" asp-controller="Account">
+                                Log Out
+                            </a>
+                        </li>
+                        <li id="nav-menu-login" class="ibid-logoin">
+                            <h5 style="color:#2695ff">Welcome @Context.Session.GetString("username")</h5>
+                        </li>
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 </nav>
