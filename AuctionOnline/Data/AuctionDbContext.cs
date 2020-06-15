@@ -17,6 +17,8 @@ namespace AuctionOnline.Data
         public DbSet<BidIncrementDefinition> BidIncrementDefinitions { get; set; }
         public DbSet<CategoryItem> CategoryItems { get; set; }
 
+        public DbSet<NotificationProduct> NotificationProducts { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

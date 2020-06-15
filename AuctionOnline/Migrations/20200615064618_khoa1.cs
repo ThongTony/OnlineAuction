@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuctionOnline.Migrations
 {
-    public partial class abc : Migration
+    public partial class khoa1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,6 +94,21 @@ namespace AuctionOnline.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "NotificationProducts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    IsDelete = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    IsAvailable = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NotificationProducts", x => x.Id);
+                });
+
             migrationBuilder.InsertData(
                 table: "Accounts",
                 columns: new[] { "Id", "Address", "CreatedAt", "Email", "Fullname", "IsBlocked", "Password", "RoleId", "Status", "Username" },
@@ -151,6 +166,9 @@ namespace AuctionOnline.Migrations
 
             migrationBuilder.DropTable(
                 name: "Bids");
+
+            migrationBuilder.DropTable(
+                name: "NotificationProducts");
 
             migrationBuilder.DropIndex(
                 name: "IX_Items_AccountId",

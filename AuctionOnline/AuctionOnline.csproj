@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\js\**" />
-    <Content Remove="wwwroot\js\**" />
-    <EmbeddedResource Remove="wwwroot\js\**" />
-    <None Remove="wwwroot\js\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Controllers\ItemsController.cs" />
     <Compile Remove="Migrations\20200610123621_abc.cs" />
     <Compile Remove="Migrations\20200610123621_abc.Designer.cs" />
@@ -27,9 +20,14 @@
     <Compile Remove="Migrations\20200612014827_abc.Designer.cs" />
     <Compile Remove="Migrations\20200612020631_abc.cs" />
     <Compile Remove="Migrations\20200612020631_abc.Designer.cs" />
+    <Compile Remove="Migrations\20200612023734_abc.cs" />
+    <Compile Remove="Migrations\20200612023734_abc.Designer.cs" />
+    <Compile Remove="Migrations\20200615022906_khoa.cs" />
+    <Compile Remove="Migrations\20200615022906_khoa.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\wp-json\oembed\1.0\embed01a0" />
     <None Include="wwwroot\wp-json\oembed\1.0\embed0774" />
     <None Include="wwwroot\wp-json\oembed\1.0\embed0f1f" />
