@@ -2,7 +2,7 @@
 
 namespace AuctionOnline
 {
-    public class SignalServer : Hub
+    public class SignalRServer : Hub
     {
     }
 }

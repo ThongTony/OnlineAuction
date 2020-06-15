@@ -12,9 +12,9 @@ namespace AuctionOnline.Controllers
     public class NotificationProductController : Controller
     {
         private AuctionDbContext dbContext;
-        private readonly IHubContext<SignalServer> hubContext;
+        private readonly IHubContext<SignalRServer> hubContext;
 
-        public NotificationProductController(AuctionDbContext dbContext, IHubContext<SignalServer> hubContext)
+        public NotificationProductController(AuctionDbContext dbContext, IHubContext<SignalRServer> hubContext)
         {
             this.dbContext = dbContext;
             this.hubContext = hubContext;

@@ -43,7 +43,7 @@ namespace AuctionOnline
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<SignalServer>("/signalServer");
+                endpoints.MapHub<SignalRServer>("/signalRServer");
             });
 
             app.UseEndpoints(endpoints =>

@@ -6,7 +6,7 @@
 
 
 $(() => {
-    let connection = new signalR.HubConnectionBuilder().withUrl("/signalServer").build();
+    let connection = new signalR.HubConnectionBuilder().withUrl("/signalRServer").build();
 
     connection.start();
 
