@@ -26,7 +26,7 @@ namespace AuctionOnline.Controllers
             return View("Login");
         }
 
-
+      
         [HttpPost]
         [Route("login")]
         public IActionResult Login(string username, string password)
@@ -64,7 +64,7 @@ namespace AuctionOnline.Controllers
             return View("Register");
         }
 
-
+      
         [HttpPost]
         [Route("register")]
         public IActionResult Register(string fullname, string username, string email, string password)
