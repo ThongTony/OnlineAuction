@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AuctionOnline.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace AuctionOnline.Controllers
 {
     [Route("home")]
     public class HomeController : Controller
     {
+
+        private readonly AuctionDbContext db;
+        public HomeController(AuctionDbContext _db)
+        {
+            db = _db;
+        }        
         [Route("~/")]
         [Route("")]
         [Route("index")]
         public IActionResult Index()
         {
-            return View();
-        }
-        [Route("about")]
-        public IActionResult About()
-        {
-            return View();
-        }
-        [Route("contact")]
-        public IActionResult Contact()
-        {
+            ViewBag.IsHome = true;
+            ViewBag.Categories = db.Categories.Where(c => c.ParentId == null).ToList();
+            ViewBag.Items = db.Items.ToList();
             return View();
         }
         [Route("logout")]
