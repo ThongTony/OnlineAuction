@@ -52,7 +52,7 @@ namespace AuctionOnline.Services
                 dbContext.SaveChanges();
                 hubContext.Clients.All.SendAsync("refreshProducts");
 
-                var count = Interlocked.Increment(ref executionCount);
+                var count = Interlocked.Increment(ref executionCount) + "----" + DateTime.Now.ToLongDateString();
 
                 _logger.LogInformation(
                     "Timed Hosted Service is working. Count: {Count}", count);
