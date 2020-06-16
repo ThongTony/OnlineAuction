@@ -38,7 +38,7 @@ namespace AuctionOnline.Controllers
 
             dbContext.NotificationProducts.Add(model);
             dbContext.SaveChanges();
-            hubContext.Clients.All.SendAsync("refreshProducts");
+            hubContext.Clients.All.SendAsync("refreshNotifications");
             return RedirectToAction("index");
         }
 
@@ -59,7 +59,7 @@ namespace AuctionOnline.Controllers
             dbContext.NotificationProducts.Update(product);
             dbContext.SaveChanges();
 
-            hubContext.Clients.All.SendAsync("refreshProducts");
+            hubContext.Clients.All.SendAsync("refreshNotifications");
             return RedirectToAction("index");
         }
 
@@ -70,7 +70,7 @@ namespace AuctionOnline.Controllers
             var product = dbContext.NotificationProducts.Find(productId);
             dbContext.NotificationProducts.Remove(product);
             dbContext.SaveChanges();
-            hubContext.Clients.All.SendAsync("refreshProducts");
+            hubContext.Clients.All.SendAsync("refreshNotifications");
             return RedirectToAction("index");
         }
     }

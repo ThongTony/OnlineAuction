@@ -10,7 +10,7 @@ $(() => {
 
     connection.start();
 
-    connection.on("refreshProducts", function () {
+    connection.on("refreshNotifications", function () {
         loadData();
     });
 

@@ -38,25 +38,24 @@ namespace AuctionOnline.Notifications
 
         private void DoWork(object state)
         {
-            using (var scope = scopeFactory.CreateScope())
+            var scope = scopeFactory.CreateScope();
+
+            var dbContext = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
+
+            var model = new NotificationProduct
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
+                Name = "Product Hosted Service " + DateTime.Now,
+                IsAvailable = true
+            };
 
-                var model = new NotificationProduct
-                {
-                    Name = "Product Hosted Service " + DateTime.Now,
-                    IsAvailable = true
-                };
+            dbContext.NotificationProducts.Add(model);
+            dbContext.SaveChanges();
+            hubContext.Clients.All.SendAsync("refreshNotifications");
 
-                dbContext.NotificationProducts.Add(model);
-                dbContext.SaveChanges();
-                hubContext.Clients.All.SendAsync("refreshProducts");
+            var count = Interlocked.Increment(ref executionCount) + "----" + DateTime.Now.ToLongDateString();
 
-                var count = Interlocked.Increment(ref executionCount) + "----" + DateTime.Now.ToLongDateString();
-
-                _logger.LogInformation(
-                    "Timed Hosted Service is working. Count: {Count}", count);
-            }
+            _logger.LogInformation(
+                "Timed Hosted Service is working. Count: {Count}", count);
         }
 
         public Task StopAsync(CancellationToken stoppingToken)
