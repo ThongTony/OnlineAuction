@@ -7,71 +7,40 @@
 }
 <!-- Page content -->
 
-<div id="primary" class="no-padding content-area no-sidebar">
-    <div class="container">
-        <main id="main" class="col-md_12 site-main main-content">
-            <article id="post-11" class="post-11 page type-page status-publish hentry">
-
-                <div class="entry-content">
-                    <div class="vc_row wpb_row vc_row-fluid vc_custom_1567511231494">
-                        <div class="wpb_column vc_column_container vc_col-sm-12">
-                            <div class="vc_column-inner">
-                                <div class="wpb_wrapper">
-                                    <div class="woocommerce">
-                                        <div class="woocommerce-notices-wrapper"></div>
-                                        <div class="u-columns col2-set">
-                                            <div class="u-column1 col-1">
-                                                <h2>Sell An Item</h2>
-
-                                                <form asp-action="Add" enctype="multipart/form-data" class="woocommerce-form woocommerce-form-login login">
-                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                                                        <label for="title">Title&nbsp;<span class="required">*</span></label>
-                                                        <input name="title" id="title" class="woocommerce-Input woocommerce-Input--text input-text" type="text" asp-for="Title" />
-                                                        <input type="hidden" asp-for="AccountId" value="@user.Id"/>
-                                                    </p>
-                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                                                        <label for="description">Categories</label>
-                                                        <select asp-for="SelectedCategoryIds" asp-items="Model.Categories" multiple="multiple">
-                                                            <option value="">Choose a category</option>
-                                                        </select>
-                                                    </p>
-                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                                                        <label for="description">Description</label>
-                                                        <textarea name="description" id="description" asp-for="Description" rows="5" cols="20" /></textarea>
-                                                    </p>
-                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                                                        <label for="price">Price&nbsp;<span class="required">*</span></label>
-                                                        <input name="price" id="price" class="woocommerce-Input woocommerce-Input--text input-text" type="text" asp-for="Price" />
-                                                    </p>
-                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                                                        <label for="photo">Photo&nbsp;<span class="required">*</span></label>
-                                                        <input asp-for="Photo" />
-                                                    </p>
-                                                    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-                                                        <label for="document">Document</label>
-                                                        <input asp-for="Document" />
-                                                    </p>
-                                                    <p class="form-row">
-                                                        <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="062592022b" />
-
-                                                        <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" value="Add" id="add">Create New Item</button>
-                                                    </p>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="clearfix"></div>
-                </div><!-- .entry-content -->
-
-                <footer class="entry-footer">
-                </footer><!-- .entry-footer -->
-            </article><!-- #post-## -->
-
-        </main>
+<div class="rowr">
+    <div class="container col-md_12">
+        <form asp-action="Add" enctype="multipart/form-data" >
+            <p >
+                <label for="title">Title&nbsp;<span class="required">*</span></label>
+                <input name="title" id="title" type="text" asp-for="Title" />
+                <input type="hidden" asp-for="AccountId" value="@user.Id" />
+            </p>
+            <p >
+                <label for="description">Categories</label>
+                <select asp-for="SelectedCategoryIds" asp-items="Model.Categories" multiple="multiple">
+                    <option value="">Choose a category</option>
+                </select>
+            </p>
+            <p >
+                <label for="description">Description</label>
+                <textarea name="description" id="description" asp-for="Description" rows="5" cols="20" /></textarea>
+            </p>
+            <p >
+                <label for="price">Price&nbsp;<span class="required">*</span></label>
+                <input name="price" id="price" type="text" asp-for="Price" />
+            </p>
+            <p>
+                <label for="photo">Photo&nbsp;<span class="required">*</span></label>
+                <input asp-for="Photo" />
+            </p>
+            <p>
+                <label for="document">Document</label>
+                <input asp-for="Document" />
+            </p>
+            <p class="form-row">
+                <button type="submit"value="Add" id="add">Create New Item</button>
+            </p>
+        </form>
     </div>
 </div>
+

@@ -14,7 +14,6 @@ namespace AuctionOnline.Data
         public DbSet<Item> Items { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Bid> Bids { get; set; }
-        public DbSet<BidIncrementDefinition> BidIncrementDefinitions { get; set; }
         public DbSet<CategoryItem> CategoryItems { get; set; }
 
         public DbSet<NotificationProduct> NotificationProducts { get; set; }

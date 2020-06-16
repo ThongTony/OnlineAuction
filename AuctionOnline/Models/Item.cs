@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,13 +14,9 @@ namespace AuctionOnline.Models
         public int Status { get; set; }
         public string Photo { get; set; }
         public string Document { get; set; }
+        //seller account id
         public int AccountId { get; set; }
         public Account Account { get; set; }
-
-        public ICollection<CategoryItem> CategoryItems { get; set; }
-        public ICollection<Bid> Bids { get; set; }
-        public DateTime CreatedAt { get; set; }
-
         public bool BidStatus { get; set; }
         public DateTime? BidStartDate { get; set; }
         public DateTime? BidEndDate { get; set; }
@@ -31,6 +26,10 @@ namespace AuctionOnline.Models
 
         [Column(TypeName = "decimal(18,1)")]
         public decimal BidIncrement { get; set; }
+
+        public ICollection<CategoryItem> CategoryItems { get; set; }
+        public ICollection<Bid> Bids { get; set; }
+        public DateTime CreatedAt { get; set; }
 
     }
 }
