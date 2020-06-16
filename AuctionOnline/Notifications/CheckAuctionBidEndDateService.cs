@@ -19,7 +19,10 @@ namespace AuctionOnline.Notifications
         private readonly IServiceScopeFactory scopeFactory;
         private readonly IHubContext<SignalRHub> hubContext;
 
-        public CheckAuctionBidEndDateService(ILogger<CheckAuctionBidEndDateService> logger, IHubContext<SignalRHub> hubContext, IServiceScopeFactory scopeFactory)
+        public CheckAuctionBidEndDateService(
+            ILogger<CheckAuctionBidEndDateService> logger, 
+            IHubContext<SignalRHub> hubContext,
+            IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             this.hubContext = hubContext;
