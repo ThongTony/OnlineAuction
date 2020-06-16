@@ -45,13 +45,14 @@ namespace AuctionOnline.Notifications
 
             var dbContext = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
 
-            var model = new NotificationProduct
+            var model = new ExpiredItem
             {
-                Name = "Product Hosted Service " + DateTime.Now,
-                IsAvailable = true
+                ItemId = 3,
+                IsExpired = true,
+                CurrentDate = DateTime.Now
             };
 
-            dbContext.NotificationProducts.Add(model);
+            dbContext.ExpiredItems.Add(model);
             dbContext.SaveChanges();
             hubContext.Clients.All.SendAsync("refreshNotifications");
 

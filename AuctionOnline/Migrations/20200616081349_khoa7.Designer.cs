@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuctionOnline.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20200616031202_khoa3")]
-    partial class khoa3
+    [Migration("20200616081349_khoa7")]
+    partial class khoa7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -195,6 +195,31 @@ namespace AuctionOnline.Migrations
                     b.ToTable("CategoryItems");
                 });
 
+            modelBuilder.Entity("AuctionOnline.Models.ExpiredItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CurrentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ExpiredItems");
+                });
+
             modelBuilder.Entity("AuctionOnline.Models.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -248,30 +273,6 @@ namespace AuctionOnline.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("AuctionOnline.Models.NotificationProduct", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NotificationProducts");
-                });
-
             modelBuilder.Entity("AuctionOnline.Models.Bid", b =>
                 {
                     b.HasOne("AuctionOnline.Models.Account", "Account")
@@ -304,6 +305,15 @@ namespace AuctionOnline.Migrations
 
                     b.HasOne("AuctionOnline.Models.Item", "Item")
                         .WithMany("CategoryItems")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AuctionOnline.Models.ExpiredItem", b =>
+                {
+                    b.HasOne("AuctionOnline.Models.Item", "Item")
+                        .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

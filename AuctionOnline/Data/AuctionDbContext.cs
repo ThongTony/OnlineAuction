@@ -16,7 +16,7 @@ namespace AuctionOnline.Data
         public DbSet<Bid> Bids { get; set; }
         public DbSet<CategoryItem> CategoryItems { get; set; }
 
-        public DbSet<NotificationProduct> NotificationProducts { get; set; }
+        public DbSet<ExpiredItem> ExpiredItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

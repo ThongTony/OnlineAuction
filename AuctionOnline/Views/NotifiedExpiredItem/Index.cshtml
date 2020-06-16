@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Notified Expired Item Page";
+    Layout = "~/Views/Shared/_NotificationLayout.cshtml";
+}
+
+<a class="btn btn-primary" asp-controller="ManageExpiredItem" asp-action="Index">Manage Items</a>
+<br />
+<br />
+
+<table class="table">
+    <thead>
+        <tr style="width:90px;">
+            <th style="width:90px;">Item Id</th>
+            <th style="width:90px;">Current Date</th>
+            <th style="width:90px;">Is Expired</th>
+            <th style="width:90px;">Is Seen</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>

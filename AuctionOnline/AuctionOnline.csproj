@@ -28,6 +28,14 @@
     <Compile Remove="Migrations\20200615064618_khoa1.Designer.cs" />
     <Compile Remove="Migrations\20200615091059_khoa2.cs" />
     <Compile Remove="Migrations\20200615091059_khoa2.Designer.cs" />
+    <Compile Remove="Migrations\20200616031202_khoa3.cs" />
+    <Compile Remove="Migrations\20200616031202_khoa3.Designer.cs" />
+    <Compile Remove="Migrations\20200616074310_khoa4.cs" />
+    <Compile Remove="Migrations\20200616074310_khoa4.Designer.cs" />
+    <Compile Remove="Migrations\20200616080707_khoa5.cs" />
+    <Compile Remove="Migrations\20200616080707_khoa5.Designer.cs" />
+    <Compile Remove="Migrations\20200616081240_khoa6.cs" />
+    <Compile Remove="Migrations\20200616081240_khoa6.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

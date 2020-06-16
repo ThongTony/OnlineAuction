@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuctionOnline.Migrations
 {
-    public partial class khoa3 : Migration
+    public partial class khoa7 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -107,18 +107,24 @@ namespace AuctionOnline.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NotificationProducts",
+                name: "ExpiredItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    IsDelete = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Price = table.Column<double>(nullable: false),
-                    IsAvailable = table.Column<bool>(nullable: false)
+                    ItemId = table.Column<int>(nullable: false),
+                    CurrentDate = table.Column<DateTime>(nullable: false),
+                    IsExpired = table.Column<bool>(nullable: false),
+                    IsSeen = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NotificationProducts", x => x.Id);
+                    table.PrimaryKey("PK_ExpiredItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExpiredItems_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -156,6 +162,11 @@ namespace AuctionOnline.Migrations
                 table: "Bids",
                 column: "ItemId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpiredItems_ItemId",
+                table: "ExpiredItems",
+                column: "ItemId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_Items_Accounts_AccountId",
                 table: "Items",
@@ -175,7 +186,7 @@ namespace AuctionOnline.Migrations
                 name: "Bids");
 
             migrationBuilder.DropTable(
-                name: "NotificationProducts");
+                name: "ExpiredItems");
 
             migrationBuilder.DropIndex(
                 name: "IX_Items_AccountId",

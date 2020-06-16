@@ -20,19 +20,17 @@ $(() => {
         var tr = '';
 
         $.ajax({
-            url: '/NotificationHome/GetProducts',
+            url: '/NotifiedExpiredItem/GetExpiredItems',
             method: 'GET',
             success: (result) => {
                 $.each(result, (k, v) => {
                     var isAvailable = v.isAvailable ? 'available' : 'not available';
                     var className = v.isAvailable ? 'badge badge-success' : 'not badge badge-warning';
-                    console.log('className: ' + className);
-                    tr = tr + `<tr>
-                        <td>${v.name}</td>
-                        <td>${v.price}</td>
-                        <td>
-                           <h6 class="${className}">  ${isAvailable}</h6>
-                        </td>
+                    tr = tr + `<tr style="width:90px;">
+                        <td style="width:90px;">${v.itemId}</td>
+                        <td style="width:90px;">${v.currentDate}</td>
+                        <td style="width:90px;">${v.isExpired}</td>
+                        <td style="width:90px;">${v.isSeen}</td>
                     </tr>`;
                 });
 
