@@ -1,4 +1,5 @@
 using AuctionOnline.Data;
+using AuctionOnline.Notifications;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,7 @@ namespace AuctionOnline
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<SignalRServer>("/signalRServer");
+                endpoints.MapHub<SignalRHub>("/signalRHub");
             });
 
             app.UseEndpoints(endpoints =>

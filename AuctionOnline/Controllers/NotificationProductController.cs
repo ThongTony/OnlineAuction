@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Notifications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -12,9 +13,9 @@ namespace AuctionOnline.Controllers
     public class NotificationProductController : Controller
     {
         private AuctionDbContext dbContext;
-        private readonly IHubContext<SignalRServer> hubContext;
+        private readonly IHubContext<SignalRHub> hubContext;
 
-        public NotificationProductController(AuctionDbContext dbContext, IHubContext<SignalRServer> hubContext)
+        public NotificationProductController(AuctionDbContext dbContext, IHubContext<SignalRHub> hubContext)
         {
             this.dbContext = dbContext;
             this.hubContext = hubContext;

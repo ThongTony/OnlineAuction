@@ -1,7 +1,7 @@
-using AuctionOnline.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using AuctionOnline.Notifications;
 
 namespace AuctionOnline
 {
@@ -16,7 +16,7 @@ namespace AuctionOnline
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<TimedHostedService>();
+                    services.AddHostedService<CheckAuctionBidEndDateService>();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

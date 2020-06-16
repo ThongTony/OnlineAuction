@@ -8,18 +8,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace AuctionOnline.Services
+namespace AuctionOnline.Notifications
 {
-    public class TimedHostedService : IHostedService, IDisposable
+    public class CheckAuctionBidEndDateService : IHostedService, IDisposable
     {
         private int executionCount = 0;
-        private readonly ILogger<TimedHostedService> _logger;
+        private readonly ILogger<CheckAuctionBidEndDateService> _logger;
         private Timer _timer;
 
         private readonly IServiceScopeFactory scopeFactory;
-        private readonly IHubContext<SignalRServer> hubContext;
+        private readonly IHubContext<SignalRHub> hubContext;
 
-        public TimedHostedService(ILogger<TimedHostedService> logger, IHubContext<SignalRServer> hubContext, IServiceScopeFactory scopeFactory)
+        public CheckAuctionBidEndDateService(ILogger<CheckAuctionBidEndDateService> logger, IHubContext<SignalRHub> hubContext, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             this.hubContext = hubContext;
