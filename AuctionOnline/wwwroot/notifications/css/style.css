@@ -75,10 +75,9 @@
     background: #cc0000;
     color: #ffffff;
     font-weight: bold;
-    margin-left: 77px;
+    left: 33px;
     border-radius: 9px;
     position: absolute;
-    margin-top: -11px;
     font-size: 11px;
 }
 
