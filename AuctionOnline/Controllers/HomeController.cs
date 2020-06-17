@@ -1,5 +1,8 @@
 ﻿using AuctionOnline.Data;
+using AuctionOnline.Models;
+using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AuctionOnline.Controllers
@@ -11,11 +14,16 @@ namespace AuctionOnline.Controllers
         public HomeController(AuctionDbContext _db)
         {
             db = _db;
-        }        
-        public IActionResult Index()
+        }
+        public IActionResult Index(CategoryVM categoryVM)
         {
             ViewBag.IsHome = true;
-
+            var category = new Category
+            {
+                Name = categoryVM.Name,
+                ParentId = categoryVM.ParentId,
+                CategoryItems = new List<CategoryItem>()
+            };
             var categories = db.Categories.Where(e => e.ParentId == null).ToList();
             foreach (var cate in categories)
             {
@@ -27,7 +35,9 @@ namespace AuctionOnline.Controllers
                 }
                 cate.CategoryItems = categoryItems;
             }
-            return View(categories);
+
+
+            return View(categoryVM);
         }
         public IActionResult Logout()
         {

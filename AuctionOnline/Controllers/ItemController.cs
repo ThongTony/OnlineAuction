@@ -125,7 +125,7 @@ namespace AuctionOnline.Controllers
             return View(item);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,Status,Photo,Document,AccountId,CreatedAt")] Item item)
+        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Title,Description,Price,Status,Photo,Document,AccountId,CreatedAt")]*/ Item item)
         {
             if (id != item.Id)
             {
@@ -211,7 +211,7 @@ namespace AuctionOnline.Controllers
 
         public async Task<IActionResult> ListedByCategory(int id)
         {
-            //var category = db.Categories.SingleOrDefault(i => i.Id == id);
+            ViewBag.Category = db.Categories.Find(id);
             ViewBag.Items = db.Items.FromSqlRaw(
                 $"Select i.* from Categories c, CategoryItems ci, Items i where c.Id = ci.CategoryId and i.Id = ci.ItemId and c.Id = " + id);
             return View();

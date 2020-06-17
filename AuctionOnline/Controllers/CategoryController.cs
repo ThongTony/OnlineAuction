@@ -1,5 +1,7 @@
 ﻿using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.ViewModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +55,7 @@ namespace AuctionOnline.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,CreatedAt,ParentId")] Category category)
         {
+            
             ViewBag.CategoryAdd = "Failed";
             category.CreatedAt = DateTime.Now;
             if (category != null)
@@ -62,7 +65,15 @@ namespace AuctionOnline.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
-            return View(category);
+            CategoryVM categoryVM = new CategoryVM
+            {
+                Name = category.Name,
+                ParentId = category.ParentId,
+                CreatedAt = category.CreatedAt
+
+            };
+            
+            return View(categoryVM);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -83,7 +94,7 @@ namespace AuctionOnline.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,CreatedAt,ParentId")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CreatedAt,ParentId")] Category category)
         {
             if (id != category.Id)
             {
