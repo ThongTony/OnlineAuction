@@ -24,15 +24,8 @@ $(() => {
             method: 'GET',
             success: (result) => {
                 $.each(result, (k, v) => {
-                    //tr = tr + `<tr style="width:90px;">
-                    //    <td style="width:90px;">${v.itemId}</td>
-                    //    <td style="width:90px;">${v.currentDate}</td>
-                    //    <td style="width:90px;">${v.isExpired}</td>
-                    //    <td style="width:90px;">${v.isSeen}</td>
-                    //    <td style="width:140px;"><a href="/Item/Details/${v.itemId}">See Expired Item</a></td>
-                    //</tr>`;
-
-                    tr = tr + `<li style="font-size:11.8px;margin-left:-40px;float:left;padding: 7px 0 7px 15px;border-top: 0.5px solid #dedede;">
+                    var className = !v.isSeen ? 'linebg' : '';
+                    tr = tr + `<li class="notifiedline ${className}">
                             <a href="/Item/Details/${v.itemId}" role="button" tabindex="0">
                                 <div>
                                     <div style="float:left;margin-right:10px;">
