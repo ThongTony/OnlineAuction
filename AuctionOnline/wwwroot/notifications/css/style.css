@@ -1,7 +1,7 @@
-﻿body {
+﻿/*body {
     background-color: #dedede;
     font-family: arial
-}
+}*/
 
 #nav {
     list-style: none;
@@ -21,7 +21,7 @@
 
             #nav li a:hover {
                 color: #006699;
-                text-decoration: none
+                text-decoration: none;
             }
 
 #notification_li {
@@ -34,10 +34,10 @@
     -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
     overflow: visible;
     position: absolute;
-    top: 30px;
+    top: 40px;
     margin-left: -170px;
-    width: 400px;
-    z-index: -1;
+    /*width: 400px;*/
+    /*z-index: -1;*/
     display: none;
 }
 
@@ -61,12 +61,12 @@
     font-size: 13px;
     background-color: #ffffff;
     width: 384px;
-    border-bottom: 1px solid #dddddd;
+    /*border-bottom: 1px solid #dddddd;*/
 }
 
 #notificationsBody {
-    padding: 33px 0px 0px 0px !important;
-    min-height: 340px;
+    padding: 20px 0px 0px 0px !important;
+    min-height: 448px;
 }
 
 #notificationFooter {
@@ -88,4 +88,8 @@
     position: absolute;
     margin-top: -11px;
     font-size: 11px;
+}
+
+.notifications ul li:hover {
+    background-color: #dedede;
 }

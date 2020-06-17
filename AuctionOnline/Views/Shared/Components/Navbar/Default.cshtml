@@ -46,10 +46,25 @@
                     </li>
                 }
                 <li>
-                    <a id="pick-location" href="javascript:;" data-toggle="modal" data-target="#pick-location-modal">
-                        <i class="fa fa-map-marker"></i>
-                        Notication
-                    </a>
+                    @*<a id="pick-location" href="javascript:;" data-toggle="modal" data-target="#pick-location-modal">
+                            <i class="fas fa-bell"></i>
+                            <svg id="notificationLink" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bell" role="img" viewBox="0 0 448 512" class="svg-inline--fa fa-bell fa-w-14 fa-spin fa-lg">
+                                <path fill="currentColor" d="M224 512c35.32 0 63.97-28.65 63.97-64H160.03c0 35.35 28.65 64 63.97 64zm215.39-149.71c-19.32-20.76-55.47-51.99-55.47-154.29 0-77.7-54.48-139.9-127.94-155.16V32c0-17.67-14.32-32-31.98-32s-31.98 14.33-31.98 32v20.84C118.56 68.1 64.08 130.3 64.08 208c0 102.3-36.15 133.53-55.47 154.29-6 6.45-8.66 14.16-8.61 21.71.11 16.4 12.98 32 32.1 32h383.8c19.12 0 32-15.6 32.1-32 .05-7.55-2.61-15.27-8.61-21.71z" class="">
+                                </path>
+                            </svg>
+                            Notication
+                        </a>*@
+
+                    <span id="notification_count"></span>
+                    <a href="#" id="notificationLink">Notifications</a>
+                    <div id="notificationContainer">
+                        <div id="notificationTitle">Notifications</div>
+                        <div id="notificationsBody" class="notifications">
+                            <ul style="list-style-type:none;margin-block-start:-20px;" id="notificationBody"></ul>
+                        </div>
+                        <div id="notificationFooter"><a href="#">See All</a></div>
+                    </div>
+
                 </li>
 
                 <li>
@@ -87,152 +102,6 @@
         </div>
     </div>
 </nav>
-<!--pick location-->
-<div id="pick-location-modal" role="dialog" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" data-dismiss="modal" class="close">×</button>
-                <h4 class="modal-title">Chọn địa điểm</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4"><a href="/toan-quoc" class="change-city">Toàn quốc</a></div>
-
-                    <div class="col-md-4"><a href="/tp-ho-chi-minh" data-value="3" class="change-city">TP.Hồ Chí Minh</a></div>
-
-                    <div class="col-md-4"><a href="/ha-noi" data-value="5" class="change-city">Hà Nội</a></div>
-
-                    <div class="col-md-4"><a href="/dak-lak" data-value="6" class="change-city">Đắk Lắk</a></div>
-
-                    <div class="col-md-4"><a href="/can-tho" data-value="7" class="change-city">Cần Thơ</a></div>
-
-                    <div class="col-md-4"><a href="/dong-nai" data-value="8" class="change-city">Đồng Nai</a></div>
-
-                    <div class="col-md-4"><a href="/da-nang" data-value="9" class="change-city">Đà Nẵng</a></div>
-
-                    <div class="col-md-4"><a href="/ca-mau" data-value="81" class="change-city">Cà Mau</a></div>
-
-                    <div class="col-md-4"><a href="/an-giang" data-value="82" class="change-city">An Giang</a></div>
-
-                    <div class="col-md-4"><a href="/hai-phong" data-value="101" class="change-city">Hải Phòng</a></div>
-
-                    <div class="col-md-4"><a href="/ba-ria-vung-tau" data-value="102" class="change-city">Bà Rịa - Vũng Tàu</a></div>
-
-                    <div class="col-md-4"><a href="/bac-giang" data-value="103" class="change-city">Bắc Giang</a></div>
-
-                    <div class="col-md-4"><a href="/bac-kan" data-value="104" class="change-city">Bắc Kạn</a></div>
-
-                    <div class="col-md-4"><a href="/bac-lieu" data-value="105" class="change-city">Bạc Liêu</a></div>
-
-                    <div class="col-md-4"><a href="/bac-ninh" data-value="106" class="change-city">Bắc Ninh</a></div>
-
-                    <div class="col-md-4"><a href="/ben-tre" data-value="107" class="change-city">Bến Tre</a></div>
-
-                    <div class="col-md-4"><a href="/binh-dinh" data-value="108" class="change-city">Bình Định</a></div>
-
-                    <div class="col-md-4"><a href="/binh-duong" data-value="109" class="change-city">Bình Dương</a></div>
-
-                    <div class="col-md-4"><a href="/binh-phuoc" data-value="110" class="change-city">Bình Phước</a></div>
-
-                    <div class="col-md-4"><a href="/binh-thuan" data-value="111" class="change-city">Bình Thuận</a></div>
-
-                    <div class="col-md-4"><a href="/cao-bang" data-value="112" class="change-city">Cao Bằng</a></div>
-
-                    <div class="col-md-4"><a href="/dac-nong" data-value="113" class="change-city">Đắc Nông</a></div>
-
-                    <div class="col-md-4"><a href="/dien-bien" data-value="114" class="change-city">Điện Biên</a></div>
-
-                    <div class="col-md-4"><a href="/dong-thap" data-value="115" class="change-city">Đồng Tháp</a></div>
-
-                    <div class="col-md-4"><a href="/gia-lai" data-value="116" class="change-city">Gia Lai</a></div>
-
-                    <div class="col-md-4"><a href="/ha-giang" data-value="117" class="change-city">Hà Giang</a></div>
-
-                    <div class="col-md-4"><a href="/ha-nam" data-value="118" class="change-city">Hà Nam</a></div>
-
-                    <div class="col-md-4"><a href="/ha-tay" data-value="119" class="change-city">Hà Tây</a></div>
-
-                    <div class="col-md-4"><a href="/ha-tinh" data-value="120" class="change-city">Hà Tĩnh</a></div>
-
-                    <div class="col-md-4"><a href="/hai-duong" data-value="121" class="change-city">Hải Dương</a></div>
-
-                    <div class="col-md-4"><a href="/hau-giang" data-value="122" class="change-city">Hậu Giang</a></div>
-
-                    <div class="col-md-4"><a href="/hoa-binh" data-value="123" class="change-city">Hoà Bình</a></div>
-
-                    <div class="col-md-4"><a href="/hung-yen" data-value="124" class="change-city">Hưng Yên</a></div>
-
-                    <div class="col-md-4"><a href="/khanh-hoa" data-value="125" class="change-city">Khánh Hoà</a></div>
-
-                    <div class="col-md-4"><a href="/kien-giang" data-value="126" class="change-city">Kiên Giang</a></div>
-
-                    <div class="col-md-4"><a href="/kon-tum" data-value="127" class="change-city">Kon Tum</a></div>
-
-                    <div class="col-md-4"><a href="/lai-chau" data-value="128" class="change-city">Lai Châu</a></div>
-
-                    <div class="col-md-4"><a href="/lam-dong" data-value="129" class="change-city">Lâm Đồng</a></div>
-
-                    <div class="col-md-4"><a href="/lang-son" data-value="130" class="change-city">Lạng Sơn</a></div>
-
-                    <div class="col-md-4"><a href="/lao-cai" data-value="131" class="change-city">Lào Cai</a></div>
-
-                    <div class="col-md-4"><a href="/long-an" data-value="132" class="change-city">Long An</a></div>
-
-                    <div class="col-md-4"><a href="/nam-dinh" data-value="133" class="change-city">Nam Định</a></div>
-
-                    <div class="col-md-4"><a href="/nghe-an" data-value="134" class="change-city">Nghệ An</a></div>
-
-                    <div class="col-md-4"><a href="/ninh-binh" data-value="135" class="change-city">Ninh Bình</a></div>
-
-                    <div class="col-md-4"><a href="/ninh-thuan" data-value="136" class="change-city">Ninh Thuận</a></div>
-
-                    <div class="col-md-4"><a href="/phu-tho" data-value="137" class="change-city">Phú Thọ</a></div>
-
-                    <div class="col-md-4"><a href="/phu-yen" data-value="138" class="change-city">Phú Yên</a></div>
-
-                    <div class="col-md-4"><a href="/quang-binh" data-value="139" class="change-city">Quảng Bình</a></div>
-
-                    <div class="col-md-4"><a href="/quang-nam" data-value="140" class="change-city">Quảng Nam</a></div>
-
-                    <div class="col-md-4"><a href="/quang-ngai" data-value="141" class="change-city">Quảng Ngãi</a></div>
-
-                    <div class="col-md-4"><a href="/quang-ninh" data-value="142" class="change-city">Quảng Ninh</a></div>
-
-                    <div class="col-md-4"><a href="/quang-tri" data-value="143" class="change-city">Quảng Trị</a></div>
-
-                    <div class="col-md-4"><a href="/soc-trang" data-value="144" class="change-city">Sóc Trăng</a></div>
-
-                    <div class="col-md-4"><a href="/son-la" data-value="145" class="change-city">Sơn La</a></div>
-
-                    <div class="col-md-4"><a href="/tay-ninh" data-value="146" class="change-city">Tây Ninh</a></div>
-
-                    <div class="col-md-4"><a href="/thai-binh" data-value="147" class="change-city">Thái Bình</a></div>
-
-                    <div class="col-md-4"><a href="/thai-nguyen" data-value="148" class="change-city">Thái Nguyên</a></div>
-
-                    <div class="col-md-4"><a href="/thanh-hoa" data-value="149" class="change-city">Thanh Hoá</a></div>
-
-                    <div class="col-md-4"><a href="/thua-thien-hue" data-value="150" class="change-city">Thừa Thiên Huế</a></div>
-
-                    <div class="col-md-4"><a href="/tien-giang" data-value="151" class="change-city">Tiền Giang</a></div>
-
-                    <div class="col-md-4"><a href="/tra-vinh" data-value="152" class="change-city">Trà Vinh</a></div>
-
-                    <div class="col-md-4"><a href="/tuyen-quang" data-value="153" class="change-city">Tuyên Quang</a></div>
-
-                    <div class="col-md-4"><a href="/vinh-long" data-value="154" class="change-city">Vĩnh Long</a></div>
-
-                    <div class="col-md-4"><a href="/vinh-phuc" data-value="155" class="change-city">Vĩnh Phúc</a></div>
-
-                    <div class="col-md-4"><a href="/yen-bai" data-value="156" class="change-city">Yên Bái</a></div>
-
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 @*if (@Context.Session.GetString("username") == null)
     {

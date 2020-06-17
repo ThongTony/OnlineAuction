@@ -32,11 +32,11 @@ $(() => {
                     //    <td style="width:140px;"><a href="/Item/Details/${v.itemId}">See Expired Item</a></td>
                     //</tr>`;
 
-                    tr = tr + `<li style="font-size:12.5px; margin-left: -20px; margin-right: 8px; float:left;">
+                    tr = tr + `<li style="font-size:11.8px;margin-left:-40px;float:left;padding: 7px 0 7px 15px;border-top: 0.5px solid #dedede;">
                             <a href="/Item/Details/${v.itemId}" role="button" tabindex="0">
                                 <div>
                                     <div style="float:left;margin-right:10px;">
-                                        <img src="https://scontent.xx.fbcdn.net/v/t1.0-1/cp0/p48x48/55738269_2813143815370024_4176931368388788224_n.jpg?_nc_cat=106&amp;_nc_sid=dbb9e7&amp;_nc_ohc=r1_aiKlQr2oAX9slP3O&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_ht=scontent.xx&amp;oh=0b4355eaa6036f3654a35daeac226554&amp;oe=5F0C85E2">
+                                        <img style="border-radius: 50%;" src="https://scontent.xx.fbcdn.net/v/t1.0-1/cp0/p48x48/55738269_2813143815370024_4176931368388788224_n.jpg?_nc_cat=106&amp;_nc_sid=dbb9e7&amp;_nc_ohc=r1_aiKlQr2oAX9slP3O&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_ht=scontent.xx&amp;oh=0b4355eaa6036f3654a35daeac226554&amp;oe=5F0C85E2">
                                     </div>
                                     <div>
                                         <span>
@@ -51,9 +51,9 @@ $(() => {
                                             </div>
                                             <div>
                                                 <span>
-                                                    <abbr aria-label="10 minutes ago" minimize="true" title="Tuesday, 16 June 2020 at 22:00" data-utime="1592319605" data-minimize="true">
+                                                    <i>
                                                         <span class="timestampContent">10m - ${v.currentDate}</span>
-                                                    </abbr>
+                                                    </i>
                                                 </span>
                                             </div>
                                         </div>
