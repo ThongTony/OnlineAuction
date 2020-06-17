@@ -45,43 +45,46 @@
             <script src="https://sohot.vn/library/javascript/infinite-scroll.pkgd.min.js"></script>
             <div id="mainTopiclist" class="topiclist">
                 <div class="topiclist-wrapper">
-                    <!--foreach-->
-                    <div class="item grid col-md-5ths col-xs-6">
-                        <div class="itemcontainer">
-                            <div class="col-md-4 col-sm-3 col-xs-5">
-                                <div style="padding-left:15px" class="row">
-                                    <a href="https://sohot.vn/tp-ho-chi-minh/gach-tham-chieu-nghi-cau-thang-4979.html" class="thumb">
-                                        <img src="https://sohot.vn/uploads/market/avatar/49/497/4979.jpg">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-sm-9 col-xs-7">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <h3>
-                                            <a href="https://sohot.vn/tp-ho-chi-minh/gach-tham-chieu-nghi-cau-thang-4979.html" class="f-black">Gạch thảm - chiếu nghỉ cầu thang</a>
-                                        </h3>
-                                        <!--.infoline
-                                                                    if !$byUser
-                                                                        //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
-                                                                        //&nbsp;
-                                                                        span.f-grey=$i->up_date_h
-                                                                    else
-                                                                        span.f-grey=$i->up_date_h
-                                        -->
+                    @foreach (var item in ViewBag.Items)
+                    {
+                        <div class="item grid col-md-5ths col-xs-6">
+                            <div class="itemcontainer">
+                                <div class="col-md-4 col-sm-3 col-xs-5">
+                                    <div style="padding-left:15px" class="row">
+                                        <a class="thumb" asp-action="Details" asp-route-id="@item.Id">
+                                            <img src="~/images/items/@item.Photo">
+                                        </a>
                                     </div>
-                                    <div class="col-sm-3 f-red text-right">
-
-                                        <strong>1.8 triệu</strong>
-                                        <div class="text-nowrap">
-
+                                </div>
+                                <div class="col-md-8 col-sm-9 col-xs-7">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h3>
+                                                <a class="f-black">@item.Title</a>
+                                            </h3>
+                                            <!--.infoline
+                                                                        if !$byUser
+                                                                            //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
+                                                                            //&nbsp;
+                                                                            span.f-grey=$i->up_date_h
+                                                                        else
+                                                                            span.f-grey=$i->up_date_h
+                                            -->
                                         </div>
-                                        <div class="spacer"></div>
+                                        <div class="col-sm-3 f-red text-right">
+
+                                            <strong>@item.Price</strong>
+                                            <div class="text-nowrap">
+
+                                            </div>
+                                            <div class="spacer"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
+
                     <!--foreach-->
 
                 </div>

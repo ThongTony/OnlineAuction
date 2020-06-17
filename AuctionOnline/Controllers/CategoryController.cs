@@ -1,6 +1,7 @@
 ﻿using AuctionOnline.Data;
 using AuctionOnline.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("category")]
     public class CategoryController : Controller
     {
         private AuctionDbContext db;
@@ -18,108 +18,137 @@ namespace AuctionOnline.Controllers
             db = _category;
         }
 
-        [Route("index")]
-        public IActionResult AdminIndex()
+        public async Task<IActionResult> IndexAsync()
         {
-            ViewBag.Categories = db.Categories.ToList();
-            return View();
+            var allCategory = db.Categories.Include(c => c.Parent);
+            return View(await allCategory.ToListAsync());
         }
 
-        [HttpGet]
-        [Route("add")]
-        public IActionResult AdminAdd()
-        {
-            return View("AdminAdd", new Category());
-        }
-
-        [HttpPost]
-        [Route("add")]
-        public IActionResult AdminAdd(Category category)
-        {
-            ViewBag.CategoryAdd = "Failed";
-            category.CreatedAt = DateTime.Now;
-            if (category != null)
-            {
-                db.Categories.Add(category);
-                db.SaveChanges();
-                ViewBag.CategoryAdd = "Success";
-            }
-            return RedirectToAction("AdminAdd");
-        }
-
-        [HttpGet]
-        [Route("addchild/{id}")]
-        public IActionResult AdminAddChild(int id)
-        {
-            ViewBag.CategoryAddChild = db.Categories.Find(id);
-            return View("AdminAddChild");
-        }
-
-        [HttpPost]
-        [Route("addchild")]
-        public IActionResult AdminAddChild(Category category)
-        {
-            ViewBag.CategoryAddChild = "Failed";
-            category.CreatedAt = DateTime.Now;
-
-            if (category != null)
-            {
-                db.Categories.Add(category);
-                db.SaveChanges();
-                ViewBag.CategoryAddChild = "Success";
-            }
-            return RedirectToAction("AdminAdd");
-        }
-
-        //[HttpGet]
-        //[Route("edit/{id}")]
-        //public IActionResult AdminEdit(int id)
-        //{
-        //    ViewBag.Edit = db.Categories.Find(id);
-        //    return View("AdminEdit", ViewBag.Edit);
-        //}
-
-        [HttpPost, ActionName("Edit")]
-        [Route("edit")]
-        public async Task<IActionResult> EditAsync(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var categoryDb = await db.Categories.FirstOrDefaultAsync(c => c.Id == id);
-            if (await TryUpdateModelAsync<Category>(categoryDb, "", s => s.Name, s => s.ParentId, s => s.CreatedAt))
+
+            var category = await db.Categories
+                .Include(c => c.Parent)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,CreatedAt,ParentId")] Category category)
+        {
+            ViewBag.CategoryAdd = "Failed";
+            category.CreatedAt = DateTime.Now;
+            if (category != null)
+            {
+                db.Add(category);
+                await db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
+            return View(category);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var category = await db.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
+            return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,CreatedAt,ParentId")] Category category)
+        {
+            if (id != category.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
             {
                 try
                 {
+                    db.Update(category);
                     await db.SaveChangesAsync();
-                    return RedirectToAction(nameof(AdminIndex));
                 }
-                catch (Exception)
+                catch (DbUpdateConcurrencyException)
                 {
-                    ModelState.AddModelError("", "Unable to save changes. " +
+                    if (!CategoryExists(category.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Unable to save changes. " +
                         "Try again, and if the problem persists, " +
                         "see your system administrator.");
+                    }
+
                 }
+                return RedirectToAction(nameof(Index));
             }
-            //db.Entry(categoryDb).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            //category.CreatedAt = db.Categories.FirstOrDefault(c => c.CreatedAt);
-            //db.SaveChanges();
-            return View(categoryDb);
+            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
+            return View(category);
         }
 
-        [Route("delete/{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var category = db.Categories.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var category = await db.Categories
+                .Include(c => c.Parent)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var category = await db.Categories.FindAsync(id);
+
+            //delete related category - item table
             var categoryitems = db.CategoryItems.Where(c => c.CategoryId == id);
             foreach (var categoryitem in categoryitems)
             {
                 category.CategoryItems.Remove(categoryitem);
             }
+
             db.Categories.Remove(category);
-            db.SaveChanges();
-            return RedirectToAction("AdminIndex");
+            await db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         [Route("model")]
@@ -158,6 +187,10 @@ namespace AuctionOnline.Controllers
                     Parent = c,
                     Children = GetChildren(categories, c.Id)
                 }).ToList();
+        }
+        private bool CategoryExists(int id)
+        {
+            return db.Categories.Any(e => e.Id == id);
         }
     }
 }

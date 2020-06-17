@@ -14,6 +14,9 @@ namespace AuctionOnline.Migrations
             migrationBuilder.DropTable(
                 name: "AccountItems");
 
+            migrationBuilder.DropTable(
+                name: "BidIncrementDefinitions");
+
             migrationBuilder.DropIndex(
                 name: "IX_Items_BidIncrementDefinitionId",
                 table: "Items");
@@ -68,7 +71,7 @@ namespace AuctionOnline.Migrations
                     BidEndDate = table.Column<DateTime>(nullable: true),
                     MinimumBid = table.Column<decimal>(type: "decimal(18,1)", nullable: true),
                     CurrentBid = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    BidIncrementDefinitionId = table.Column<int>(nullable: false),
+                    BidIncrement = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -78,12 +81,6 @@ namespace AuctionOnline.Migrations
                         name: "FK_Bids_Accounts_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bids_BidIncrementDefinitions_BidIncrementDefinitionId",
-                        column: x => x.BidIncrementDefinitionId,
-                        principalTable: "BidIncrementDefinitions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -123,11 +120,6 @@ namespace AuctionOnline.Migrations
                 name: "IX_Bids_AccountId",
                 table: "Bids",
                 column: "AccountId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Bids_BidIncrementDefinitionId",
-                table: "Bids",
-                column: "BidIncrementDefinitionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bids_ItemId",
@@ -247,6 +239,20 @@ namespace AuctionOnline.Migrations
                         principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BidIncrementDefinitions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BidIncrement = table.Column<decimal>(type: "decimal(18,1)", nullable: false),
+                    PriceRange = table.Column<decimal>(type: "decimal(18,1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BidIncrementDefinitions", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(

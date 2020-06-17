@@ -10,23 +10,23 @@ using AuctionOnline.Models;
 
 namespace AuctionOnline
 {
-    public class ItemsController : Controller
+    public class CategoriesController : Controller
     {
         private readonly AuctionDbContext _context;
 
-        public ItemsController(AuctionDbContext context)
+        public CategoriesController(AuctionDbContext context)
         {
             _context = context;
         }
 
-        // GET: Items
+        // GET: Categories
         public async Task<IActionResult> Index()
         {
-            var auctionDbContext = _context.Items.Include(i => i.Account);
+            var auctionDbContext = _context.Categories.Include(c => c.Parent);
             return View(await auctionDbContext.ToListAsync());
         }
 
-        // GET: Items/Details/5
+        // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,42 @@ namespace AuctionOnline
                 return NotFound();
             }
 
-            var item = await _context.Items
-                .Include(i => i.Account)
+            var category = await _context.Categories
+                .Include(c => c.Parent)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (item == null)
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(item);
+            return View(category);
         }
 
-        // GET: Items/Create
+        // GET: Categories/Create
         public IActionResult Create()
         {
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id");
+            ViewData["ParentId"] = new SelectList(_context.Categories, "Id", "Id");
             return View();
         }
 
-        // POST: Items/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Price,Status,Photo,Document,AccountId,CreatedAt")] Item item)
+        public async Task<IActionResult> Create([Bind("Id,Name,CreatedAt,ParentId")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(item);
+                _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", item.AccountId);
-            return View(item);
+            ViewData["ParentId"] = new SelectList(_context.Categories, "Id", "Id", category.ParentId);
+            return View(category);
         }
 
-        // GET: Items/Edit/5
+        // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +77,23 @@ namespace AuctionOnline
                 return NotFound();
             }
 
-            var item = await _context.Items.FindAsync(id);
-            if (item == null)
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", item.AccountId);
-            return View(item);
+            ViewData["ParentId"] = new SelectList(_context.Categories, "Id", "Id", category.ParentId);
+            return View(category);
         }
 
-        // POST: Items/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,Status,Photo,Document,AccountId,CreatedAt")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CreatedAt,ParentId")] Category category)
         {
-            if (id != item.Id)
+            if (id != category.Id)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace AuctionOnline
             {
                 try
                 {
-                    _context.Update(item);
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.Id))
+                    if (!CategoryExists(category.Id))
                     {
                         return NotFound();
                     }
@@ -118,11 +118,11 @@ namespace AuctionOnline
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", item.AccountId);
-            return View(item);
+            ViewData["ParentId"] = new SelectList(_context.Categories, "Id", "Id", category.ParentId);
+            return View(category);
         }
 
-        // GET: Items/Delete/5
+        // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +130,31 @@ namespace AuctionOnline
                 return NotFound();
             }
 
-            var item = await _context.Items
-                .Include(i => i.Account)
+            var category = await _context.Categories
+                .Include(c => c.Parent)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (item == null)
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(item);
+            return View(category);
         }
 
-        // POST: Items/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var item = await _context.Items.FindAsync(id);
-            _context.Items.Remove(item);
+            var category = await _context.Categories.FindAsync(id);
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ItemExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.Items.Any(e => e.Id == id);
+            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }

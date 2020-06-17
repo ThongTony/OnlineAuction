@@ -11,11 +11,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using PagedList;
+using PagedList.Core;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("item")]
     public class ItemController : Controller
     {
         private readonly AuctionDbContext db;
@@ -31,15 +30,16 @@ namespace AuctionOnline.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            ViewBag.Item = db.Items.ToList();
-            return View();
+            var getAllItem = db.Items.Include(i => i.Account);
+
+            return View(await getAllItem.ToListAsync());
         }
 
         [HttpGet]
-        public IActionResult Add(int id)
+        public IActionResult Create()
         {
+            ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id");
             var model = new ItemVM();
-            ViewBag.Account = db.Accounts.Find(id);
             model.Categories = db.Categories.Select(a =>
                                   new SelectListItem
                                   {
@@ -50,7 +50,8 @@ namespace AuctionOnline.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ItemVM itemVM)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ItemVM itemVM)
         {
             ViewBag.Item = "Failed";
             itemVM.CreatedAt = DateTime.Now;
@@ -63,7 +64,7 @@ namespace AuctionOnline.Controllers
                 {
                     Title = itemVM.Title,
                     Price = itemVM.Price,
-                    AccountId = itemVM.AccountId,
+                    AccountId = 1 /*itemVM.AccountId*/,
                     Photo = fileName,
                     Document = documentName,
                     CreatedAt = itemVM.CreatedAt,
@@ -81,10 +82,11 @@ namespace AuctionOnline.Controllers
                 }
 
                 db.Items.Add(item);
-                db.SaveChanges();
-                ViewBag.Item = "Success";
+                await db.SaveChangesAsync();
+                return RedirectToAction(nameof(ListInShop));
             }
-            return RedirectToAction("Add");
+            ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id", itemVM.AccountId);
+            return View(itemVM);
         }
 
         private async Task<string> UploadAsync(IFormFile fileType, string path)
@@ -107,22 +109,76 @@ namespace AuctionOnline.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            var item = db.Items.Find(id);
-            return View("Edit", item);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await db.Items.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id", item.AccountId);
+            return View(item);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,Status,Photo,Document,AccountId,CreatedAt")] Item item)
         {
-            db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Edit", "item");
+            if (id != item.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Update(item);
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ItemExists(item.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id", item.AccountId);
+            return View(item);
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var item = db.Items.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await db.Items
+                .Include(i => i.Account)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var item = await db.Items.FindAsync(id);
 
             var categoryitems = db.CategoryItems.Where(c => c.ItemId == id);
             foreach (var categoryitem in categoryitems)
@@ -130,39 +186,41 @@ namespace AuctionOnline.Controllers
                 item.CategoryItems.Remove(categoryitem);
             }
             db.Items.Remove(item);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-        public async Task<IActionResult> Details(int id)
-        {
-            ViewBag.DetailItem = db.Items.Find(id);
-            var accountId = db.Items.Where(a => a.Id == id).Select(a => a.AccountId);
-            ViewBag.Account = db.Accounts.Find(accountId);
-            return View();
+            await db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-        //public IActionResult Odertracking()
-        //{
-        //    ViewBag.isBreadCrumb = true;
-        //    return View();
-        //}
-        //public IActionResult Featured()
-        //{
-        //    ViewBag.isBreadCrumb = true;
-        //    return View();
-        //}
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await db.Items
+                .Include(i => i.Account)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
+
 
         public async Task<IActionResult> ListedByCategory(int id)
         {
             //var category = db.Categories.SingleOrDefault(i => i.Id == id);
-            ViewBag.Item = db.Items.FromSqlRaw(
+            ViewBag.Items = db.Items.FromSqlRaw(
                 $"Select i.* from Categories c, CategoryItems ci, Items i where c.Id = ci.CategoryId and i.Id = ci.ItemId and c.Id = " + id);
             return View();
         }
-        public async Task<IActionResult> ListInShop(int id)
+        public async Task<IActionResult> ListInShop()
         {
-            ViewBag.Account = db.Accounts.Find(id);
-            ViewBag.Items = db.Items.Where(i => i.AccountId == id).ToList();
+            var username = HttpContext.Session.GetString("username");
+            var account= db.Accounts.FirstOrDefault(a => a.Username.Equals(username));
+            ViewBag.Items = db.Items.Where(i => i.AccountId == account.Id).ToList();
             return View();
         }
 
@@ -172,5 +230,9 @@ namespace AuctionOnline.Controllers
             return View(item);
         }
 
+        private bool ItemExists(int id)
+        {
+            return db.Items.Any(e => e.Id == id);
+        }
     }
 }

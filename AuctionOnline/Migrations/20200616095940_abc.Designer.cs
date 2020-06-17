@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuctionOnline.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20200612023734_abc")]
+    [Migration("20200616095940_abc")]
     partial class abc
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.4")
+                .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -111,8 +111,8 @@ namespace AuctionOnline.Migrations
                     b.Property<DateTime?>("BidEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("BidIncrementDefinitionId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("BidIncrement")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<DateTime?>("BidStartDate")
                         .HasColumnType("datetime2");
@@ -136,29 +136,9 @@ namespace AuctionOnline.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.HasIndex("BidIncrementDefinitionId");
-
                     b.HasIndex("ItemId");
 
                     b.ToTable("Bids");
-                });
-
-            modelBuilder.Entity("AuctionOnline.Models.BidIncrementDefinition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("BidIncrement")
-                        .HasColumnType("decimal(18,1)");
-
-                    b.Property<decimal>("PriceRange")
-                        .HasColumnType("decimal(18,1)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BidIncrementDefinitions");
                 });
 
             modelBuilder.Entity("AuctionOnline.Models.Category", b =>
@@ -273,12 +253,6 @@ namespace AuctionOnline.Migrations
                     b.HasOne("AuctionOnline.Models.Account", "Account")
                         .WithMany("Bids")
                         .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AuctionOnline.Models.BidIncrementDefinition", "BidIncrementDefinition")
-                        .WithMany()
-                        .HasForeignKey("BidIncrementDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
