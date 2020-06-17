@@ -51,11 +51,18 @@
                         <i class="fas fa-bell" style="font-size:20px;"></i>
                     </a>
                     <div id="notificationContainer">
-                        <div id="notificationTitle">Notifications</div>
+                        <div id="notificationTitle">
+                            <div style="float:left;">Notifications</div>
+                            <div style="text-align:right;font-weight:normal;" id="markasread">
+                                <a asp-controller="ManageExpiredItem" asp-action="MarkAllAsRead">Mark all as read</a>
+                            </div>
+                        </div>
                         <div id="notificationsBody" class="notifications">
                             <ul style="list-style-type:none;margin-block-start:-20px;" id="notificationBody"></ul>
                         </div>
-                        <div id="notificationFooter"><a href="#">See All</a></div>
+                        <div id="notificationFooter">
+                            <a asp-controller="ManageExpiredItem" asp-action="Index">See All</a>
+                        </div>
                     </div>
 
                 </li>

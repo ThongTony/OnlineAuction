@@ -96,3 +96,7 @@
 .linebg {
     background-color: #e9eaed;
 }
+
+#markasread a:hover {
+    text-decoration: underline;
+}
