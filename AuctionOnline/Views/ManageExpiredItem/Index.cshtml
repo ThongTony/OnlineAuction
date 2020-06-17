@@ -1,0 +1,48 @@
+﻿@model IEnumerable<AuctionOnline.Models.ExpiredItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr style="width:60px;">
+            <th style="width:60px;">
+                @Html.DisplayNameFor(model => model.ItemId)
+            </th>
+            <th style="width:60px;">
+                @Html.DisplayNameFor(model => model.CurrentDate)
+            </th>
+            <th style="width:60px;">
+                @Html.DisplayNameFor(model => model.IsExpired)
+            </th>
+            <th style="width:60px;">
+                @Html.DisplayNameFor(model => model.IsSeen)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="width:60px;">
+                <td style="width:60px;">
+                    @Html.DisplayFor(modelItem => item.ItemId)
+                </td>
+                <td style="width:60px;">
+                    @Html.DisplayFor(modelItem => item.CurrentDate)
+                </td>
+                <td style="width:60px;">
+                    @Html.DisplayFor(modelItem => item.IsExpired)
+                </td>
+                <td style="width:60px;">
+                    @Html.DisplayFor(modelItem => item.IsSeen)
+                </td>
+                <td style="width:60px;">
+                    <a asp-controller="ManageExpiredItem" asp-action="DeleteExpiredItem" asp-route-productId="@item.Id"
+                       onclick="return confirm ('Are you sure want to delete item?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
 using AuctionOnline.Data;
+using AuctionOnline.Notifications;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace AuctionOnline
             services.AddDbContext<AuctionDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
             services.AddSession();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,9 +44,14 @@ namespace AuctionOnline
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<SignalRHub>("/signalRHub");
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}");
+                    pattern: "{controller=NotificationHome}/{action=Index}/{id?}");
             });
         }
     }

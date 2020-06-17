@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PagedList;
 
 namespace AuctionOnline.Controllers
@@ -32,7 +33,7 @@ namespace AuctionOnline.Controllers
             ViewBag.Item = db.Items.ToList();
             return View();
         }
-        
+
         [HttpGet]
         public IActionResult Add(int id)
         {
@@ -52,7 +53,7 @@ namespace AuctionOnline.Controllers
         {
             ViewBag.Item = "Failed";
             itemVM.CreatedAt = DateTime.Now;
-            
+
             if (itemVM != null)
             {
                 string fileName = await UploadAsync(itemVM.Photo, photoPath);
@@ -67,7 +68,7 @@ namespace AuctionOnline.Controllers
                     CreatedAt = itemVM.CreatedAt,
                     CategoryItems = new List<CategoryItem>()
                 };
-                
+
                 foreach (var id in itemVM.SelectedCategoryIds)
                 {
                     item.CategoryItems.Add(new CategoryItem
@@ -87,11 +88,11 @@ namespace AuctionOnline.Controllers
 
         private async Task<string> UploadAsync(IFormFile fileType, string path)
         {
-            
+
             string uniqueFileName = null;
 
             if (fileType != null)
-            {               
+            {
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, path);
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + fileType.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -131,11 +132,11 @@ namespace AuctionOnline.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            ViewBag.isBreadCrumb = true;
             ViewBag.DetailItem = db.Items.Find(id);
-
             var accountId = db.Items.Where(a => a.Id == id).Select(a => a.AccountId);
             ViewBag.Account = db.Accounts.Find(accountId);
             return View();
@@ -154,14 +155,13 @@ namespace AuctionOnline.Controllers
 
         public async Task<IActionResult> ListedByCategory(int id)
         {
-            ViewBag.isBreadCrumb = true;
-            var itemId = db.CategoryItems.Where(ci => ci.CategoryId == id).Select(ci => ci.ItemId);
-            //ViewBag.Items = db.Items.Where(i => i.Id == itemId).ToList();
+            //var category = db.Categories.SingleOrDefault(i => i.Id == id);
+            ViewBag.Item = db.Items.FromSqlRaw(
+                $"Select i.* from Categories c, CategoryItems ci, Items i where c.Id = ci.CategoryId and i.Id = ci.ItemId and c.Id = " + id);
             return View();
         }
         public async Task<IActionResult> ListInShop(int id)
         {
-            ViewBag.isBreadCrumb = true;
             ViewBag.Account = db.Accounts.Find(id);
             ViewBag.Items = db.Items.Where(i => i.AccountId == id).ToList();
             return View();
