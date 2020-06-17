@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http;
+@{
     var user = ViewBag.User;
 }
 <nav class="navbar navbar-default navbar-fixed-top navbar-md">
@@ -34,28 +35,53 @@
             </div>
 
             <ul style="padding-top:5px" class="nav navbar-nav navbar-right">
+                @if ((@Context.Session.GetString("username") != null))
+                {
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-sign-in"></i>
+                            Welcome
+                            <span style="color:blue;font-weight:bold">@Context.Session.GetString("username")</span>
+                        </a>
+                    </li>
+                }
                 <li>
                     <a id="pick-location" href="javascript:;" data-toggle="modal" data-target="#pick-location-modal">
                         <i class="fa fa-map-marker"></i>
-                        Toàn Quốc
+                        Notication
                     </a>
                 </li>
 
                 <li>
                     <a href="/user/action/login">
                         <i class="fa fa-sign-in"></i>
-                        Create a shop
+                        Add new item
                     </a>
                 </li>
 
                 <li>
-                    @*<a asp-controller="item" asp-action="Add" asp-route-id="@user.Id" style="margin:7px 5px !important" class="hasbtn lean ta-center">*@
-                    <a asp-controller="item" asp-action="Add" style="margin:7px 5px !important" class="hasbtn lean ta-center">
-                        <btn class="btn btn-success">
-                            <i class="fa fa-pencil-square-o"></i>
-                            Sell an item
-                        </btn>
-                    </a>
+                    @if (@Context.Session.GetString("username") == null)
+                    {
+
+                        @*<a asp-controller="item" asp-action="Add" asp-route-id="@user.Id" style="margin:7px 5px !important" class="hasbtn lean ta-center">*@
+                        <a asp-controller="account" asp-action="login" style="margin:7px 5px !important" class="hasbtn lean ta-center">
+                            <btn class="btn btn-success">
+                                <i class="fa fa-pencil-square-o"></i>
+                                Login
+                            </btn>
+                        </a>
+                    }
+                    else
+                    {
+
+                        <a asp-controller="account" asp-action="logout" style="margin:7px 5px !important" class="hasbtn lean ta-center">
+                            <btn class="btn btn-success">
+                                <i class="fa fa-pencil-square-o"></i>
+                                Logout
+                            </btn>
+                        </a>
+                    }
+
                 </li>
             </ul>
         </div>
@@ -209,32 +235,32 @@
 </div>
 
 @*if (@Context.Session.GetString("username") == null)
-            {
+    {
 
-                <div class="col-md-2 my-account-navbar">
-                    <ul>
-                        <!-- logged out -->
-                        <li id="nav-menu-login" class="ibid-logoin">
-                            <a href="#" data-modal="modal-log-in" class="modeltheme-trigger">
-                                Sign In
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            }
-            else
-            {
-                <div class="col-md-2 my-account-navbar">
-                    <ul>
-                        <!-- logged out -->
-                        <li id="nav-menu-login" class="ibid-logoin">
-                            <a asp-action="Logout" asp-controller="Account">
-                                Log Out
-                            </a>
-                        </li>
-                        <li id="nav-menu-login" class="ibid-logoin">
-                            <h5 style="color:#2695ff">Welcome @Context.Session.GetString("username")</h5>
-                        </li>
-                    </ul>
-                </div>
-            }*@
+        <div class="col-md-2 my-account-navbar">
+            <ul>
+                <!-- logged out -->
+                <li id="nav-menu-login" class="ibid-logoin">
+                    <a href="#" data-modal="modal-log-in" class="modeltheme-trigger">
+                        Sign In
+                    </a>
+                </li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-2 my-account-navbar">
+            <ul>
+                <!-- logged out -->
+                <li id="nav-menu-login" class="ibid-logoin">
+                    <a asp-action="Logout" asp-controller="Account">
+                        Log Out
+                    </a>
+                </li>
+                <li id="nav-menu-login" class="ibid-logoin">
+                    <h5 style="color:#2695ff">Welcome @Context.Session.GetString("username")</h5>
+                </li>
+            </ul>
+        </div>
+    }*@
