@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuctionOnline.Migrations
 {
-    public partial class abc : Migration
+    public partial class khoa1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,29 +14,38 @@ namespace AuctionOnline.Migrations
             migrationBuilder.DropTable(
                 name: "AccountItems");
 
+            migrationBuilder.DropTable(
+                name: "BidIncrementDefinitions");
+
             migrationBuilder.DropIndex(
                 name: "IX_Items_BidIncrementDefinitionId",
-                table: "Items");
-
-            migrationBuilder.DropColumn(
-                name: "BidEndDate",
                 table: "Items");
 
             migrationBuilder.DropColumn(
                 name: "BidIncrementDefinitionId",
                 table: "Items");
 
-            migrationBuilder.DropColumn(
-                name: "BidStartDate",
-                table: "Items");
-
-            migrationBuilder.DropColumn(
-                name: "BidStatus",
-                table: "Items");
-
-            migrationBuilder.DropColumn(
+            migrationBuilder.AlterColumn<decimal>(
                 name: "MinimumBid",
-                table: "Items");
+                table: "Items",
+                type: "decimal(18,1)",
+                nullable: true,
+                oldClrType: typeof(decimal),
+                oldType: "decimal(18,1)");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "BidStartDate",
+                table: "Items",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "BidEndDate",
+                table: "Items",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
 
             migrationBuilder.AddColumn<int>(
                 name: "AccountId",
@@ -44,11 +53,18 @@ namespace AuctionOnline.Migrations
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<decimal>(
+                name: "BidIncrement",
+                table: "Items",
+                type: "decimal(18,1)",
+                nullable: false,
+                defaultValue: 0m);
+
+            migrationBuilder.AddColumn<bool>(
                 name: "Status",
                 table: "Items",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: false);
 
             migrationBuilder.AddColumn<string>(
                 name: "Address",
@@ -63,12 +79,7 @@ namespace AuctionOnline.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ItemId = table.Column<int>(nullable: false),
                     AccountId = table.Column<int>(nullable: false),
-                    BidStatus = table.Column<bool>(nullable: false),
-                    BidStartDate = table.Column<DateTime>(nullable: true),
-                    BidEndDate = table.Column<DateTime>(nullable: true),
-                    MinimumBid = table.Column<decimal>(type: "decimal(18,1)", nullable: true),
                     CurrentBid = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    BidIncrementDefinitionId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -81,12 +92,6 @@ namespace AuctionOnline.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bids_BidIncrementDefinitions_BidIncrementDefinitionId",
-                        column: x => x.BidIncrementDefinitionId,
-                        principalTable: "BidIncrementDefinitions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Bids_Items_ItemId",
                         column: x => x.ItemId,
                         principalTable: "Items",
@@ -94,20 +99,50 @@ namespace AuctionOnline.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Accounts",
-                columns: new[] { "Id", "Address", "CreatedAt", "Email", "Fullname", "IsBlocked", "Password", "RoleId", "Status", "Username" },
-                values: new object[] { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user1@gmail.com", "User 1", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 1, true, "user1" });
+            migrationBuilder.CreateTable(
+                name: "ExpiredItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ItemId = table.Column<int>(nullable: false),
+                    CurrentDate = table.Column<DateTime>(nullable: false),
+                    IsExpired = table.Column<bool>(nullable: false),
+                    IsSeen = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpiredItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExpiredItems_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "Accounts",
                 columns: new[] { "Id", "Address", "CreatedAt", "Email", "Fullname", "IsBlocked", "Password", "RoleId", "Status", "Username" },
-                values: new object[] { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user2@gmail.com", "User 2", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 1, true, "user2" });
+                values: new object[,]
+                {
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user1@gmail.com", "User 1", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 1, true, "user1" },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user2@gmail.com", "User 2", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 1, true, "user2" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
                 values: new object[] { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smarts", 2 });
+
+            migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "Id", "AccountId", "BidEndDate", "BidIncrement", "BidStartDate", "BidStatus", "CreatedAt", "Description", "Document", "MinimumBid", "Photo", "Price", "Status", "Title" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2020, 6, 23, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(4791), 2m, new DateTime(2020, 6, 20, 8, 45, 46, 728, DateTimeKind.Local).AddTicks(1378), 1, new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(6752), "description 1", null, 7m, null, 5m, true, "product 1" },
+                    { 2, 1, new DateTime(2020, 6, 23, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9770), 2m, new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9751), 1, new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9810), "description 2", null, 7m, null, 10m, true, "product 2" },
+                    { 3, 1, new DateTime(2020, 6, 23, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9852), 2m, new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9850), 1, new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9855), "description 3", null, 7m, null, 15m, true, "product 3" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -125,13 +160,13 @@ namespace AuctionOnline.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bids_BidIncrementDefinitionId",
-                table: "Bids",
-                column: "BidIncrementDefinitionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Bids_ItemId",
                 table: "Bids",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpiredItems_ItemId",
+                table: "ExpiredItems",
                 column: "ItemId");
 
             migrationBuilder.AddForeignKey(
@@ -151,6 +186,9 @@ namespace AuctionOnline.Migrations
 
             migrationBuilder.DropTable(
                 name: "Bids");
+
+            migrationBuilder.DropTable(
+                name: "ExpiredItems");
 
             migrationBuilder.DropIndex(
                 name: "IX_Items_AccountId",
@@ -172,12 +210,31 @@ namespace AuctionOnline.Migrations
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
+                table: "Items",
+                keyColumn: "Id",
+                keyValue: 1);
+
+            migrationBuilder.DeleteData(
+                table: "Items",
+                keyColumn: "Id",
+                keyValue: 2);
+
+            migrationBuilder.DeleteData(
+                table: "Items",
+                keyColumn: "Id",
+                keyValue: 3);
+
+            migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
                 keyValue: 3);
 
             migrationBuilder.DropColumn(
                 name: "AccountId",
+                table: "Items");
+
+            migrationBuilder.DropColumn(
+                name: "BidIncrement",
                 table: "Items");
 
             migrationBuilder.DropColumn(
@@ -188,12 +245,30 @@ namespace AuctionOnline.Migrations
                 name: "Address",
                 table: "Accounts");
 
-            migrationBuilder.AddColumn<DateTime>(
+            migrationBuilder.AlterColumn<decimal>(
+                name: "MinimumBid",
+                table: "Items",
+                type: "decimal(18,1)",
+                nullable: false,
+                oldClrType: typeof(decimal),
+                oldType: "decimal(18,1)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "BidStartDate",
+                table: "Items",
+                type: "datetime2",
+                nullable: false,
+                oldClrType: typeof(DateTime),
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<DateTime>(
                 name: "BidEndDate",
                 table: "Items",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                oldClrType: typeof(DateTime),
+                oldNullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "BidIncrementDefinitionId",
@@ -201,27 +276,6 @@ namespace AuctionOnline.Migrations
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "BidStartDate",
-                table: "Items",
-                type: "datetime2",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-            migrationBuilder.AddColumn<int>(
-                name: "BidStatus",
-                table: "Items",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<decimal>(
-                name: "MinimumBid",
-                table: "Items",
-                type: "decimal(18,1)",
-                nullable: false,
-                defaultValue: 0m);
 
             migrationBuilder.CreateTable(
                 name: "AccountItems",
@@ -247,6 +301,20 @@ namespace AuctionOnline.Migrations
                         principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BidIncrementDefinitions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BidIncrement = table.Column<decimal>(type: "decimal(18,1)", nullable: false),
+                    PriceRange = table.Column<decimal>(type: "decimal(18,1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BidIncrementDefinitions", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(

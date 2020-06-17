@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Facebook Style Notification Popup CSS Demo 9lessons.info</title>
+    <link rel="stylesheet" href="~/notifications/css/style.css">
+    <script src="~/notifications/lib/jquery/dist/jquery.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#notificationLink").click(function () {
+                $("#notificationContainer").fadeToggle(300);
+                $("#notification_count").fadeOut("slow");
+                return false;
+            });
+
+            //Document Click
+            $(document).click(function () {
+                $("#notificationContainer").hide();
+            });
+            //Popup Click
+            $("#notificationContainer").click(function () {
+                return false
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+
+    @RenderBody()
+
+    <script src="~/notifications/lib/signalR/browser/signalr.js"></script>
+    <script src="~/notifications/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>

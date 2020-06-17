@@ -15,7 +15,6 @@ using PagedList;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("item")]
     public class ItemController : Controller
     {
         private readonly AuctionDbContext db;
@@ -133,6 +132,8 @@ namespace AuctionOnline.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             ViewBag.DetailItem = db.Items.Find(id);
