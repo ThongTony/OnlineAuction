@@ -59,54 +59,69 @@ namespace AuctionOnline.Controllers
         public IActionResult Create()
         {
             ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
-            return View();
+            var cateVM = new CategoryVM();
+            cateVM.Categories = db.Categories.Select(a =>
+                                  new SelectListItem
+                                  {
+                                      Value = a.Id.ToString(),
+                                      Text = a.Name
+                                  }).ToList();
+            return View(cateVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,CreatedAt,ParentId")] Category category)
+        public async Task<IActionResult> Create(/*[Bind("Id,Name,CreatedAt,ParentId")]*/ CategoryVM categoryVM)
         {
 
             ViewBag.CategoryAdd = "Failed";
-            category.CreatedAt = DateTime.Now;
-            if (category != null)
+            categoryVM.CreatedAt = DateTime.Now;
+            if (categoryVM != null)
             {
+                var category = new Category
+                {
+                    Name = categoryVM.Name,
+                    ParentId = categoryVM.ParentId,
+                    CreatedAt = categoryVM.CreatedAt
+                };
                 db.Add(category);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
-            var categoryVM = new CategoryVM
-            {
-                Name = category.Name,
-                ParentId = category.ParentId,
-                CreatedAt = category.CreatedAt
-
-            };
-
+            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", categoryVM.ParentId);
             return View(categoryVM);
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
             var category = await db.Categories.FindAsync(id);
+            var categoryVM = new CategoryVM()
+            {
+
+                Name = category.Name,
+                ParentId = category.ParentId,
+                CreatedAt = category.CreatedAt
+
+            };
+            categoryVM.Categories = db.Categories.Select(a =>
+                                  new SelectListItem
+                                  {
+                                      Value = a.Id.ToString(),
+                                      Text = a.Name
+                                  }).ToList();
             if (category == null)
             {
                 return NotFound();
             }
 
-            var categoryVM = new CategoryVM()
-            {
-                Name = category.Name,
-                ParentId = category.ParentId,
-                CreatedAt = category.CreatedAt
-            };
-            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", categoryVM.ParentId);
+
+            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
             return View(categoryVM);
         }
 

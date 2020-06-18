@@ -1,4 +1,5 @@
 ﻿using AuctionOnline.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace AuctionOnline.ViewModels
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
         public int? ParentId { get; set; }
+        public List<SelectListItem> Categories { get; set; }
         public virtual Category Parent { get; set; }
         public virtual List<Category> Children { get; set; }
         public ICollection<CategoryItem> CategoryItems { get; set; }
