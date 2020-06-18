@@ -20,6 +20,7 @@ namespace AuctionOnline.Controllers
         }
         public IActionResult Index()
         {
+            // Nhớ filter theo AccountId
             return View(dbContext.ExpiredItems.ToList());
         }
 
@@ -32,5 +33,21 @@ namespace AuctionOnline.Controllers
             hubContext.Clients.All.SendAsync("refreshNotifications");
             return RedirectToAction("index");
         }
+
+        [HttpGet]
+        public IActionResult MarkAllAsRead()
+        {
+            // Nhớ filter theo AccountId
+            var items = dbContext.ExpiredItems;
+            foreach (var item in items)
+            {
+                item.IsSeen = true;
+            }
+
+            dbContext.SaveChanges();
+            hubContext.Clients.All.SendAsync("refreshNotifications");
+            return Ok();
+        }
+
     }
 }
