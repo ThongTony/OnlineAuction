@@ -19,10 +19,15 @@ namespace AuctionOnline.Controllers
             db = _category;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             var allCategory = db.Categories.Include(c => c.Parent);
-            return View(await allCategory.ToListAsync());
+            //Map model to viewmodels
+            var viewmodel = new ViewModel()
+            {
+                CategoryViewModel = await allCategory.ToListAsync()
+            };
+            return View(viewmodel);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -39,8 +44,15 @@ namespace AuctionOnline.Controllers
             {
                 return NotFound();
             }
+            var categoryVM = new CategoryVM
+            {
+                Name = category.Name,
+                ParentId = category.ParentId,
+                CreatedAt = category.CreatedAt
 
-            return View(category);
+            };
+
+            return View(categoryVM);
         }
 
         [HttpGet]
@@ -54,7 +66,7 @@ namespace AuctionOnline.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,CreatedAt,ParentId")] Category category)
         {
-            
+
             ViewBag.CategoryAdd = "Failed";
             category.CreatedAt = DateTime.Now;
             if (category != null)
@@ -64,14 +76,14 @@ namespace AuctionOnline.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
-            CategoryVM categoryVM = new CategoryVM
+            var categoryVM = new CategoryVM
             {
                 Name = category.Name,
                 ParentId = category.ParentId,
                 CreatedAt = category.CreatedAt
 
             };
-            
+
             return View(categoryVM);
         }
 
@@ -87,14 +99,26 @@ namespace AuctionOnline.Controllers
             {
                 return NotFound();
             }
-            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
-            return View(category);
+
+            var categoryVM = new CategoryVM()
+            {
+                Name = category.Name,
+                ParentId = category.ParentId,
+                CreatedAt = category.CreatedAt
+            };
+            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", categoryVM.ParentId);
+            return View(categoryVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CreatedAt,ParentId")] Category category)
+        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Name,CreatedAt,ParentId")]*/ CategoryVM categoryVM, Category category)
         {
+            //Map model to viewmodels
+            category.Name = categoryVM.Name;
+            category.CreatedAt = categoryVM.CreatedAt;
+            category.ParentId = categoryVM.ParentId;
+
             if (id != category.Id)
             {
                 return NotFound();
@@ -122,8 +146,8 @@ namespace AuctionOnline.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
-            return View(category);
+            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", categoryVM.ParentId);
+            return View(categoryVM);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -140,7 +164,14 @@ namespace AuctionOnline.Controllers
                 return NotFound();
             }
 
-            return View(category);
+            var categoryVM = new CategoryVM()
+            {
+                Name = category.Name,
+                CreatedAt = category.CreatedAt,
+                ParentId = category.ParentId
+            };
+
+            return View(categoryVM);
         }
 
         [HttpPost, ActionName("Delete")]

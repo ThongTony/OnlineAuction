@@ -35,8 +35,6 @@ namespace AuctionOnline.Controllers
                 }
                 cate.CategoryItems = categoryItems;
             }
-
-
             return View(categories);
         }
         public IActionResult Logout()
