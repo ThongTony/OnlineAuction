@@ -129,25 +129,39 @@ namespace AuctionOnline.Migrations
                     { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user2@gmail.com", "User 2", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 1, true, "user2" }
                 });
 
+            migrationBuilder.UpdateData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "CreatedAt",
+                value: new DateTime(2020, 6, 17, 15, 0, 46, 172, DateTimeKind.Local).AddTicks(4225));
+
+            migrationBuilder.UpdateData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "CreatedAt",
+                value: new DateTime(2020, 6, 17, 15, 0, 46, 172, DateTimeKind.Local).AddTicks(4346));
+
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
-                values: new object[] { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smarts", 2 });
+                values: new object[] { 3, new DateTime(2020, 6, 17, 15, 0, 46, 172, DateTimeKind.Local).AddTicks(4391), "Smarts", 2 });
 
             migrationBuilder.InsertData(
                 table: "Items",
                 columns: new[] { "Id", "AccountId", "BidEndDate", "BidIncrement", "BidStartDate", "BidStatus", "CreatedAt", "Description", "Document", "MinimumBid", "Photo", "Price", "Status", "Title" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2020, 6, 20, 12, 11, 8, 29, DateTimeKind.Local).AddTicks(9318), 2m, new DateTime(2020, 6, 17, 12, 11, 8, 28, DateTimeKind.Local).AddTicks(8952), 1, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(547), "description 1", null, 7m, null, 5m, true, "product 1" },
-                    { 2, 1, new DateTime(2020, 6, 20, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2383), 2m, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2366), 1, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2417), "description 2", null, 7m, null, 10m, true, "product 2" },
-                    { 3, 1, new DateTime(2020, 6, 20, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2452), 2m, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2450), 1, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2454), "description 3", null, 7m, null, 15m, true, "product 3" }
+                    { 1, 1, new DateTime(2020, 6, 20, 15, 0, 45, 955, DateTimeKind.Local).AddTicks(9157), 2m, new DateTime(2020, 6, 17, 15, 0, 45, 955, DateTimeKind.Local).AddTicks(446), 1, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(297), "description 1", null, 7m, null, 5m, true, "product 1" },
+                    { 2, 1, new DateTime(2020, 6, 20, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2017), 2m, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2002), 1, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2040), "description 2", null, 7m, null, 10m, true, "product 2" },
+                    { 3, 1, new DateTime(2020, 6, 20, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2068), 2m, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2067), 1, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2070), "description 3", null, 7m, null, 15m, true, "product 3" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
-                values: new object[] { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Laptops & Macs", 3 });
+                values: new object[] { 4, new DateTime(2020, 6, 17, 15, 0, 46, 172, DateTimeKind.Local).AddTicks(4469), "Laptops & Macs", 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_AccountId",
@@ -316,6 +330,20 @@ namespace AuctionOnline.Migrations
                 {
                     table.PrimaryKey("PK_BidIncrementDefinitions", x => x.Id);
                 });
+
+            migrationBuilder.UpdateData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "CreatedAt",
+                value: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.UpdateData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "CreatedAt",
+                value: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_BidIncrementDefinitionId",

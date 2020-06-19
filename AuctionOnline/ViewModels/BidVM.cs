@@ -14,8 +14,6 @@ namespace AuctionOnline.ViewModels
         public DateTime? BidStartDate { get; set; }
         public DateTime? BidEndDate { get; set; }
         public decimal? MinimumBid { get; set; }
-        //public int? BidIncrementDefinitionId { get; set; }
-        //public BidIncrementDefinition BidIncrementDefinition { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

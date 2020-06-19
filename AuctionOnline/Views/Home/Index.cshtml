@@ -1,4 +1,5 @@
-﻿@{
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -12,14 +13,14 @@
     <div class="spacer"></div>
     <div style="margin-bottom:10px" class="panel panel-default">
         <div class="topiclist panel-body">
-            @foreach (var category in ViewBag.Categories)
+            @foreach (var category in Model.Categories)
             {
                 <h2 class="section-header">
-                    <a href="/toan-quoc/noi-that-gia-dinh">@category.Name</a>
-                    <a href="/toan-quoc/noi-that-gia-dinh" style="position:absolute;right:10px;text-align:right">See More &raquo;</a>
+                    <a>@category.Name</a>
+                    <a asp-controller="Item" asp-action="ListedByCategory" asp-route-id="@category.Id" style="position:absolute;right:10px;text-align:right">See More &raquo;</a>
                 </h2>
                 <div class="clearfix"></div>
-                @foreach (var item in ViewBag.Items)
+                @foreach (var ci in category.CategoryItems)
                 {
                     <div class="topiclist-wrapper">
 
@@ -28,7 +29,7 @@
                                 <div class="col-md-4 col-sm-3 col-xs-5">
                                     <div style="padding-left:15px" class="row">
                                         <a href="/tp-ho-chi-minh/ghe-aston-co-tay-110.html" class="thumb">
-                                            <img src="~/images/items/@item.Photo">
+                                            <img src="~/images/items/@ci.Item.Photo">
                                         </a>
                                     </div>
                                 </div>
@@ -36,7 +37,7 @@
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h3>
-                                                <a href="/tp-ho-chi-minh/ghe-aston-co-tay-110.html" class="f-black">@item.Title</a>
+                                                <a href="/tp-ho-chi-minh/ghe-aston-co-tay-110.html" class="f-black">@ci.Item.Title</a>
                                             </h3>
                                             <!--.infoline
                                                                         if !$byUser
@@ -47,11 +48,16 @@
                                                                             span.f-grey=$i->up_date_h
                                             -->
                                         </div>
-                                        <div class="col-sm-3 f-red text-right">
+                                        <div class="col-sm-3">
+                                            <div class="col-sm-6 f-red text-right">
 
-                                            <strong>@item.Price</strong>
-                                            <div class="text-nowrap">
+                                                <strong>@ci.Item.Price</strong>
+                                                <div class="text-nowrap">
 
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button asp-controller="Item" asp-action="Details" asp-route-id="@ci.Item.Id">Go Bid</button>
                                             </div>
                                             <div class="spacer"></div>
                                         </div>

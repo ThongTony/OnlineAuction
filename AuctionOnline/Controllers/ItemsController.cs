@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
 
-namespace AuctionOnline.Controllers
+namespace AuctionOnline
 {
     public class ItemsController : Controller
     {
@@ -22,7 +22,7 @@ namespace AuctionOnline.Controllers
         // GET: Items
         public async Task<IActionResult> Index()
         {
-            var auctionDbContext = _context.Items.Include(i => i.BidIncrementDefinition);
+            var auctionDbContext = _context.Items.Include(i => i.Account);
             return View(await auctionDbContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace AuctionOnline.Controllers
             }
 
             var item = await _context.Items
-                .Include(i => i.BidIncrementDefinition)
+                .Include(i => i.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
@@ -48,7 +48,7 @@ namespace AuctionOnline.Controllers
         // GET: Items/Create
         public IActionResult Create()
         {
-            ViewData["BidIncrementDefinitionId"] = new SelectList(_context.BidIncrementDefinitions, "Id", "Id");
+            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace AuctionOnline.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Price,Status,Photo,Document,BidStartDate,BidEndDate,MinimumBid,BidIncrementDefinitionId,CreatedAt")] Item item)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Price,Status,Photo,Document,AccountId,CreatedAt")] Item item)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace AuctionOnline.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BidIncrementDefinitionId"] = new SelectList(_context.BidIncrementDefinitions, "Id", "Id", item.BidIncrementDefinitionId);
+            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", item.AccountId);
             return View(item);
         }
 
@@ -82,7 +82,7 @@ namespace AuctionOnline.Controllers
             {
                 return NotFound();
             }
-            ViewData["BidIncrementDefinitionId"] = new SelectList(_context.BidIncrementDefinitions, "Id", "Id", item.BidIncrementDefinitionId);
+            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", item.AccountId);
             return View(item);
         }
 
@@ -91,7 +91,7 @@ namespace AuctionOnline.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,Status,Photo,Document,BidStartDate,BidEndDate,MinimumBid,BidIncrementDefinitionId,CreatedAt")] Item item)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Price,Status,Photo,Document,AccountId,CreatedAt")] Item item)
         {
             if (id != item.Id)
             {
@@ -118,7 +118,7 @@ namespace AuctionOnline.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BidIncrementDefinitionId"] = new SelectList(_context.BidIncrementDefinitions, "Id", "Id", item.BidIncrementDefinitionId);
+            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", item.AccountId);
             return View(item);
         }
 
@@ -131,7 +131,7 @@ namespace AuctionOnline.Controllers
             }
 
             var item = await _context.Items
-                .Include(i => i.BidIncrementDefinition)
+                .Include(i => i.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
