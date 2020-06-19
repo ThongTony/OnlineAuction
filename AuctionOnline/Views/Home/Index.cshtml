@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AuctionOnline.Models.Category>
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,7 +13,7 @@
     <div class="spacer"></div>
     <div style="margin-bottom:10px" class="panel panel-default">
         <div class="topiclist panel-body">
-            @foreach (var category in Model)
+            @foreach (var category in Model.Categories)
             {
                 <h2 class="section-header">
                     <a>@category.Name</a>

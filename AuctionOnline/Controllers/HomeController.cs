@@ -15,15 +15,10 @@ namespace AuctionOnline.Controllers
         {
             db = _db;
         }
-        public IActionResult Index(/*CategoryVM categoryVM*/)
+        public IActionResult Index()
         {
             ViewBag.IsHome = true;
-            //var category = new Category
-            //{
-            //    Name = categoryVM.Name,
-            //    ParentId = categoryVM.ParentId,
-            //    CategoryItems = new List<CategoryItem>()
-            //};
+
             var categories = db.Categories.Where(e => e.ParentId == null).ToList();
             foreach (var cate in categories)
             {
@@ -35,7 +30,12 @@ namespace AuctionOnline.Controllers
                 }
                 cate.CategoryItems = categoryItems;
             }
-            return View(categories);
+            var layoutVM = new LayoutViewModel()
+            {
+                Categories = categories
+            };
+
+            return View(layoutVM);
         }
         public IActionResult Logout()
         {

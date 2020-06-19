@@ -24,6 +24,7 @@
     <!-- link(href=URL_ROOT + 'library/font_awesome/css/font-awesome.min.css', rel='stylesheet')-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <script src="~/library/javascript/jquery-3.1.1.min.js"></script>
+    @*<script src="~/notifications/lib/jquery/dist/jquery.js"></script>*@
     <script src="~/library/javascript/jquery.cookie.js"></script>
     <script src="~/library/javascript/nprogress/nprogress.js"></script>
     <script src="~/library/javascript/push.min.js"></script>
@@ -33,6 +34,29 @@
     <noscript>
         <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=274749230065889&amp;ev=PageView&amp;noscript=1">
     </noscript>
+
+    <link rel="stylesheet" href="~/notifications/css/style.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#notificationLink").click(function () {
+                $("#notificationContainer").fadeToggle(300);
+                $("#notification_count").fadeOut("slow");
+                return false;
+            });
+
+            //Document Click
+            $(document).click(function () {
+                $("#notificationContainer").hide();
+            });
+            //Popup Click
+            $("#notificationContainer").click(function () {
+                return false
+            });
+
+        });
+    </script>
+
 </head>
 <body>
     <div id="fb-root"></div>
@@ -136,6 +160,10 @@
             </div>
         </div>
     </div>
+
+    <script src="~/notifications/lib/signalR/browser/signalr.js"></script>
+    <script src="~/notifications/js/site.js" asp-append-version="true"></script>
+
 </body>
 </html>
 
