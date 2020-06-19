@@ -1,5 +1,6 @@
 ﻿using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,12 +22,9 @@ namespace AuctionOnline.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var allCategory = db.Categories.Include(c => c.Parent);
-            //Map model to viewmodels
-            var viewmodel = new ViewModel()
-            {
-                CategoryViewModel = await allCategory.ToListAsync()
-            };
+            var categories = db.Categories.Include(c => c.Parent);
+            var viewmodel = new LayoutViewModel();
+            viewmodel.CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList());
             return View(viewmodel);
         }
 
@@ -44,13 +42,7 @@ namespace AuctionOnline.Controllers
             {
                 return NotFound();
             }
-            var categoryVM = new CategoryVM
-            {
-                Name = category.Name,
-                ParentId = category.ParentId,
-                CreatedAt = category.CreatedAt
-
-            };
+            var categoryVM = CategoryUtility.MapModeltoVM(category);
 
             return View(categoryVM);
         }
@@ -59,31 +51,27 @@ namespace AuctionOnline.Controllers
         public IActionResult Create()
         {
             ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
-            var cateVM = new CategoryVM();
-            cateVM.Categories = db.Categories.Select(a =>
-                                  new SelectListItem
-                                  {
-                                      Value = a.Id.ToString(),
-                                      Text = a.Name
-                                  }).ToList();
-            return View(cateVM);
+            var viewmodel = new LayoutViewModel();
+            //var cateVM = new CategoryVM();
+            viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
+                                   new SelectListItem
+                                   {
+                                       Value = a.Id.ToString(),
+                                       Text = a.Name
+                                   }).ToList();
+            return View(viewmodel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(/*[Bind("Id,Name,CreatedAt,ParentId")]*/ CategoryVM categoryVM)
+        public async Task<IActionResult> Create(CategoryVM categoryVM)
         {
 
             ViewBag.CategoryAdd = "Failed";
             categoryVM.CreatedAt = DateTime.Now;
             if (categoryVM != null)
             {
-                var category = new Category
-                {
-                    Name = categoryVM.Name,
-                    ParentId = categoryVM.ParentId,
-                    CreatedAt = categoryVM.CreatedAt
-                };
+                var category = CategoryUtility.MapVMtoModel(categoryVM);
                 db.Add(category);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -92,24 +80,18 @@ namespace AuctionOnline.Controllers
             return View(categoryVM);
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
-
             if (id == null)
             {
                 return NotFound();
             }
 
             var category = await db.Categories.FindAsync(id);
-            var categoryVM = new CategoryVM()
-            {
-
-                Name = category.Name,
-                ParentId = category.ParentId,
-                CreatedAt = category.CreatedAt
-
-            };
-            categoryVM.Categories = db.Categories.Select(a =>
+            var layoutViewModel = new LayoutViewModel();
+            layoutViewModel.CategoryVM = CategoryUtility.MapModeltoVM(category);
+            layoutViewModel.CategoryVM.Categories = db.Categories.Select(a =>
                                   new SelectListItem
                                   {
                                       Value = a.Id.ToString(),
@@ -119,27 +101,25 @@ namespace AuctionOnline.Controllers
             {
                 return NotFound();
             }
-
-
             ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
-            return View(categoryVM);
+            return View(layoutViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Name,CreatedAt,ParentId")]*/ CategoryVM categoryVM, Category category)
+        public async Task<IActionResult> Edit(int id, CategoryVM categoryVM)
         {
-            //Map model to viewmodels
-            category.Name = categoryVM.Name;
-            category.CreatedAt = categoryVM.CreatedAt;
-            category.ParentId = categoryVM.ParentId;
-
-            if (id != category.Id)
-            {
-                return NotFound();
-            }
             if (ModelState.IsValid)
             {
+                if (id != categoryVM.Id)
+                {
+                    return NotFound();
+                }
+                //Map model to viewmodels
+                var category = await db.Categories.FindAsync(id);
+                category.Name = categoryVM.Name;
+                category.ParentId = categoryVM.ParentId;
+
                 try
                 {
                     db.Update(category);
@@ -157,7 +137,6 @@ namespace AuctionOnline.Controllers
                         "Try again, and if the problem persists, " +
                         "see your system administrator.");
                     }
-
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -165,7 +144,7 @@ namespace AuctionOnline.Controllers
             return View(categoryVM);
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
@@ -179,14 +158,13 @@ namespace AuctionOnline.Controllers
                 return NotFound();
             }
 
-            var categoryVM = new CategoryVM()
+
+            var viewlayout = new LayoutViewModel()
             {
-                Name = category.Name,
-                CreatedAt = category.CreatedAt,
-                ParentId = category.ParentId
+                CategoryVM = CategoryUtility.MapModeltoVM(category)
             };
 
-            return View(categoryVM);
+            return View(viewlayout);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -248,5 +226,7 @@ namespace AuctionOnline.Controllers
         {
             return db.Categories.Any(e => e.Id == id);
         }
+
+
     }
 }

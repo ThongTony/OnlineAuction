@@ -77,35 +77,14 @@ namespace AuctionOnline.Controllers
                     {
                         CategoryId = id,
                         ItemId = item.Id
-
                     });
                 }
-
                 db.Items.Add(item);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(ListInShop));
             }
             ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id", itemVM.AccountId);
             return View(itemVM);
-        }
-
-        private async Task<string> UploadAsync(IFormFile fileType, string path)
-        {
-
-            string uniqueFileName = null;
-
-            if (fileType != null)
-            {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, path);
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + fileType.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                Directory.CreateDirectory(uploadsFolder);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await fileType.CopyToAsync(fileStream);
-                }
-            }
-            return uniqueFileName;
         }
 
         [HttpGet]
@@ -115,8 +94,18 @@ namespace AuctionOnline.Controllers
             {
                 return NotFound();
             }
-
-            var item = await db.Items.FindAsync(id);
+           
+            var item = await db.Items.FindAsync(id); 
+            //var itemVM = new ItemVM()
+            //{
+            //    Title = item.Title,
+            //    Price = item.Price,
+            //    AccountId = 1 /*itemVM.AccountId*/,
+            //    Photo = item.Photo,
+            //    Document = documentName,
+            //    CreatedAt = item.CreatedAt,
+            //    CategoryItems = new List<CategoryItem>()
+            //};
             if (item == null)
             {
                 return NotFound();
@@ -219,9 +208,28 @@ namespace AuctionOnline.Controllers
         public async Task<IActionResult> ListInShop()
         {
             var username = HttpContext.Session.GetString("username");
-            var account= db.Accounts.FirstOrDefault(a => a.Username.Equals(username));
+            var account = db.Accounts.FirstOrDefault(a => a.Username.Equals(username));
             ViewBag.Items = db.Items.Where(i => i.AccountId == account.Id).ToList();
             return View();
+        }
+
+        private async Task<string> UploadAsync(IFormFile fileType, string path)
+        {
+
+            string uniqueFileName = null;
+
+            if (fileType != null)
+            {
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, path);
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + fileType.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                Directory.CreateDirectory(uploadsFolder);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await fileType.CopyToAsync(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
 
         public async Task<IActionResult> Pagination(int page = 1, int pageSize = 5)

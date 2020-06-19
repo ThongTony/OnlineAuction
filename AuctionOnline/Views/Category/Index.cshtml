@@ -1,4 +1,4 @@
-﻿@model AuctionOnline.ViewModels.ViewModel    
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
     <!--IEnumerable<>-->
 
 @{
@@ -16,7 +16,7 @@
     <p>
         <a asp-action="Create">Create New</a>
     </p>
-    <table class="table" border="1">
+    <table class="table" border="1" align="center" style="text-align:center;">
         <thead>
             <tr>
                 <th>
@@ -24,7 +24,7 @@
                     Name
                 </th>
                 <th>
-                    Creating Date :&nbsp;
+                    Creating Date
                 </th>
                 <th>
                     @*@Html.DisplayNameFor(model => model.Parent)*@
@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.CategoryViewModel)
+            @foreach (var item in Model.CategoriesVM)
             {
                 <tr>
                     <td>
@@ -44,7 +44,15 @@
                         @Html.DisplayFor(modelItem => item.CreatedAt)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Parent.Id)
+                        @if (item.ParentId != null)
+                        {
+                            <p>@Html.DisplayFor(modelItem => item.Parent.Name)</p>
+                        }
+                        else
+                        {
+                            <p>None</p>
+                        }
+
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

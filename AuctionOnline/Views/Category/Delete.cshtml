@@ -1,4 +1,4 @@
-﻿@model AuctionOnline.ViewModels.CategoryVM
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
 
 @{
     Layout = null;
@@ -19,27 +19,27 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.CategoryVM.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.CategoryVM.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CreatedAt)
+            @Html.DisplayNameFor(model => model.CategoryVM.CreatedAt)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.CreatedAt)
+            @Html.DisplayFor(model => model.CategoryVM.CreatedAt)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Parent)
+            @Html.DisplayNameFor(model => model.CategoryVM.Parent)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Parent.Id)
+            @Html.DisplayFor(model => model.CategoryVM.Parent.Name)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="CategoryVM.Id" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
