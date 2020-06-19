@@ -35,7 +35,7 @@ namespace AuctionOnline.Controllers
         }
 
         [HttpGet]
-        public IActionResult MarkAllAsRead()
+        public async Task<IActionResult> MarkAllAsRead()
         {
             // Nhớ filter theo AccountId
             var items = dbContext.ExpiredItems;
@@ -44,8 +44,19 @@ namespace AuctionOnline.Controllers
                 item.IsSeen = true;
             }
 
+            dbContext.SaveChanges(); 
+            await hubContext.Clients.All.SendAsync("refreshNotifications");
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MarkNotificationAsRead(Guid id)
+        {
+            var item = dbContext.ExpiredItems.FirstOrDefault(x => x.Id == id);
+            item.IsSeen = true;
+
             dbContext.SaveChanges();
-            hubContext.Clients.All.SendAsync("refreshNotifications");
+            await hubContext.Clients.All.SendAsync("refreshNotifications");
             return Ok();
         }
 
