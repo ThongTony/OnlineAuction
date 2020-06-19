@@ -139,9 +139,9 @@ namespace AuctionOnline.Migrations
                 columns: new[] { "Id", "AccountId", "BidEndDate", "BidIncrement", "BidStartDate", "BidStatus", "CreatedAt", "Description", "Document", "MinimumBid", "Photo", "Price", "Status", "Title" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2020, 6, 20, 12, 11, 8, 29, DateTimeKind.Local).AddTicks(9318), 2m, new DateTime(2020, 6, 17, 12, 11, 8, 28, DateTimeKind.Local).AddTicks(8952), 1, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(547), "description 1", null, 7m, null, 5m, true, "product 1" },
-                    { 2, 1, new DateTime(2020, 6, 20, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2383), 2m, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2366), 1, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2417), "description 2", null, 7m, null, 10m, true, "product 2" },
-                    { 3, 1, new DateTime(2020, 6, 20, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2452), 2m, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2450), 1, new DateTime(2020, 6, 17, 12, 11, 8, 30, DateTimeKind.Local).AddTicks(2454), "description 3", null, 7m, null, 15m, true, "product 3" }
+                    { 1, 1, new DateTime(2020, 6, 22, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(5256), 2m, new DateTime(2020, 6, 19, 9, 14, 45, 857, DateTimeKind.Local).AddTicks(4794), 1, new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(6447), "description 1", null, 7m, null, 5m, true, "product 1" },
+                    { 2, 1, new DateTime(2020, 6, 22, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8160), 2m, new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8140), 1, new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8194), "description 2", null, 7m, null, 10m, true, "product 2" },
+                    { 3, 1, new DateTime(2020, 6, 22, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8230), 2m, new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8228), 1, new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8232), "description 3", null, 7m, null, 15m, true, "product 3" }
                 });
 
             migrationBuilder.InsertData(
