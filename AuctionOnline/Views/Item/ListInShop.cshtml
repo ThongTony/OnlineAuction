@@ -1,286 +1,117 @@
-﻿@{
+﻿@model System.Collections.Generic.List<AuctionOnline.ViewModels.ItemVM>;
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = ViewBag.Account;
 }
+<div class="row">
+    @await Component.InvokeAsync("Search")
+    <div class="spacer"></div>
+    <div style="margin-bottom:10px" class="panel panel-default">
+        <div class="topiclist panel-body">
+            <div class="row">
+                <div class="col-xs-6">
 
-<div id="primary" class="content-area">
-    <main id="main" class="site-main" role="main">
-        <!-- Page content -->
-        <div class="high-padding">
-            <!-- Blog content -->
-            <div class="container blog-posts">
-                <div class="row">
+                    <h1>@user.Fullname</h1>
 
-                    <div class="col-md-3 sidebar-content">
-                        User : @user.Fullname
-                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="dropdown pull-right">
+                        Sắp xếp theo:&nbsp;
+                        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
 
+                            Tin mới nhất
 
+                            <div style="margin-left:5px" class="caret"></div>
+                        </button>
+                        <ul class="dropdown-menu">
 
-                    <div class="col-md-9 main-content">
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham">Tin mới nhất</a></li>
 
-
-
-                        <div class="ibid-shop-sort-group">
-                            <div class="woocommerce-notices-wrapper"></div>
-                            <p class="woocommerce-result-count">
-                                Showing 1&ndash;9 of 12 results
-                            </p>
-                            <form class="woocommerce-ordering" method="get">
-                                <select name="orderby" class="orderby" aria-label="Shop order">
-                                    <option value="menu_order" selected='selected'>Default sorting</option>
-                                    <option value="popularity">Sort by popularity</option>
-                                    <option value="date">Sort by latest</option>
-                                    <option value="price">Sort by price: low to high</option>
-                                    <option value="price-desc">Sort by price: high to low</option>
-                                    <option value="bid_asc">Sort by current bid: Low to high</option>
-                                    <option value="bid_desc">Sort by current bid: High to low</option>
-                                    <option value="auction_end">Sort auction by ending soonest</option>
-                                    <option value="auction_started">Sort auction by recently started</option>
-                                    <option value="auction_activity">Sort auction by most active</option>
-                                </select>
-                                <input type="hidden" name="paged" value="1" />
-                            </form>
-                            <nav class="gridlist-toggle">
-                                <a href="#" id="grid" title="Grid view">
-                                    <span class="dashicons dashicons-grid-view"></span>
-                                    <em>Grid view</em>
-                                </a>
-                                <a href="#" id="list" title="List view">
-                                    <span class="dashicons dashicons-exerpt-view"></span>
-                                    <em>List view</em>
-                                </a>
-                            </nav>
-                            <div class="clearfix"></div>
-                        </div>
-
-                        <div class="clearfix"></div>
-
-                        <ul class="products columns-3">
-                            @foreach (var item in ViewBag.Items)
-                            {
-                                <li class=" first post-4472 product type-product status-publish has-post-thumbnail product_cat-protection-phones product_cat-console-gaming product_cat-data-cables-phones product_cat-mobile-phone-chargers product_cat-mobile-phones product_cat-phones product_cat-power-bank product_cat-selfie-stickers product_cat-tablets product_cat-protection-tablets product_tag-black-friday product_tag-sales instock sold-individually shipping-taxable purchasable product-type-auction">
-                                    <div class="products-wrapper">
-                                        <div class="thumbnail-and-details">
-                                            <div class="overlay-container">
-                                                <div class="thumbnail-overlay"></div>
-                                                <div class="overlay-components">
-                                                    <div class="component add-to-cart">
-                                                        <a asp-action="Details" asp-route-id="@item.Id" data-tooltip="Bid Now" class="button product_type_auction add_to_cart_button" aria-label="Read more about &ldquo;@item.Title&rdquo;" rel="nofollow">
-                                                            <i class="fa fa-gavel"></i>
-                                                        </a>
-                                                    </div>
-                                                    <!--if acution ended-->
-                                                    <div class="component add-to-cart">
-                                                        <a asp-action="Details" asp-route-id="@item.Id" data-tooltip="View Acution" class="button product_type_auction add_to_cart_button" aria-label="Read more about &ldquo;@item.Title&rdquo;" rel="nofollow">
-                                                            <i class="fa fa-eye"></i>
-                                                        </a>
-                                                    </div>
-                                                    <!--<div class="component wishlist">
-                                                    <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                        <div class="yith-wcwl-add-button hide" style="display:none">
-
-                                                            <!-- BROWSE WISHLIST MESSAGE --
-                                                                                    <div class="yith-wcwl-wishlistexistsbrowse">
-                                                                                        <span class="feedback">
-                                                                                        </span>
-                                                                                        <a href="https://ibid.modeltheme.com/wishlist/" rel="nofollow" data-title="Browse Wishlist">
-                                                                                            Browse Wishlist
-                                                                                        </a>
-                                                                                    </div>
-
-                                                                                </div>
-
-                                                                                <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                                        <i class="fa fa-heart"></i>
-                                                                                    </a>
-                                                                                </div>
-
-                                                                                <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
-                                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
-                                                                                        <i class="fa fa-heart"></i>
-                                                                                    </a>
-                                                                                </div>
-
-                                                                                <div style="clear:both"></div>
-                                                                                <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                            </div>
-
-                                                                            <div class="clear"></div>
-                                                                        </div>
-                                                                        <div class="component quick-view">
-                                                                            <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472">
-                                                                                <i class="fa fa-search"></i>
-                                                                            </a>
-                                                                        </div>-->
-
-                                                </div>
-                                            </div>
-                                            <a class="woo_catalog_media_images" title="Desktop Gamer Las Vegas" href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/">
-                                            <img width="300" height="300" src="~/images/items/@item.Photo" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" />
-                                            <img class="woo_secondary_media_image" src="" alt="@item.Title" /></a>
-                                        </div>
-
-                                        <div class="woocommerce-title-metas">
-                                            <h3 class="archive-product-title">
-                                                <a asp-action="Details" asp-route-id="@item.Id">
-                                                    @item.Title
-                                                </a>
-                                            </h3>
-                                            <div class="details-container">
-                                                <div class="details-price-container details-item">
-                                                    <div class="product-description" itemprop="description">
-                                                        <p>@item.Description</p>
-                                                    </div>
-                                                    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-                                                    <script type="text/javascript">
-                                                        var clock;
-
-                                                        jQuery(document).ready(function () {
-
-                                                            // Grab the current date
-                                                            var currentDate = new Date();
-
-                                                            // Grab the date inserted by user
-                                                            var inserted_date = new Date("2020-10-31");
-
-                                                            // Calculate the difference in seconds between the future and current date
-                                                            var diff = inserted_date.getTime() / 1000 - currentDate.getTime() / 1000;
-
-                                                            // Instantiate a coutdown FlipClock
-                                                            clock = jQuery("#countdown_5ee5cdcc22c76").FlipClock(diff, {
-                                                                clockFace: "DailyCounter",
-                                                                countdown: true
-                                                            });
-                                                        });
-                                                    </script>
-                                                    <div class="countdownv2_holder ">
-                                                        <div class="countdownv2 clock " id="countdown_5ee5cdcc22c76"></div>
-                                                    </div>
-                                                    Current Bid:
-                                                    <span class="woocommerce-Price-amount amount">
-                                                        <span class="woocommerce-Price-currencySymbol">&#36;</span>
-                                                        420.00
-                                                    </span>
-                                                    <p>Acution Ended</p>
-                                                    <div class="details-review-container details-item"></div>
-                                                    <!--<div class="bottom-components">
-                                                    <div class="component add-to-cart">
-                                                        <a href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/" data-quantity="1" data-tooltip="Bid Now" class="button product_type_simple add_to_cart_button" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Desktop Gamer Las Vegas&rdquo;" rel="nofollow">
-                                                            <i class="fa fa-gavel"></i>
-                                                        </a>
-                                                    </div>
-                                                    <div class="component wishlist">
-                                                        <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                            <div class="yith-wcwl-add-button hide" style="display:none">
-
-
-                                                                <!-- BROWSE WISHLIST MESSAGE --
-                                                                            <div class="yith-wcwl-wishlistexistsbrowse">
-                                                                                <span class="feedback">
-                                                                                </span>
-                                                                                <a href="https://ibid.modeltheme.com/wishlist/" rel="nofollow" data-title="Browse Wishlist">
-                                                                                    Browse Wishlist
-                                                                                </a>
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                        <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                            <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                                <i class="fa fa-heart"></i>
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
-                                                                            <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
-                                                                                <i class="fa fa-heart"></i>
-                                                                            </a>
-                                                                        </div>
-
-                                                                        <div style="clear:both"></div>
-                                                                        <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                                    </div>
-
-                                                                    <div class="clear"></div>
-                                                                </div>
-                                                                <div class="component quick-view">
-                                                                    <a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472">
-                                                                        <i class="fa fa-search"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </div>-->
-
-                                                </div>
-                                            </div>
-                                            <!--<div class="bottom-components-list">
-                                                            <div class="component add-to-cart">
-                                                                <a href="https://ibid.modeltheme.com/product/desktop-ttz-gamer-lasvegas-v4-intel-coffee-lake-model/" data-quantity="1" data-tooltip="Bid Now" class="button product_type_simple add_to_cart_button" data-product_id="4472" data-product_sku="BF001" aria-label="Read more about &ldquo;Desktop Gamer Las Vegas&rdquo;" rel="nofollow">
-                                                                <i class="fa fa-gavel"></i></a>
-                                                            </div><div class="component wishlist">
-                                                                <div class="yith-wcwl-add-to-wishlist add-to-wishlist-4472">
-                                                                    <div class="yith-wcwl-add-button hide" style="display:none">
-
-
-                                                                        <!-- BROWSE WISHLIST MESSAGE --
-                                                                    <div class="yith-wcwl-wishlistexistsbrowse">
-                                                                        <span class="feedback">
-                                                                        </span>
-                                                                        <a href="https://ibid.modeltheme.com/wishlist/" rel="nofollow" data-title="Browse Wishlist">
-                                                                            Browse Wishlist
-                                                                        </a>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-toggle="tooltip" data-tooltip="Add to Wishlist Wishlist" data-placement="top" title="Browse Wishlist">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div class="yith-wcwl-wishlistexistsbrowse show" style="display:block">
-                                                                    <a href="https://ibid.modeltheme.com/wishlist/" data-tooltip="Check Wishlist" class="button">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </div>
-
-                                                                <div style="clear:both"></div>
-                                                                <div class="yith-wcwl-wishlistaddresponse"></div>
-
-                                                            </div>
-
-                                                            <div class="clear"></div>
-                                                </div><div class="component quick-view"><a href="#" class="button yith-wcqv-button" data-tooltip="Quickview" data-product_id="4472"><i class="fa fa-search"></i></a></div>
-                                            </div>-->
-
-                                        </div>
-                                    </div>
-                                </li>
-
-                                <li class="clearfix hide-on-mobile"></li>
-                            }
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-desc">Giá cao nhất</a></li>
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Giá thấp nhất</a></li>
                         </ul>
+                    </div>
+                    <!--.btn-group.btn-group-justified
+                                        a.btn.btn-default(href='#{sortURL[0]}', class=(!$sort) ? 'active' : '')
+                                            i.fa.fa-clock-o.fa-lg(data-toggle="tooltip" data-placement="top", title="Tin mới nhất")
+                                        a.btn.btn-default(href='#{sortURL[1]}sort=price', class=($sort=='price') ? 'active' : '')
+                                            span(data-toggle="tooltip" data-placement="top", title="Giá thấp nhất")
+                                                | VNĐ
+                                                i.fa.fa-angle-down.fa-lg
+                    -->
+                </div>
+            </div>
+            <hr>
+            <script src="https://sohot.vn/library/javascript/infinite-scroll.pkgd.min.js"></script>
+            <div id="mainTopiclist" class="topiclist">
+                <div class="topiclist-wrapper">
+                    @foreach(var item in ViewBag.Items)
+                    {
+                    <div class="item grid col-md-5ths col-xs-6">
+                        <div class="itemcontainer">
+                            <div class="col-md-4 col-sm-3 col-xs-5">
+                                <div style="padding-left:15px" class="row">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="thumb">
+                                        <img src="~/images/items/@item.Photo">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-8 col-sm-9 col-xs-7">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <h3>
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="f-black">@item.Title</a>
+                                        </h3>
+                                        <!--.infoline
+                                                if !$byUser
+                                                    //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
+                                                    //&nbsp;
+                                                    span.f-grey=$i->up_date_h
+                                                else
+                                                    span.f-grey=$i->up_date_h
+                    -->
+                                    </div>
+                                    <div class="col-sm-3 f-red text-right">
 
-                        <nav class="woocommerce-pagination">
-                            <ul class='page-numbers'>
-                                <li><span aria-current="page" class="page-numbers current">1</span></li>
-                                <li><a class="page-numbers" href="https://ibid.modeltheme.com/product-category/phones/page/2/">2</a></li>
-                                <li><a class="next page-numbers" href="https://ibid.modeltheme.com/product-category/phones/page/2/">&rarr;</a></li>
-                            </ul>
-                        </nav>
+                                        <strong>@item.Price</strong>
+                                        <div class="text-nowrap">
 
+                                        </div>
+                                        <div class="spacer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    
+                    <!--foreach-->
+
+                </div>
+                <div class="clearfix"></div>
+
+                <!--.center.text-center!=pagestr-->
+
+                <div class="col-xs-4 text-left">
+                    <div class="row">
 
                     </div>
+                </div>
+                <div style="line-height:35px" class="col-xs-4 text-center">1 / 2</div>
+                <div class="col-xs-4 text-right">
+                    <div class="row">
 
-
+                        <a id="nextpage" href="https://sohot.vn/tp-ho-chi-minh/tham?page=2" class="btn btn-default f-red">
+                            <i style="margin-right:5px" class="fa fa-chevron-circle-right fa-lg"></i>
+                            Tiếp
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="spacer">
 
-    </main>
+        </div>
+    </div>
 </div>
