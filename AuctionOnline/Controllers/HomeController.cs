@@ -41,5 +41,10 @@ namespace AuctionOnline.Controllers
         {
             return View("Index");
         }
+
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }

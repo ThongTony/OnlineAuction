@@ -51,7 +51,7 @@ namespace AuctionOnline
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=NotificationHome}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}");
             });
         }
     }

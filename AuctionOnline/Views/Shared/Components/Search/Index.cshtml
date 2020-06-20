@@ -1,6 +1,7 @@
-﻿<div id="search-block" style="margin-bottom:10px" class="panel panel-default">
+﻿@using Microsoft.AspNetCore.Http;
+<div id="search-block" style="margin-bottom:10px" class="panel panel-default">
     <div class="panel-body">
-        <form id="marketsearch" role="search" action="/toan-quoc/search" method="get">
+        <form method="get" asp-action="searchkeyword" asp-controller="item">
             <div class="col-sm-2 hidden-xs hidden-sm">
 
                 <select name="cat_id" class="form-control">
@@ -58,7 +59,7 @@
             </div>
             <div class="col-md-8">
                 <div class="input-group">
-                    <input name="keyword" placeholder="Tìm sản phẩm" class="form-control">
+                    <input type="text" name="keyword" placeholder="Tìm sản phẩm" class="form-control">
                     <div class="input-group-btn">
                         <button type="submit" class="btn btn-default">
                             <i class="fa fa-search"></i>
