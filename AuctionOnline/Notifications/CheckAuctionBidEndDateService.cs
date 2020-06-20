@@ -49,7 +49,7 @@ namespace AuctionOnline.Notifications
 
             DateTime now = DateTime.Now;
 
-            var expiredItems = dbContext.Items.Where(t => t.BidEndDate.Value.Date.CompareTo(now.Date) <= 0).OrderBy(d => d.BidEndDate).ToList();
+            var expiredItems = dbContext.Items.Where(t => t.BidEndDate.Value.Date.CompareTo(now.Date) <= 0 && t.AccountId == 1).OrderBy(d => d.BidEndDate).ToList();
 
             foreach (var item in expiredItems)
             {
