@@ -52,6 +52,10 @@
     <Compile Remove="Migrations\20200620053754_newmodel2.Designer.cs" />
     <Compile Remove="Migrations\20200620054637_newmodel3.cs" />
     <Compile Remove="Migrations\20200620054637_newmodel3.Designer.cs" />
+    <Compile Remove="Migrations\20200620063358_newmodel4.cs" />
+    <Compile Remove="Migrations\20200620063358_newmodel4.Designer.cs" />
+    <Compile Remove="Migrations\20200620124236_new1.cs" />
+    <Compile Remove="Migrations\20200620124236_new1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

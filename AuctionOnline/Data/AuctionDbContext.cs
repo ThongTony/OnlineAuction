@@ -58,9 +58,9 @@ namespace AuctionOnline.Data
                 );
 
             modelBuilder.Entity<Item>().HasData(
-                new Item() { Id = 1, Title = "product 1", Description = "description 1", BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(3), MinimumBid = 2, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 3, Status = true },
-                new Item() { Id = 2, Title = "product 2", Description = "description 2", BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(3), MinimumBid = 2, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 3, Status = true },
-                new Item() { Id = 3, Title = "product 3", Description = "description 3", BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(3), MinimumBid = 2, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 3, Status = true }
+                new Item() { Id = 1, Title = "product 1", Description = "description 1", BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(1), MinimumBid = 2, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 3, Status = true },
+                new Item() { Id = 2, Title = "product 2", Description = "description 2", BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(1), MinimumBid = 2, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 3, Status = true },
+                new Item() { Id = 3, Title = "product 3", Description = "description 3", BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(1), MinimumBid = 2, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 3, Status = true }
                 );
 
             modelBuilder.Entity<Account>().HasData(
