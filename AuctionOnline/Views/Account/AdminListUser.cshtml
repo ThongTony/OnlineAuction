@@ -1,6 +1,4 @@
-﻿@model AuctionOnline.ViewModels.LayoutViewModel
-
-@{
+﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -10,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>List Category</h1>
+                <h1>List User</h1>
             </div>
 
         </div>
@@ -20,38 +18,47 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <div class="col-12">
+        <div class="col-16">
             <div class="card">
+
                 <!-- /.card-header -->
                 <div class="card-body">
+
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Name</th>
-                                <th>CreatedAt</th>
-                                <th>ParentId</th>
+                                <th>FullName</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Status</th>
+                                <th>Isblocked</th>
+                                <th>Created</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var category in Model.CategoriesVM)
+                            @foreach (var account in ViewBag.Accounts)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelCategory => category.Id)</td>
-                                    <td>@Html.DisplayFor(modelCategory => category.Name)</td>
-                                    <td>@Html.DisplayFor(modelCategory => category.CreatedAt)</td>
-                                    <td>@Html.DisplayFor(modelCategory => category.Parent.Name)</td>
-                                    <td>
-                                        <a asp-action="Create">Create</a> |
-                                        <a asp-action="Edit" asp-route-id="@category.Id">Edit</a> |
-                                        <a asp-action="Detail" asp-route-id="@category.Id">Detail</a> |
-                                        <a asp-action="Delete" asp-route-id="@category.Id">Delete</a>
-                                    </td>
+                                    <td>@account.Id</td>
+                                    <td>@account.Fullname</td>
+                                    <td>@account.Address</td>
+                                    <td>@account.Email</td>
+                                    <td>@account.Username</td>
+                                    <td>@account.Password</td>
+                                    <td>@(account.Status ? "active" : "unactive")</td>
+                                    <td>@(account.IsBlocked ? "blocked" : "unblock")</td>
+                                    <td>@account.CreatedAt.ToString("dd/MM/yyyy")</td>
+                                    <td><a href="#">Blocked</a>|<a href="#">UnBlocked</a></td>
                                 </tr>
                             }
                         </tbody>
+
                     </table>
+
                 </div>
                 <!-- /.card-body -->
             </div>

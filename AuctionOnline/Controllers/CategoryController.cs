@@ -29,7 +29,7 @@ namespace AuctionOnline.Controllers
             return View(viewmodel);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Detail(int id)
         {
             if (id == null)
             {
@@ -193,7 +193,7 @@ namespace AuctionOnline.Controllers
             return View("Index", categories);
         }
 
-        public IActionResult GetallMenu()
+        public async Task<IActionResult> GetallMenu()
         {
             List<Category> category = new List<Category>();
             List<Category> categories = db.Categories.ToList();
@@ -206,8 +206,11 @@ namespace AuctionOnline.Controllers
                     ParentId = c.ParentId,
                     Children = GetChildren(categories, c.Id)
                 }).ToList();
-
-            return View(category);
+            var layoutVM = new LayoutViewModel()
+            {
+                CategoriesVM = CategoryUtility.MapModelsToVMs(category)
+            };
+            return View(layoutVM);
         }
 
         public static List<Category> GetChildren(List<Category> categories, int parentId)

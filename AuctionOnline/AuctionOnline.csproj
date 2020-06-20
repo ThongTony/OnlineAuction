@@ -5,57 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\**" />
+    <Content Remove="Areas\**" />
+    <EmbeddedResource Remove="Areas\**" />
+    <None Remove="Areas\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\ItemsController.cs" />
-    <Compile Remove="Migrations\20200610123621_abc.cs" />
-    <Compile Remove="Migrations\20200610123621_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200610123744_abc.cs" />
-    <Compile Remove="Migrations\20200610123744_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200610155602_abc.cs" />
-    <Compile Remove="Migrations\20200610155602_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200610165232_abc.cs" />
-    <Compile Remove="Migrations\20200610165232_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200612013102_abc.cs" />
-    <Compile Remove="Migrations\20200612013102_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200612014827_abc.cs" />
-    <Compile Remove="Migrations\20200612014827_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200612020631_abc.cs" />
-    <Compile Remove="Migrations\20200612020631_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200612023734_abc.cs" />
-    <Compile Remove="Migrations\20200612023734_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200615022906_khoa.cs" />
-    <Compile Remove="Migrations\20200615022906_khoa.Designer.cs" />
-    <Compile Remove="Migrations\20200615064618_khoa1.cs" />
-    <Compile Remove="Migrations\20200615064618_khoa1.Designer.cs" />
-    <Compile Remove="Migrations\20200615091059_khoa2.cs" />
-    <Compile Remove="Migrations\20200615091059_khoa2.Designer.cs" />
-    <Compile Remove="Migrations\20200616031202_khoa3.cs" />
-    <Compile Remove="Migrations\20200616031202_khoa3.Designer.cs" />
-    <Compile Remove="Migrations\20200616074310_khoa4.cs" />
-    <Compile Remove="Migrations\20200616074310_khoa4.Designer.cs" />
-    <Compile Remove="Migrations\20200616080707_khoa5.cs" />
-    <Compile Remove="Migrations\20200616080707_khoa5.Designer.cs" />
-    <Compile Remove="Migrations\20200616081240_khoa6.cs" />
-    <Compile Remove="Migrations\20200616081240_khoa6.Designer.cs" />
-    <Compile Remove="Migrations\20200616081349_khoa7.cs" />
-    <Compile Remove="Migrations\20200616081349_khoa7.Designer.cs" />
-    <Compile Remove="Migrations\20200617080046_abc.cs" />
-    <Compile Remove="Migrations\20200617080046_abc.Designer.cs" />
-    <Compile Remove="Migrations\20200619030742_abcc.cs" />
-    <Compile Remove="Migrations\20200619030742_abcc.Designer.cs" />
-    <Compile Remove="Migrations\20200620014547_khoa1.cs" />
-    <Compile Remove="Migrations\20200620014547_khoa1.Designer.cs" />
-    <Compile Remove="Migrations\20200620051731_newmodel.cs" />
-    <Compile Remove="Migrations\20200620051731_newmodel.Designer.cs" />
-    <Compile Remove="Migrations\20200620051952_newmodel1.cs" />
-    <Compile Remove="Migrations\20200620051952_newmodel1.Designer.cs" />
-    <Compile Remove="Migrations\20200620053754_newmodel2.cs" />
-    <Compile Remove="Migrations\20200620053754_newmodel2.Designer.cs" />
-    <Compile Remove="Migrations\20200620054637_newmodel3.cs" />
-    <Compile Remove="Migrations\20200620054637_newmodel3.Designer.cs" />
-    <Compile Remove="Migrations\20200620063358_newmodel4.cs" />
-    <Compile Remove="Migrations\20200620063358_newmodel4.Designer.cs" />
-    <Compile Remove="Migrations\20200620124236_new1.cs" />
-    <Compile Remove="Migrations\20200620124236_new1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

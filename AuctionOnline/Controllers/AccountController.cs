@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
-using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 
 namespace AuctionOnline.Controllers
 {
@@ -21,18 +16,15 @@ namespace AuctionOnline.Controllers
         public AccountController(IConfiguration _configuration,
             AuctionDbContext _db)
         {
-
             db = _db;
             configuration = _configuration;
         }
-
 
         [HttpGet]
         public IActionResult Login()
         {
             return View("Login");
         }
-
 
         [HttpPost]
         public IActionResult Login(string username, string password)
@@ -109,17 +101,17 @@ namespace AuctionOnline.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult DemoIndex()
+        public IActionResult AdminListUser()
         {
-            ViewBag.Account = db.Accounts.Where(x => x.RoleId == 1).ToList();
-            return View("DemoIndex");
+            ViewBag.Accounts = db.Accounts.Where(x => x.RoleId == 1).ToList();
+            return View();
         }
 
-        public IActionResult List()
+        public IActionResult ListUser()
         {
             ViewBag.SellerCount = db.Accounts.Select(x => x.RoleId == 1).Count();
-            ViewBag.SellerList = db.Accounts.Where(x => x.RoleId == 1).ToList();
-            return View("List");
+            ViewBag.Seller = db.Accounts.Where(x => x.RoleId == 1).ToList();
+            return View();
         }
 
 
