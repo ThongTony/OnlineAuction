@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="spacer"></div>
+    <div style="margin-bottom:10px" class="panel panel-default">
+        <div class="topiclist panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+
+                    <h1>Kết Quả Search : @ViewBag.keyword</h1>
+
+                </div>
+                <div class="col-xs-6">
+                    <div class="dropdown pull-right">
+                        Sort by :&nbsp;
+                        <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+
+                            Most expensive
+
+                            <div style="margin-left:5px" class="caret"></div>
+                        </button>
+                        <ul class="dropdown-menu">
+
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-desc">Most expensive</a></li>
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Cheapiest</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <script src="~/library/javascript/infinite-scroll.pkgd.min.js"></script>
+            <div id="mainTopiclist" class="topiclist">
+                <div class="topiclist-wrapper">
+                    @foreach (var search in ViewBag.Success)
+                    {
+                        <div class="item grid col-md-5ths col-xs-6">
+                            <div class="itemcontainer">
+                                <div class="col-md-4 col-sm-3 col-xs-5">
+                                    <div style="padding-left:15px" class="row">
+                                        <a class="thumb">
+                                            <img src="~/images/items/@search.Photo">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-9 col-xs-7">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h3>
+                                                <a class="f-black">@search.Title</a>
+                                            </h3>
+                                            <!--.infoline
+                                                                        if !$byUser
+                                                                            //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
+                                                                            //&nbsp;
+                                                                            span.f-grey=$i->up_date_h
+                                                                        else
+                                                                            span.f-grey=$i->up_date_h
+                                            -->
+                                        </div>
+                                        <div class="col-sm-3 f-red text-right">
+
+                                            <strong>@search.Price</strong>
+                                            <div class="text-nowrap">
+
+                                            </div>
+                                            <div class="spacer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <!--foreach-->
+
+                </div>
+                <div class="clearfix"></div>
+
+                <!--.center.text-center!=pagestr-->
+
+                <div class="col-xs-4 text-left">
+                    <div class="row">
+
+                    </div>
+                </div>
+                <div style="line-height:35px" class="col-xs-4 text-center">1 / 2</div>
+                <div class="col-xs-4 text-right">
+                    <div class="row">
+
+                        <a id="nextpage" href="https://sohot.vn/tp-ho-chi-minh/tham?page=2" class="btn btn-default f-red">
+                            <i style="margin-right:5px" class="fa fa-chevron-circle-right fa-lg"></i>
+                            Tiếp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="spacer">
+
+        </div>
+    </div>
+</div>

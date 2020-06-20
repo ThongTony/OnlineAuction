@@ -4,14 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("account")]
     public class AccountController : Controller
     {
         private IConfiguration configuration;
@@ -27,7 +28,6 @@ namespace AuctionOnline.Controllers
 
 
         [HttpGet]
-        [Route("login")]
         public IActionResult Login()
         {
             return View("Login");
@@ -35,7 +35,6 @@ namespace AuctionOnline.Controllers
 
 
         [HttpPost]
-        [Route("login")]
         public IActionResult Login(string username, string password)
         {
             var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username) && a.Status == true);
@@ -48,9 +47,13 @@ namespace AuctionOnline.Controllers
                         HttpContext.Session.SetString("username", username);
                         return RedirectToAction("Index", "Home");
                     }
+                    else if ( account.RoleId == 0)
+                    {
+                        return RedirectToAction("Index", "ListUser", new { area = "Admin" });
+                    }
                     else
                     {
-                        return RedirectToAction("404error", "Home");
+                        return RedirectToAction("error", "Home");
                     }
                 }
             }
@@ -61,7 +64,6 @@ namespace AuctionOnline.Controllers
 
 
         [HttpGet]
-        [Route("register")]
         public IActionResult Register()
         {
             return View("Register");
@@ -69,7 +71,6 @@ namespace AuctionOnline.Controllers
 
 
         [HttpPost]
-        [Route("register")]
         public IActionResult Register(string fullname, string username, string email, string password)
         {
             var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
@@ -102,20 +103,18 @@ namespace AuctionOnline.Controllers
             }
         }
 
-        [Route("logout")]
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("username");
             return RedirectToAction("Index", "Home");
         }
 
-        [Route("index")]
         public IActionResult DemoIndex()
         {
             ViewBag.Account = db.Accounts.Where(x => x.RoleId == 1).ToList();
             return View("DemoIndex");
         }
-        [Route("list")]
+
         public IActionResult List()
         {
             ViewBag.SellerCount = db.Accounts.Select(x => x.RoleId == 1).Count();
@@ -125,91 +124,82 @@ namespace AuctionOnline.Controllers
 
 
         [HttpGet]
-        [Route("resetpassword")]
-        public IActionResult Resetpassword()
+        public IActionResult Forgotpassword()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("resetpassword")]
-        public IActionResult Resetpassword(string email, string username )
+        public IActionResult Forgotpassword(string email)
         {
             var checkemail = db.Accounts.SingleOrDefault(a => a.Email.Equals(email));
-            var checkusername = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
-            if (checkusername != null && checkemail != null)
+            if (checkemail != null)
             {
-                // send mail
-                var checkpassword = (from i in db.Accounts
-                               where i.Username == username
-                                     select i.Password).FirstOrDefault();
-                var password = BCrypt.Net.BCrypt.HashString(checkpassword);
-                var body = "<b>Your Password Is: " + password; 
+
+
+                string body = "Please reset your password by clicking  https://localhost:44378/account/resetpassword";
                 var mailHelper = new MailHelper(configuration);
                 if (mailHelper.Send(configuration["Gmail:Username"], email, "From Bookshop", body))
                 {
-                    
+                    HttpContext.Session.SetString("email", email);
+                    // send mail
+                    int checkid = (from i in db.Accounts
+                                   where i.Email == email
+                                   select i.Id).FirstOrDefault();
+                    HttpContext.Session.SetInt32("checkid", checkid);
+                    var checkpassword = (from i in db.Accounts
+                                   where i.Email == email
+                                   select i.Password).FirstOrDefault();
+                    HttpContext.Session.SetInt32("checkid", checkid);
+                    HttpContext.Session.SetString("checkpassword", checkpassword);
                     ViewBag.Success = "Your password has been sent in gmail: " + email;
-                    return View("Resetpassword");
+                    return View("Forgotpassword");
                 }
                 else
                 {
                     ViewBag.errorSendMail = "When send mail to you have error, contact with admin.";
-                    return View("Resetpassword");
+                    return View("Forgotpassword");
                 }
             }
             else
             {
-                ViewBag.Failed = "Invalid";
-                return View("resetpassword");
+                ViewBag.Failed = "Sai Gmail";
+                return View("Forgotpassword");
             }
         }
-        /*
-         * [HttpGet]
-        [Route("forgotpw")]
-        public IActionResult Forgotpw()
+        [HttpGet]
+        public IActionResult Resetpassword()
         {
-            return View(new Account());
+            return View();
         }
         [HttpPost]
-        [Route("forgotpw")]
-        public async Task<IActionResult> Forgotpw(Account account)
+        public IActionResult Resetpassword(string password, string confirmpassword , Account account)
         {
-            if (account.Username !=null || account.Email !=null)
+
+            if (HttpContext.Session.GetString("email") != null)
             {
-                if (accountRepository.GetAll().SingleOrDefault(a => a.Username.Equals(account.Username) && a.Email.Equals(account.Email))!=null)
+                if (password == confirmpassword)
                 {
-                    var accountDB = accountRepository.GetAll().SingleOrDefault(a => a.Username.Equals(account.Username) && a.Email.Equals(account.Email));
-                    account = await accountRepository.GetById(accountDB.Id);
-                    var newpw = accountRepository.RandomNumber(10000000, 99999999);
-                    account.Password = BCrypt.Net.BCrypt.HashString(newpw.ToString());
-                    // send mail
-                    var body = "Your new password: " + newpw;
-                    var mailHelper = new MailHelper(configuration);
-                    if (mailHelper.sendMail(configuration["Gmail:Username"], account.Email, "From Bookshop", body))
+                    if (HttpContext.Session.GetInt32("checkid") != null)
                     {
-                        await accountRepository.Update(account.Id, account);
-                        return RedirectToAction("index", "login");
+                        var hashpassword = BCrypt.Net.BCrypt.HashPassword(password);
+                        account = db.Accounts.Find((HttpContext.Session.GetInt32("checkid")));
+                        account.Password = hashpassword;
+                        db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Login");
                     }
-                    else
-                    {
-                        ViewBag.errorSendMail = "When send mail to you have error, contact with admin.";
-                        return View(account);
-                    }
+
                 }
                 else
                 {
-                    ViewBag.errorInput = "No matching information found, please check again.";
-                    return View(account);
+                    ViewBag.Failed = "Password va Confirm Password khong khop";
+                    return View();
                 }
             }
-            else
-            {
-                return View(account);
-            }
-
-            return View(account);
+            return View();
         }
-         * */
+
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,29 +19,61 @@ namespace AuctionOnline.Areas.Admin.Controllers
         {
             db = _db;
         }
-        [Route("")]
-        [Route("index")]
+        //[Route("")]
         public IActionResult Index()
         {
-            ViewBag.Accounts = db.Accounts.ToList();
+            ViewBag.Accounts = db.Accounts.Where(a => a.RoleId == 1).ToList();
             return View();
         }
 
-        [HttpGet]
-        [Route("edit/{id}")]
-        public IActionResult Edit(int id)
+        [Route("delete/{id}")]
+        public IActionResult Delete(int id)
         {
-            var account = db.Accounts.Find(id);
-            return View("edit", account);
+            db.Accounts.Remove(db.Accounts.Find(id));
+            db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Route("blocked/{id}")]
+        public IActionResult Blocked(int id , Account account)
+        {
+            var checkid = db.Accounts.Find(id);
+            if(checkid != null)
+            {
+                var i = db.Accounts.Where(a => a.IsBlocked == false);
+                if (i != null)
+                {
+                    account = db.Accounts.Find(id);
+                    account.IsBlocked = true;
+                    db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(nameof(Index));
+
         }
 
 
-        [HttpPost]
-        public IActionResult Edit(Account account)
+        [Route("unblock/{id}")]
+        public IActionResult Unlock(int id, Account account)
         {
-            db.Entry(account).State = EntityState.Modified;
-            db.SaveChanges();
-            return View("Index");
+            var checkid = db.Accounts.Find(id);
+            if (checkid != null)
+            {
+                var i = db.Accounts.Where(a => a.IsBlocked == true);
+                if (i != null)
+                {
+                    account = db.Accounts.Find(id);
+                    account.IsBlocked = false;
+
+                    db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(nameof(Index));
+
         }
 
 

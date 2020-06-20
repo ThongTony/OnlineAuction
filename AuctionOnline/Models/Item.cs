@@ -6,6 +6,12 @@ namespace AuctionOnline.Models
 {
     public class Item
     {
+        public Item()
+        {
+            CategoryItems = new List<CategoryItem>();
+            Bids = new List<Bid>();
+        }
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

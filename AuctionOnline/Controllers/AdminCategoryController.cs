@@ -13,20 +13,18 @@ namespace AuctionOnline.Controllers
         {
             db = _category;
         }
-        [Route("index")]
+
         public IActionResult Index(int id)
         {
             ViewBag.categories = db.Categories.ToList();
             return View("Index", ViewBag.categories);
         }
         [HttpGet]
-        [Route("add")]
         public IActionResult Add()
         {
             return View("Add", new Category());
         }
         [HttpPost]
-        [Route("add")]
         public IActionResult Add(Category category)
         {
             ViewBag.result = "Failed";
@@ -38,7 +36,6 @@ namespace AuctionOnline.Controllers
             }
             return View();
         }
-        [Route("delete/{id}")]
         public IActionResult Delete(int id)
         {
             var categories = db.Categories.Find(id);
