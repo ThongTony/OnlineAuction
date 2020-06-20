@@ -94,7 +94,10 @@ namespace AuctionOnline.Controllers
             }
 
             var item = await db.Items.FindAsync(id);
-
+            if (item == null)
+            {
+                return NotFound();
+            }
             var layoutVM = new LayoutViewModel();
             layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
             layoutVM.ItemVM.Categories = db.Categories.Select(a =>
@@ -103,10 +106,7 @@ namespace AuctionOnline.Controllers
                                       Value = a.Id.ToString(),
                                       Text = a.Name
                                   }).ToList();
-            if (item == null)
-            {
-                return NotFound();
-            }
+
             return View(layoutVM);
         }
 
