@@ -43,100 +43,124 @@
         </div>
         <div class="panel-body">
             <div style="min-height:300px" class="row">
-
-                <div class="col-md-9">
-                    <h1>@Html.DisplayFor(model => model.ItemVM.Title)</h1>
-                    <hr>
+                <div class="col-md-6">
                     <div id="swap-info" style="margin-bottom:10px"></div>
-
                     <div id="slick-container">
                         <div class="slick slick-initialized slick-slider">
-
                             <div aria-live="polite" class="slick-list draggable">
-                                <div class="slick-track" role="listbox" style="opacity: 1; width: 869px; transform: translate3d(0px, 0px, 0px);">
-                                    <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 869px;">
-                                        <img src="~/images/items/@Html.DisplayFor(model => model.ItemVM.PhotoName)" alt="@Html.DisplayFor(model => model.ItemVM.Title)">
+                                <div class="slick-track" role="listbox" style="opacity: 1; width: 600px; transform: translate3d(0px, 0px, 0px);">
+                                    <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 600px;">
+                                        <img src="~/images/items/@Html.DisplayFor(model => model.ItemVM.PhotoName)" alt="@Html.DisplayFor(model => model.ItemVM.Title)" class="img-rounded" width="500" height="auto">
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="slick-counter">
                             <span>1 / 1</span>
                         </div>
                     </div>
-                    <div class="spacer"></div>
-
-
-                    @Html.DisplayFor(model => model.ItemVM.Title)<br><br>Chân ash <br><br>Bọc vải hoặc simili tùy chọn màu sắc
-
-                    <div style="padding: 10px 0px">
-
-                        <a href="https://sohot.vn/toan-quoc/tag/Ghế văn phòng" style="font-size:14px;line-height:normal" class="label label-primary">Ghế văn phòng</a>
-                        <a href="https://sohot.vn/toan-quoc/tag/Ghế gỗ" style="font-size:14px;line-height:normal" class="label label-primary">Ghế gỗ</a>
-                        <a href="https://sohot.vn/toan-quoc/tag/Ghế làm việc" style="font-size:14px;line-height:normal" class="label label-primary">Ghế làm việc</a>
-                        <a href="https://sohot.vn/toan-quoc/tag/Ghế ăn" style="font-size:14px;line-height:normal" class="label label-primary">Ghế ăn</a>
-                    </div>
-
-                    <div>
-                        <div data-href="https://sohot.vn/tp-ho-chi-minh/ghe-aston-co-tay-110.html" data-width="" data-numposts="20" class="fb-comments fb_iframe_widget fb_iframe_widget_fluid_desktop" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=586511584891073&amp;container_width=869&amp;height=100&amp;href=https%3A%2F%2Fsohot.vn%2Ftp-ho-chi-minh%2Fghe-aston-co-tay-110.html&amp;locale=en_US&amp;numposts=20&amp;sdk=joey&amp;version=v2.6&amp;width=550">
-                            <span style="vertical-align: bottom; width: 550px; height: 178px;">
-                                <iframe name="f4f62b39ec7a8" width="550px" height="100px" data-testid="fb:comments Facebook Social Plugin" title="fb:comments Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v2.6/plugins/comments.php?app_id=586511584891073&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df27c1a61bc474cc%26domain%3Dsohot.vn%26origin%3Dhttps%253A%252F%252Fsohot.vn%252Ff24309e4d5aa12c%26relation%3Dparent.parent&amp;container_width=869&amp;height=100&amp;href=https%3A%2F%2Fsohot.vn%2Ftp-ho-chi-minh%2Fghe-aston-co-tay-110.html&amp;locale=en_US&amp;numposts=20&amp;sdk=joey&amp;version=v2.6&amp;width=550" style="border: none; visibility: visible; width: 550px; height: 178px;" class=""></iframe>
-                            </span>
-                        </div>
-                    </div>
                 </div>
-                <div class="col-md-3">
-                    <div id="seller-info" style="min-width: 245px !important; top: 352px;" class="list-group affix-bottom">
+                <div class="col-md-6">
+                    <div class="bidding" style="margin: 25px">
+                        <p><h1 style="color: olivedrab"><b>@Html.DisplayFor(model => model.ItemVM.Title)</b></h1></p>
+                        <br>
+                        <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 60px;margin-top: 0px;"></p>
+                        <script>
+                            // Set the date we're counting down to
+                            var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
 
-                        <div class="list-group-item b-red text-center">
-                            <strong>1.500.000 đ</strong>
-                        </div>
+                            // Update the count down every 1 second
+                            var x = setInterval(function () {
 
-                        <div class="list-group-item text-center">
-                            <div style="padding-bottom:10px">
-                                <strong>
-                                    <a href="https://sohot.vn/HappyX">HappyX</a>
-                                </strong>
+                                // Get today's date and time
+                                var now = new Date().getTime();
+
+                                // Find the distance between now and the count down date
+                                var distance = countDownDate - now;
+
+                                // Time calculations for days, hours, minutes and seconds
+                                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                // Output the result in an element with id="demo"
+                                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                                    + minutes + "m " + seconds + "s ";
+
+                                // If the count down is over, write some text
+                                if (distance < 0) {
+                                    clearInterval(x);
+                                    document.getElementById("demo").innerHTML = "EXPIRED";
+                                }
+                            }, 1000);
+                        </script>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Current Price:</label>
+                                <h4>$@Html.DisplayFor(model => model.ItemVM.Price)</h4>
                             </div>
-
-                            <img src="https://sohot.vn/uploads/user/avatar/3p/3pz/3pzqbpf8ryrg-5c0a2d005157b.jpg" width="128" height="128" align="center" class="img-circle">
+                            <div class="col-md-6">
+                                <label>Winner:</label>
+                                <h4>Name</h4>
+                            </div>
                         </div>
-                        <div class="list-group-item text-center">
-                            <a id="openMap" href="javascript:;">
-                                <i style="margin-right:10px" class="fa fa-map-marker fa-lg"></i>
-                                114 đường 2 cư xá Đô Thành Phường 4&nbsp;Quận 3&nbsp;TP.Hồ Chí Minh
-                            </a>
+                        <br>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default">-</button>
+                            <button type="button" class="btn btn-default">15K</button>
+                            <button type="button" class="btn btn-default">+</button>
                         </div>
-                        <div class="list-group-item text-center">
-                            <a href="javascript:;" onclick="$(this).html(&quot;<a style=\'color:#fff\' href=\'tel:&quot;+window.atob($(&quot;#tel&quot;).html())+&quot;\'>&quot; + window.atob($(&quot;#tel&quot;).html()) + &quot;</a>&quot;);" class="btn btn-primary">
-                                <i style="margin-right:10px" class="fa fa-phone fa-lg"></i>
-                                Hiện số điện thoại
-                            </a>
-                        </div>
-
-                        <div class="list-group-item text-center">
-
-                            <a href="https://m.me/noithat5giay" target="_blank" style="margin:0px 5px"><img src="https://sohot.vn/base/view/images/facebook.png" height="48"></a>
-                            <a href="https://zalo.me/0933456457" target="_blank" style="margin:0px 5px"><img src="https://sohot.vn/base/view/images/zalo.png" height="48"></a>
-                        </div>
-                        <!--|ID #{$topic->id}-->
-                        <!--if $topic->user_id != $user->id && $topic->user_id != 3
-                                                .list-group-item.text-center.hidden-sm.hidden-xs
-                                                    a.btn.btn-success(href='javascript:;' onclick='javascript:chatOnTopic("#{URL_ROOT}/user/action/pm?topic_id=#{$topic->id}&ajax=1");')
-                                                        i.fa.fa-comments
-                                                        &nbsp;
-                                                        |Chat mua hàng
-                        -->
-                        <!--.list-group-item.text-center
-                                                i.fa.fa-calendar.fa-lg(style='margin-right:10px')
-                                                =$topic->up_date_h
-                        -->
-
+                        <button type="button" class="btn btn-success" style="margin-left: 25px">BID</button>
                     </div>
                 </div>
-
+                <div class="spacer"></div>
             </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div style="margin:auto" class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="info" style="text-align: center">
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="text-align: center" >
+                            <td>John Wick</td>
+                            <td>john@example.com</td>
+                            <td>hcm City</td>
+                            <td>0000000000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="spacer"></div>
+            <hr />
+            <div class="item_detail" style="text-align:left">
+                <h1 style="color: olivedrab"><b>Item Information</b></h1>
+                <br>
+                <h2>Bid Session : ........</h2>
+                <h2>Item Id : @Html.DisplayFor(model => model.ItemVM.Id)</h2>
+                @if (Model.ItemVM.Status != false)
+                {
+                    <h3 style="color:green">On Bidding</h3>
+                }
+                else
+                {
+                    <h3 style="color: red">Ended</h3>
+                }
+                <br />
+                <h1><b>Description</b></h1>
+                <p>@Html.DisplayFor(model => model.ItemVM.Description)</p>
+            </div>
+            <div class="spacer"></div>
         </div>
     </div>
     <div id="related-topics" class="panel panel-default">
@@ -191,3 +215,5 @@
         </div>
     </div>
 </div>
+
+
