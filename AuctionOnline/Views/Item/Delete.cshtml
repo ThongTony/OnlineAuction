@@ -10,57 +10,51 @@
     <h4>Item</h4>
     <hr />
     <dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.ItemVM.Title)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.ItemVM.Title)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.ItemVM.Description)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.ItemVM.Description)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.ItemVM.Price)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.ItemVM.Price)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.ItemVM.Status)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.ItemVM.Status)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.ItemVM.Photo)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.ItemVM.PhotoName)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.ItemVM.Document)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.ItemVM.DocumentName)
-    </dd>
-    @*<dt>
-                @Html.DisplayNameFor(model => model.ItemVM.Account)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.ItemVM.Account.Id)
-            </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ItemVM.CreatedAt)
+            @Html.DisplayNameFor(model => model.ItemVM.Title)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ItemVM.CreatedAt)
-        </dd>*@
+            @Html.DisplayFor(model => model.ItemVM.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemVM.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemVM.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemVM.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemVM.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemVM.Photo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemVM.PhotoName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemVM.Document)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemVM.DocumentName)
+        </dd>
+        @*<dt>
+                    @Html.DisplayNameFor(model => model.ItemVM.Account)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ItemVM.Account.Id)
+                </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ItemVM.CreatedAt)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ItemVM.CreatedAt)
+            </dd>*@
     </dl>
 
-    <form asp-action="Delete">
+    <form asp-action="Delete" method="post">
         <input type="hidden" asp-for="ItemVM.Id" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>

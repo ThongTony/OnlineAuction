@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,6 +65,7 @@ namespace AuctionOnline.Controllers
                 var item = ItemUtility.MapVMToModel(itemVM);
 
                 item.AccountId = 1; /*itemVM.AccountId*/
+                item.MinimumBid = itemVM.MinimumBid;
                 item.Photo = fileName;
                 item.Document = documentName;
                 item.CategoryItems = new List<CategoryItem>();
@@ -94,71 +95,66 @@ namespace AuctionOnline.Controllers
             }
 
             var item = await db.Items.FindAsync(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
             var layoutVM = new LayoutViewModel();
             layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
+
+            int[] selectedCategoryIds = db.CategoryItems.Where(x => x.ItemId == id).Select(i => i.CategoryId).ToArray();
             layoutVM.ItemVM.Categories = db.Categories.Select(a =>
                                   new SelectListItem
                                   {
                                       Value = a.Id.ToString(),
                                       Text = a.Name
                                   }).ToList();
-
+            layoutVM.ItemVM.SelectedCategoryIds = selectedCategoryIds;
+            if (item == null)
+            {
+                return NotFound();
+            }
             return View(layoutVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ItemVM itemVM)
+        public async Task<IActionResult> Edit(ItemVM itemVM)
         {
-            if (ModelState.IsValid)
+            var item = await db.Items.FindAsync(itemVM.Id);
+            if (itemVM.Photo != null)
             {
-                if (id != itemVM.Id)
-                {
-                    return NotFound();
-                }
                 string fileName = await UploadAsync(itemVM.Photo, photoPath);
-                string documentName = await UploadAsync(itemVM.Document, documentPath);
-
-                var item = await db.Items.FindAsync(id);
-                //map vm to model
-                //item = ItemUtility.MapVMToModel(itemVM);
-                item.Title = itemVM.Title;
-                item.Description = itemVM.Description;
-                item.Price = itemVM.Price;
-                item.AccountId = itemVM.AccountId;
                 item.Photo = fileName;
+            }
+
+            if (itemVM.Document != null)
+            {
+                string documentName = await UploadAsync(itemVM.Document, documentPath);
                 item.Document = documentName;
-                item.CreatedAt = itemVM.CreatedAt;
+            }
 
+            item.Title = itemVM.Title;
+            item.Description = itemVM.Description;
+            item.MinimumBid = itemVM.MinimumBid;
+            item.CreatedAt = itemVM.CreatedAt;
 
-                //update selected Categories' Ids
-                if (itemVM.SelectedCategoryIds != null)
+            if (itemVM.SelectedCategoryIds != null)
+            {
+                var categoryitems = db.CategoryItems.Where(c => c.ItemId == itemVM.Id).ToList();
+                if (categoryitems.Count > 0)
                 {
-                    //remove related categories
-                    var categoryitems = db.CategoryItems.Where(c => c.ItemId == id);
                     foreach (var categoryitem in categoryitems)
                     {
                         item.CategoryItems.Remove(categoryitem);
                     }
-                    //add selected categories
-                    foreach (var cateId in itemVM.SelectedCategoryIds)
-                    {
-                        item.CategoryItems.Add(new CategoryItem
-                        {
-                            CategoryId = cateId,
-                            ItemId = item.Id
-                        });
-                    }
-                    db.Items.Add(item);
                 }
-                else
+                foreach (var cateId in itemVM.SelectedCategoryIds)
                 {
-                    item.CategoryItems = itemVM.CategoryItems;
+                    item.CategoryItems.Add(new CategoryItem
+                    {
+                        CategoryId = cateId,
+                        ItemId = item.Id,
+                        CreatedAt = DateTime.Now
+                    });
                 }
+                db.Items.Add(item);
 
                 try
                 {
@@ -178,12 +174,26 @@ namespace AuctionOnline.Controllers
                         "see your system administrator.");
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id", itemVM.AccountId);
-            return View(itemVM);
+
+            var layoutVM = new LayoutViewModel()
+            {
+                ItemVM = itemVM
+            };
+
+            layoutVM.ItemVM.Categories = db.Categories.Select(a =>
+                                 new SelectListItem
+                                 {
+                                     Value = a.Id.ToString(),
+                                     Text = a.Name
+                                 }).ToList();
+
+            return View(layoutVM);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
@@ -206,13 +216,14 @@ namespace AuctionOnline.Controllers
             return View(viewlayout);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(ItemVM itemVM)
         {
-            var item = await db.Items.FindAsync(id);
+            var item = await db.Items.FindAsync(itemVM.Id);
 
-            var categoryitems = db.CategoryItems.Where(c => c.ItemId == id);
+            var categoryitems = db.CategoryItems.Where(c => c.ItemId == itemVM.Id);
+
             foreach (var categoryitem in categoryitems)
             {
                 item.CategoryItems.Remove(categoryitem);
@@ -232,6 +243,8 @@ namespace AuctionOnline.Controllers
             var item = await db.Items
                 .Include(i => i.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBidPrice).ToList();
+
             if (item == null)
             {
                 return NotFound();
@@ -293,6 +306,40 @@ namespace AuctionOnline.Controllers
         private bool ItemExists(int id)
         {
             return db.Items.Any(e => e.Id == id);
+        }
+
+
+
+        [HttpGet]
+        public IActionResult Searchkeyword(string keyword)
+        {
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                var searchkeyword = db.Items.Where(i => i.Title.Trim().Contains(keyword.Trim())).ToString();
+                HttpContext.Session.SetString("searchkeyword", searchkeyword);
+                var checkkeyword = db.Items.Where(i => i.Title.Trim().Contains(keyword.Trim())).ToList();
+
+                if (checkkeyword != null)
+                {
+                    ViewBag.Success = checkkeyword;
+                    ViewBag.keyword = keyword;
+                    return View("ListBySearch");
+
+                }
+                else
+                {
+                    return View("ListBySearch");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult ListBySearch()
+        {
+            return View();
         }
     }
 }

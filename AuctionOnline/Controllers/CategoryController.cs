@@ -14,6 +14,7 @@ namespace AuctionOnline.Controllers
 {
     public class CategoryController : Controller
     {
+
         private AuctionDbContext db;
         public CategoryController(AuctionDbContext _category)
         {
@@ -28,7 +29,7 @@ namespace AuctionOnline.Controllers
             return View(viewmodel);
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Detail(int id)
         {
             if (id == null)
             {
@@ -111,16 +112,12 @@ namespace AuctionOnline.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, CategoryVM categoryVM)
+        public async Task<IActionResult> Edit(CategoryVM categoryVM)
         {
             if (ModelState.IsValid)
             {
-                if (id != categoryVM.Id)
-                {
-                    return NotFound();
-                }
                 //Map model to viewmodels
-                var category = await db.Categories.FindAsync(id);
+                var category = await db.Categories.FindAsync(categoryVM.Id);
                 category.Name = categoryVM.Name;
                 category.ParentId = categoryVM.ParentId;
 
@@ -148,6 +145,7 @@ namespace AuctionOnline.Controllers
             return View(categoryVM);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
@@ -170,14 +168,14 @@ namespace AuctionOnline.Controllers
             return View(viewlayout);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(CategoryVM categoryVM)
         {
-            var category = await db.Categories.FindAsync(id);
+            var category = await db.Categories.FindAsync(categoryVM.Id);
 
             //delete related category - item table
-            var categoryitems = db.CategoryItems.Where(c => c.CategoryId == id);
+            var categoryitems = db.CategoryItems.Where(c => c.CategoryId == categoryVM.Id);
             foreach (var categoryitem in categoryitems)
             {
                 category.CategoryItems.Remove(categoryitem);
@@ -195,7 +193,7 @@ namespace AuctionOnline.Controllers
             return View("Index", categories);
         }
 
-        public IActionResult GetallMenu()
+        public async Task<IActionResult> GetallMenu()
         {
             List<Category> category = new List<Category>();
             List<Category> categories = db.Categories.ToList();
@@ -208,8 +206,11 @@ namespace AuctionOnline.Controllers
                     ParentId = c.ParentId,
                     Children = GetChildren(categories, c.Id)
                 }).ToList();
-
-            return View(category);
+            var layoutVM = new LayoutViewModel()
+            {
+                CategoriesVM = CategoryUtility.MapModelsToVMs(category)
+            };
+            return View(layoutVM);
         }
 
         public static List<Category> GetChildren(List<Category> categories, int parentId)

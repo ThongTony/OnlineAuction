@@ -6,14 +6,16 @@ namespace AuctionOnline.Models
 {
     public class Item
     {
+        public Item()
+        {
+            CategoryItems = new List<CategoryItem>();
+            Bids = new List<Bid>();
+        }
+
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-
-        [Column(TypeName = "decimal(18,1)")]
-        public decimal Price { get; set; }
         public bool Status { get; set; }
-
         public string Photo { get; set; }
         public string Document { get; set; }
 

@@ -1,7 +1,6 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <!-- Content Header (Page header) -->
@@ -19,7 +18,7 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <div class="col-12">
+        <div class="col-16">
             <div class="card">
 
                 <!-- /.card-header -->
@@ -30,10 +29,10 @@
                             <tr>
                                 <th>Id</th>
                                 <th>FullName</th>
+                                <th>Address</th>
                                 <th>Email</th>
                                 <th>Username</th>
                                 <th>Password</th>
-                                <th>RoleId</th>
                                 <th>Status</th>
                                 <th>Isblocked</th>
                                 <th>Created</th>
@@ -46,14 +45,14 @@
                                 <tr>
                                     <td>@account.Id</td>
                                     <td>@account.Fullname</td>
+                                    <td>@account.Address</td>
                                     <td>@account.Email</td>
                                     <td>@account.Username</td>
                                     <td>@account.Password</td>
-                                    <td>@account.RoleId</td>
                                     <td>@(account.Status ? "active" : "unactive")</td>
                                     <td>@(account.IsBlocked ? "blocked" : "unblock")</td>
                                     <td>@account.CreatedAt.ToString("dd/MM/yyyy")</td>
-                                    <td><a asp-area="admin" asp-controller="listuser" asp-action="edit" asp-route-id="@account.Id">Edit</a></td>
+                                    <td><a href="#">Blocked</a>|<a href="#">UnBlocked</a></td>
                                 </tr>
                             }
                         </tbody>

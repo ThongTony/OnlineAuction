@@ -1,0 +1,46 @@
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
+<div id="search-block" style="margin-bottom:10px" class="panel panel-default">
+    <div class="panel-body">
+        <form method="get" asp-action="searchkeyword" asp-controller="item">
+            <div class="col-sm-2 hidden-xs hidden-sm">
+
+                <select name="cat_id" class="form-control">
+                    <option value=""><< Tất cả >></option>
+                    
+                    @*@foreach (var cate in Model.CategoriesVM)
+                    {
+                        if (cate.Children.Any())
+                        {
+                            <option>
+                                @cate.Name
+                            </option>
+                            @await Html.PartialAsync("~/Views/Shared/Components/Search", cate.Children)
+                        }
+                        else
+                        {
+                            <option>@cate.Name</option>
+                        }
+                    }*@
+                </select>
+            </div>
+            <div class="col-md-2 visible-md-block">
+                <select name="price" class="form-control">
+                    <option value="0">- Chọn mức giá -</option>
+                    <option value="1">Duới 1 triệu</option>
+                    <option value="2">Từ 1 tới 2 triệu</option>
+                    <option value="3">Trên 2 triệu</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" name="keyword" placeholder="Tìm sản phẩm" class="form-control">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

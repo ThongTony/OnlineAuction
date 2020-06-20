@@ -1,4 +1,5 @@
 ﻿@model AuctionOnline.ViewModels.LayoutViewModel
+@using AuctionOnline.Utilities
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -29,21 +30,59 @@
                 <!--li.active=$topic->title-->
 
                 <li class="pull-right">
-                    <button style="padding:0px 10px" onclick="javascript:saveProduct()" class="btn btn-default">
-                        <i class="fa fa-save"></i>
-                        <span style="margin-left:10px">Save</span>
-                    </button>
-                    <div data-href="https://sohot.vn/tp-ho-chi-minh/ghe-aston-co-tay-110.html" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true" class="fb-like fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=586511584891073&amp;container_width=92&amp;href=https%3A%2F%2Fsohot.vn%2Ftp-ho-chi-minh%2Fghe-aston-co-tay-110.html&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=false&amp;size=small">
-                        <span style="vertical-align: bottom; width: 122px; height: 20px;">
-                            <iframe name="f3fc1bc6b18bb58" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v2.6/plugins/like.php?action=like&amp;app_id=586511584891073&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df15e235094dbeb8%26domain%3Dsohot.vn%26origin%3Dhttps%253A%252F%252Fsohot.vn%252Ff24309e4d5aa12c%26relation%3Dparent.parent&amp;container_width=92&amp;href=https%3A%2F%2Fsohot.vn%2Ftp-ho-chi-minh%2Fghe-aston-co-tay-110.html&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=false&amp;size=small" style="border: none; visibility: visible; width: 122px; height: 20px;" class=""></iframe>
-                        </span>
-                    </div>
+                    <p>Back to Shop</p>
                 </li>
             </ul>
         </div>
         <div class="panel-body">
             <div style="min-height:300px" class="row">
+                @{
+                    decimal currentPrice = 0;
+                    decimal availableBidPrice = 0;
+
+                    var latestSessionBid = Model.ItemVM.Bids.OrderByDescending(x => x.BidSession).FirstOrDefault();
+
+                    if (latestSessionBid != null)
+                    {
+                        var latestCurrentPriceBid = Model.ItemVM.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBidPrice).FirstOrDefault();
+
+                        if (latestCurrentPriceBid == null)
+                        {
+                            availableBidPrice = Model.ItemVM.MinimumBid.Value;
+                        }
+                        else
+                        {
+                            if (!latestCurrentPriceBid.IsWinned)
+                            {
+                                currentPrice = latestCurrentPriceBid.CurrentBidPrice;
+                                availableBidPrice = latestCurrentPriceBid.CurrentBidPrice + Model.ItemVM.BidIncrement;
+                            }
+                            else
+                            {
+                                currentPrice = 0;
+                                availableBidPrice = Model.ItemVM.MinimumBid.Value;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        availableBidPrice = Model.ItemVM.MinimumBid.Value;
+                    }
+                }
                 <div class="col-md-6">
+                    @if (Model.ItemVM.BidStatus == BidStatus.InProgress)
+                    {
+                        <form asp-controller="Bid" asp-action="Create">
+                            <input type="hidden" asp-for="ItemVM.BidStartDate" />
+                            <input type="hidden" asp-for="ItemVM.BidEndDate" />
+                            <input type="hidden" asp-for="ItemVM.Id" />
+                            <input type="hidden" asp-for="ItemVM.Id" />
+                            <input type="number" asp-for="ItemVM.BidPrice" value="@availableBidPrice" />
+                            @Html.ValidationMessageFor(model => Model.ItemVM.BidPrice, "", new { @class = "text-danger" })
+                            <button type="submit" id="bid" name="bid">Start Bid</button>
+                        </form>
+                    }
+
                     <div id="swap-info" style="margin-bottom:10px"></div>
                     <div id="slick-container">
                         <div class="slick slick-initialized slick-slider">
@@ -64,7 +103,8 @@
                     <div class="bidding" style="margin: 25px">
                         <p><h1 style="color: olivedrab"><b>@Html.DisplayFor(model => model.ItemVM.Title)</b></h1></p>
                         <br>
-                        <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 60px;margin-top: 0px;"></p>
+                        <p>End in:&nbsp;</p>
+                        <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 30px;margin-top: 0px;"></p>
                         <script>
                             // Set the date we're counting down to
                             var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
@@ -85,8 +125,8 @@
                                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                                 // Output the result in an element with id="demo"
-                                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-                                    + minutes + "m " + seconds + "s ";
+                                document.getElementById("demo").innerHTML = days + " - " + hours + " - "
+                                    + minutes + " - " + seconds;
 
                                 // If the count down is over, write some text
                                 if (distance < 0) {
@@ -97,13 +137,13 @@
                         </script>
                         <br>
                         <div class="row">
-                            <div class="col-md-6">
-                                <label>Current Price:</label>
-                                <h4>$@Html.DisplayFor(model => model.ItemVM.Price)</h4>
+                            <div class="col-md-5">
+                                Current Price:
+                                <h1>@Html.DisplayFor(model => currentPrice)</h1>
                             </div>
-                            <div class="col-md-6">
-                                <label>Winner:</label>
-                                <h4>Name</h4>
+                            <div class="col-md-7">
+                                Increment Bid Price:
+                                <h1>@Html.DisplayFor(model => model.ItemVM.BidIncrement)</h1>
                             </div>
                         </div>
                         <br>
@@ -132,12 +172,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="text-align: center" >
+                        <!--foreach-->
+                        <tr style="text-align: center">
                             <td>John Wick</td>
                             <td>john@example.com</td>
                             <td>hcm City</td>
                             <td>0000000000</td>
                         </tr>
+                        <!------>
                     </tbody>
                 </table>
             </div>
@@ -158,7 +200,7 @@
                 }
                 <br />
                 <h1><b>Description</b></h1>
-                <p>@Html.DisplayFor(model => model.ItemVM.Description)</p>
+                <p style="font-size:10px">@Html.DisplayFor(model => model.ItemVM.Description)</p>
             </div>
             <div class="spacer"></div>
         </div>

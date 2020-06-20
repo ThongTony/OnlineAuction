@@ -1,19 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var category = ViewBag.Category;
 }
 
 <div class="row">
-    @await Component.InvokeAsync("Search")
     <div class="spacer"></div>
     <div style="margin-bottom:10px" class="panel panel-default">
         <div class="topiclist panel-body">
             <div class="row">
                 <div class="col-xs-6">
 
-                    <h1>@category.Name</h1>
+                    <h1>Kết Quả Search : @ViewBag.keyword</h1>
 
                 </div>
                 <div class="col-xs-6">
@@ -31,28 +28,20 @@
                             <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Cheapiest</a></li>
                         </ul>
                     </div>
-                    <!--.btn-group.btn-group-justified
-                                        a.btn.btn-default(href='#{sortURL[0]}', class=(!$sort) ? 'active' : '')
-                                            i.fa.fa-clock-o.fa-lg(data-toggle="tooltip" data-placement="top", title="Tin mới nhất")
-                                        a.btn.btn-default(href='#{sortURL[1]}sort=price', class=($sort=='price') ? 'active' : '')
-                                            span(data-toggle="tooltip" data-placement="top", title="Giá thấp nhất")
-                                                | VNĐ
-                                                i.fa.fa-angle-down.fa-lg
-                    -->
                 </div>
             </div>
             <hr>
             <script src="~/library/javascript/infinite-scroll.pkgd.min.js"></script>
             <div id="mainTopiclist" class="topiclist">
                 <div class="topiclist-wrapper">
-                    @foreach (var item in ViewBag.Items)
+                    @foreach (var search in ViewBag.Success)
                     {
                         <div class="item grid col-md-5ths col-xs-6">
                             <div class="itemcontainer">
                                 <div class="col-md-4 col-sm-3 col-xs-5">
                                     <div style="padding-left:15px" class="row">
-                                        <a class="thumb" asp-action="Details" asp-route-id="@item.Id">
-                                            <img src="~/images/items/@item.Photo">
+                                        <a class="thumb">
+                                            <img src="~/images/items/@search.Photo">
                                         </a>
                                     </div>
                                 </div>
@@ -60,7 +49,7 @@
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h3>
-                                                <a class="f-black">@item.Title</a>
+                                                <a class="f-black">@search.Title</a>
                                             </h3>
                                             <!--.infoline
                                                                         if !$byUser
@@ -73,7 +62,7 @@
                                         </div>
                                         <div class="col-sm-3 f-red text-right">
 
-                                            <button type="button" class="btn btn-success">Bid</button>
+                                            <strong>@search.Price</strong>
                                             <div class="text-nowrap">
 
                                             </div>
@@ -92,20 +81,21 @@
 
                 <!--.center.text-center!=pagestr-->
 
-                <div style="line-height:35px" class="col-xs-12 text-center">
+                <div class="col-xs-4 text-left">
                     <div class="row">
-                        <a id="nextpage" href="" class="btn btn-default f-red">
-                            <i style="margin-right:5px" class="fa fa-chevron-circle-left fa-lg"></i>
-                            Sau
-                        </a>
-                        &nbsp;
-                        <a id="nextpage" href="" class="btn btn-default f-red">
+
+                    </div>
+                </div>
+                <div style="line-height:35px" class="col-xs-4 text-center">1 / 2</div>
+                <div class="col-xs-4 text-right">
+                    <div class="row">
+
+                        <a id="nextpage" href="https://sohot.vn/tp-ho-chi-minh/tham?page=2" class="btn btn-default f-red">
                             <i style="margin-right:5px" class="fa fa-chevron-circle-right fa-lg"></i>
                             Tiếp
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="spacer">
