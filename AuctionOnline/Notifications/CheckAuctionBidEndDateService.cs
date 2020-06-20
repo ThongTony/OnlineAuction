@@ -68,7 +68,9 @@ namespace AuctionOnline.Notifications
 
             var count = Interlocked.Increment(ref executionCount) + "----" + now;
 
-            _logger.LogInformation("Timed Hosted Service is working. Count: {1}", "Expired Items Count: { 2}", count, expiredItems.Count);
+            _logger.LogInformation("Timed Hosted Service is working");
+            _logger.LogInformation("Count {Count}", count);
+            _logger.LogInformation("Total Expired Items: { Total}", expiredItems.Count);
         }
 
         public Task StopAsync(CancellationToken stoppingToken)
