@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuctionOnline.Migrations
 {
-    public partial class abc : Migration
+    public partial class abcc : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -134,34 +134,34 @@ namespace AuctionOnline.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreatedAt",
-                value: new DateTime(2020, 6, 17, 15, 0, 46, 172, DateTimeKind.Local).AddTicks(4225));
+                value: new DateTime(2020, 6, 19, 10, 7, 42, 645, DateTimeKind.Local).AddTicks(2544));
 
             migrationBuilder.UpdateData(
                 table: "Categories",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreatedAt",
-                value: new DateTime(2020, 6, 17, 15, 0, 46, 172, DateTimeKind.Local).AddTicks(4346));
+                value: new DateTime(2020, 6, 19, 10, 7, 42, 645, DateTimeKind.Local).AddTicks(2675));
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
-                values: new object[] { 3, new DateTime(2020, 6, 17, 15, 0, 46, 172, DateTimeKind.Local).AddTicks(4391), "Smarts", 2 });
+                values: new object[] { 3, new DateTime(2020, 6, 19, 10, 7, 42, 645, DateTimeKind.Local).AddTicks(2720), "Smarts", 2 });
 
             migrationBuilder.InsertData(
                 table: "Items",
                 columns: new[] { "Id", "AccountId", "BidEndDate", "BidIncrement", "BidStartDate", "BidStatus", "CreatedAt", "Description", "Document", "MinimumBid", "Photo", "Price", "Status", "Title" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2020, 6, 20, 15, 0, 45, 955, DateTimeKind.Local).AddTicks(9157), 2m, new DateTime(2020, 6, 17, 15, 0, 45, 955, DateTimeKind.Local).AddTicks(446), 1, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(297), "description 1", null, 7m, null, 5m, true, "product 1" },
-                    { 2, 1, new DateTime(2020, 6, 20, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2017), 2m, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2002), 1, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2040), "description 2", null, 7m, null, 10m, true, "product 2" },
-                    { 3, 1, new DateTime(2020, 6, 20, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2068), 2m, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2067), 1, new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2070), "description 3", null, 7m, null, 15m, true, "product 3" }
+                    { 1, 1, new DateTime(2020, 6, 22, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(3333), 2m, new DateTime(2020, 6, 19, 10, 7, 42, 389, DateTimeKind.Local).AddTicks(2397), 1, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(5003), "description 1", null, 7m, null, 5m, true, "product 1" },
+                    { 2, 1, new DateTime(2020, 6, 22, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6796), 2m, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6784), 1, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6823), "description 2", null, 7m, null, 10m, true, "product 2" },
+                    { 3, 1, new DateTime(2020, 6, 22, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6850), 2m, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6849), 1, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6852), "description 3", null, 7m, null, 15m, true, "product 3" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
-                values: new object[] { 4, new DateTime(2020, 6, 17, 15, 0, 46, 172, DateTimeKind.Local).AddTicks(4469), "Laptops & Macs", 3 });
+                values: new object[] { 4, new DateTime(2020, 6, 19, 10, 7, 42, 645, DateTimeKind.Local).AddTicks(2798), "Laptops & Macs", 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_AccountId",

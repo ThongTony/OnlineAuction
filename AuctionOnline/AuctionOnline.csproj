@@ -38,6 +38,8 @@
     <Compile Remove="Migrations\20200616081240_khoa6.Designer.cs" />
     <Compile Remove="Migrations\20200616081349_khoa7.cs" />
     <Compile Remove="Migrations\20200616081349_khoa7.Designer.cs" />
+    <Compile Remove="Migrations\20200617080046_abc.cs" />
+    <Compile Remove="Migrations\20200617080046_abc.Designer.cs" />
     <Compile Remove="Migrations\20200620014547_khoa1.cs" />
     <Compile Remove="Migrations\20200620014547_khoa1.Designer.cs" />
   </ItemGroup>
@@ -112,6 +114,7 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="bootstrap" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />

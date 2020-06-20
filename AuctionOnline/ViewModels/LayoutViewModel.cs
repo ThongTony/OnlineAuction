@@ -8,16 +8,24 @@ namespace AuctionOnline.ViewModels
         public LayoutViewModel()
         {
             CategoryVM = new CategoryVM();
-            ItemVM = new ItemVM();
-            AccountVM = new AccountVM();
             CategoriesVM = new List<CategoryVM>();
+            
+            ItemVM = new ItemVM();
+            ItemsVM = new List<ItemVM>();
+
+            AccountVM = new AccountVM();
+            
             Categories = new List<Category>();
         }
 
         public CategoryVM CategoryVM { get; set; }
-        public ItemVM ItemVM { get; set; }
-        public AccountVM AccountVM { get; set; }
         public List<CategoryVM> CategoriesVM { get; set; }
+
+        public ItemVM ItemVM { get; set; }
+        public List<ItemVM> ItemsVM { get; set; }
+
+        public AccountVM AccountVM { get; set; }
+        
         public List<Category> Categories { get; set; }
 
     }
