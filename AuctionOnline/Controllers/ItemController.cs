@@ -65,6 +65,7 @@ namespace AuctionOnline.Controllers
                 var item = ItemUtility.MapVMToModel(itemVM);
 
                 item.AccountId = 1; /*itemVM.AccountId*/
+                item.MinimumBid = itemVM.MinimumBid;
                 item.Photo = fileName;
                 item.Document = documentName;
                 item.CategoryItems = new List<CategoryItem>();
@@ -129,18 +130,13 @@ namespace AuctionOnline.Controllers
                 item.Document = documentName;
             }
 
-            //map vm to model
-            //item = ItemUtility.MapVMToModel(itemVM);
             item.Title = itemVM.Title;
             item.Description = itemVM.Description;
-            item.Price = itemVM.Price;
+            item.MinimumBid = itemVM.MinimumBid;
             item.CreatedAt = itemVM.CreatedAt;
-            //item.CategoryItems = itemVM.CategoryItems;
 
-            //update selected Categories' Ids
             if (itemVM.SelectedCategoryIds != null)
             {
-                //remove related categories
                 var categoryitems = db.CategoryItems.Where(c => c.ItemId == itemVM.Id).ToList();
                 if (categoryitems.Count > 0)
                 {
@@ -149,7 +145,6 @@ namespace AuctionOnline.Controllers
                         item.CategoryItems.Remove(categoryitem);
                     }
                 }
-                //add selected categories
                 foreach (var cateId in itemVM.SelectedCategoryIds)
                 {
                     item.CategoryItems.Add(new CategoryItem
@@ -248,6 +243,8 @@ namespace AuctionOnline.Controllers
             var item = await db.Items
                 .Include(i => i.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBidPrice).ToList();
+
             if (item == null)
             {
                 return NotFound();

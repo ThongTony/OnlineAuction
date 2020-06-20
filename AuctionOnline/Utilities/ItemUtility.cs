@@ -13,7 +13,6 @@ namespace AuctionOnline.Utilities
                 Id = itemVM.Id,
                 Title = itemVM.Title,
                 Description = itemVM.Description,
-                Price= itemVM.Price,
                 Status= itemVM.Status,
                 //AccountId = itemVM.AccountId,
                 Account = itemVM.Account,
@@ -39,7 +38,6 @@ namespace AuctionOnline.Utilities
                 Id = item.Id,
                 Title = item.Title,
                 Description = item.Description,
-                Price = item.Price,
                 Status = item.Status,
                 //AccountId = item.AccountId,
                 Account = item.Account,
@@ -53,6 +51,7 @@ namespace AuctionOnline.Utilities
                 MinimumBid = item.MinimumBid,
                 BidIncrement = item.BidIncrement,
                 CreatedAt = item.CreatedAt,
+                Bids = item.Bids
             };
 
             return viewModel;
@@ -68,7 +67,6 @@ namespace AuctionOnline.Utilities
                     Id = itemVM.Id,
                     Title = itemVM.Title,
                     Description = itemVM.Description,
-                    Price = itemVM.Price,
                     Status = itemVM.Status,
                     //AccountId = itemVM.AccountId,
                     Account = itemVM.Account,
@@ -99,7 +97,6 @@ namespace AuctionOnline.Utilities
                     Id = item.Id,
                     Title = item.Title,
                     Description = item.Description,
-                    Price = item.Price,
                     Status = item.Status,
                     //AccountId = item.AccountId,
                     Account = item.Account,
