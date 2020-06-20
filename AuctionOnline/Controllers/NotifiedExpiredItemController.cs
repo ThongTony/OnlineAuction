@@ -15,7 +15,7 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult GetExpiredItems()
         {
-            return Ok(db.ExpiredItems.Where(x => !x.IsSeen).OrderByDescending(x => x.Id).ToList());
+            return Ok(db.ExpiredItems.OrderByDescending(x => x.Id).ToList());
         }
         public IActionResult Index()
         {

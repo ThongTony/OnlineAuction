@@ -32,16 +32,5 @@ namespace AuctionOnline.Controllers
             hubContext.Clients.All.SendAsync("refreshNotifications");
             return RedirectToAction("index");
         }
-
-        [HttpGet]
-        public async Task<IActionResult> SeeExpiredItem(Guid id)
-        {
-            var item = dbContext.ExpiredItems.Find(id);
-            item.IsSeen = true;
-            dbContext.SaveChanges();
-            await hubContext.Clients.All.SendAsync("refreshNotifications");
-            return RedirectToAction("index", "NotifiedExpiredItem");
-        }
-
     }
 }

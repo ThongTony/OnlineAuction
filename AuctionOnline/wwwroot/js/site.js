@@ -29,7 +29,7 @@ $(() => {
                         <td style="width:90px;">${v.currentDate}</td>
                         <td style="width:90px;">${v.isExpired}</td>
                         <td style="width:90px;">${v.isSeen}</td>
-                        <td style="width:140px;"><a href="/ManageExpiredItem/SeeExpiredItem/${v.id}">See Expired Item</a></td>
+                        <td style="width:140px;"><a href="/Item/Details/${v.itemId}">See Expired Item</a></td>
                     </tr>`;
                 });
 
