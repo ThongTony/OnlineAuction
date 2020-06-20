@@ -24,21 +24,14 @@ $(() => {
             method: 'GET',
             success: (result) => {
                 $.each(result, (k, v) => {
-                    //tr = tr + `<tr style="width:90px;">
-                    //    <td style="width:90px;">${v.itemId}</td>
-                    //    <td style="width:90px;">${v.currentDate}</td>
-                    //    <td style="width:90px;">${v.isExpired}</td>
-                    //    <td style="width:90px;">${v.isSeen}</td>
-                    //    <td style="width:140px;"><a href="/Item/Details/${v.itemId}">See Expired Item</a></td>
-                    //</tr>`;
-
-                    tr = tr + `<li style="font-size:12.5px; margin-left: -20px; margin-right: 8px; float:left;">
+                    var className = !v.isSeen ? 'linebg' : '';
+                    tr = tr + `<li class="notifiedline ${className}">
                             <a href="/Item/Details/${v.itemId}" role="button" tabindex="0">
                                 <div>
                                     <div style="float:left;margin-right:10px;">
-                                        <img src="https://scontent.xx.fbcdn.net/v/t1.0-1/cp0/p48x48/55738269_2813143815370024_4176931368388788224_n.jpg?_nc_cat=106&amp;_nc_sid=dbb9e7&amp;_nc_ohc=r1_aiKlQr2oAX9slP3O&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_ht=scontent.xx&amp;oh=0b4355eaa6036f3654a35daeac226554&amp;oe=5F0C85E2">
+                                        <img style="border-radius: 50%;" src="https://scontent.xx.fbcdn.net/v/t1.0-1/cp0/p48x48/55738269_2813143815370024_4176931368388788224_n.jpg?_nc_cat=106&amp;_nc_sid=dbb9e7&amp;_nc_ohc=r1_aiKlQr2oAX9slP3O&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_ht=scontent.xx&amp;oh=0b4355eaa6036f3654a35daeac226554&amp;oe=5F0C85E2">
                                     </div>
-                                    <div>
+                                    <div style="float:left; width:75%;">
                                         <span>
                                             <span>Nước hoa Charme Bình Dương</span>
                                             <span> checked in at </span>
@@ -51,12 +44,16 @@ $(() => {
                                             </div>
                                             <div>
                                                 <span>
-                                                    <abbr aria-label="10 minutes ago" minimize="true" title="Tuesday, 16 June 2020 at 22:00" data-utime="1592319605" data-minimize="true">
+                                                    <i>
                                                         <span class="timestampContent">10m - ${v.currentDate}</span>
-                                                    </abbr>
+                                                    </i>
                                                 </span>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div style="font-size:12px;">
+                                         <div><a href="#" alt="Remove this notification">X</a></div>
+                                         <div><a href="#" alt="Mark as read">...</a></div>
                                     </div>
                                 </div>
                             </a>

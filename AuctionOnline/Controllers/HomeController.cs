@@ -1,10 +1,12 @@
 ﻿using AuctionOnline.Data;
+using AuctionOnline.Models;
+using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("home")]
     public class HomeController : Controller
     {
 
@@ -12,21 +14,37 @@ namespace AuctionOnline.Controllers
         public HomeController(AuctionDbContext _db)
         {
             db = _db;
-        }        
-        [Route("~/")]
-        [Route("")]
-        [Route("index")]
+        }
         public IActionResult Index()
         {
             ViewBag.IsHome = true;
-            ViewBag.Categories = db.Categories.Where(c => c.ParentId == null).ToList();
-            ViewBag.Items = db.Items.ToList();
-            return View();
+
+            var categories = db.Categories.Where(e => e.ParentId == null).ToList();
+            foreach (var cate in categories)
+            {
+                var categoryItems = db.CategoryItems.Where(x => x.CategoryId == cate.Id).ToList();
+
+                foreach (var categoryItem in categoryItems)
+                {
+                    categoryItem.Item = db.Items.FirstOrDefault(x => x.Id == categoryItem.ItemId);
+                }
+                cate.CategoryItems = categoryItems;
+            }
+            var layoutVM = new LayoutViewModel()
+            {
+                Categories = categories
+            };
+
+            return View(layoutVM);
         }
-        [Route("logout")]
         public IActionResult Logout()
         {
-            return View("index");
+            return View("Index");
+        }
+
+        public IActionResult Error()
+        {
+            return View();
         }
     }
 }

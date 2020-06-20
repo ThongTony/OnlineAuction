@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuctionOnline.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20200619021446_abc")]
+    [Migration("20200619022342_abc")]
     partial class abc
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,26 +152,26 @@ namespace AuctionOnline.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 6, 19, 9, 23, 42, 604, DateTimeKind.Local).AddTicks(3747),
                             Name = "Furniture"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 6, 19, 9, 23, 42, 604, DateTimeKind.Local).AddTicks(4011),
                             Name = "Electric"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 6, 19, 9, 23, 42, 604, DateTimeKind.Local).AddTicks(4102),
                             Name = "Smarts",
                             ParentId = 2
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 6, 19, 9, 23, 42, 604, DateTimeKind.Local).AddTicks(4176),
                             Name = "Laptops & Macs",
                             ParentId = 3
                         });
@@ -277,11 +277,11 @@ namespace AuctionOnline.Migrations
                         {
                             Id = 1,
                             AccountId = 1,
-                            BidEndDate = new DateTime(2020, 6, 22, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(5256),
+                            BidEndDate = new DateTime(2020, 6, 22, 9, 23, 42, 115, DateTimeKind.Local).AddTicks(9634),
                             BidIncrement = 2m,
-                            BidStartDate = new DateTime(2020, 6, 19, 9, 14, 45, 857, DateTimeKind.Local).AddTicks(4794),
+                            BidStartDate = new DateTime(2020, 6, 19, 9, 23, 42, 114, DateTimeKind.Local).AddTicks(8974),
                             BidStatus = 1,
-                            CreatedAt = new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(6447),
+                            CreatedAt = new DateTime(2020, 6, 19, 9, 23, 42, 116, DateTimeKind.Local).AddTicks(815),
                             Description = "description 1",
                             MinimumBid = 7m,
                             Price = 5m,
@@ -292,11 +292,11 @@ namespace AuctionOnline.Migrations
                         {
                             Id = 2,
                             AccountId = 1,
-                            BidEndDate = new DateTime(2020, 6, 22, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8160),
+                            BidEndDate = new DateTime(2020, 6, 22, 9, 23, 42, 116, DateTimeKind.Local).AddTicks(3034),
                             BidIncrement = 2m,
-                            BidStartDate = new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8140),
+                            BidStartDate = new DateTime(2020, 6, 19, 9, 23, 42, 116, DateTimeKind.Local).AddTicks(2526),
                             BidStatus = 1,
-                            CreatedAt = new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8194),
+                            CreatedAt = new DateTime(2020, 6, 19, 9, 23, 42, 116, DateTimeKind.Local).AddTicks(3093),
                             Description = "description 2",
                             MinimumBid = 7m,
                             Price = 10m,
@@ -307,11 +307,11 @@ namespace AuctionOnline.Migrations
                         {
                             Id = 3,
                             AccountId = 1,
-                            BidEndDate = new DateTime(2020, 6, 22, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8230),
+                            BidEndDate = new DateTime(2020, 6, 22, 9, 23, 42, 116, DateTimeKind.Local).AddTicks(3139),
                             BidIncrement = 2m,
-                            BidStartDate = new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8228),
+                            BidStartDate = new DateTime(2020, 6, 19, 9, 23, 42, 116, DateTimeKind.Local).AddTicks(3136),
                             BidStatus = 1,
-                            CreatedAt = new DateTime(2020, 6, 19, 9, 14, 45, 858, DateTimeKind.Local).AddTicks(8232),
+                            CreatedAt = new DateTime(2020, 6, 19, 9, 23, 42, 116, DateTimeKind.Local).AddTicks(3141),
                             Description = "description 3",
                             MinimumBid = 7m,
                             Price = 15m,

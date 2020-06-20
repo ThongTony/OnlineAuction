@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var category = ViewBag.Category;
 }
 
 <div class="row">
@@ -11,24 +13,22 @@
             <div class="row">
                 <div class="col-xs-6">
 
-                    <h1>Thảm</h1>
+                    <h1>@category.Name</h1>
 
                 </div>
                 <div class="col-xs-6">
                     <div class="dropdown pull-right">
-                        Sắp xếp theo:&nbsp;
+                        Sort by :&nbsp;
                         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
 
-                            Tin mới nhất
+                            Most expensive
 
                             <div style="margin-left:5px" class="caret"></div>
                         </button>
                         <ul class="dropdown-menu">
 
-                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham">Tin mới nhất</a></li>
-
-                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-desc">Giá cao nhất</a></li>
-                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Giá thấp nhất</a></li>
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-desc">Most expensive</a></li>
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Cheapiest</a></li>
                         </ul>
                     </div>
                     <!--.btn-group.btn-group-justified
@@ -42,46 +42,49 @@
                 </div>
             </div>
             <hr>
-            <script src="https://sohot.vn/library/javascript/infinite-scroll.pkgd.min.js"></script>
+            <script src="~/library/javascript/infinite-scroll.pkgd.min.js"></script>
             <div id="mainTopiclist" class="topiclist">
                 <div class="topiclist-wrapper">
-                    <!--foreach-->
-                    <div class="item grid col-md-5ths col-xs-6">
-                        <div class="itemcontainer">
-                            <div class="col-md-4 col-sm-3 col-xs-5">
-                                <div style="padding-left:15px" class="row">
-                                    <a href="https://sohot.vn/tp-ho-chi-minh/gach-tham-chieu-nghi-cau-thang-4979.html" class="thumb">
-                                        <img src="https://sohot.vn/uploads/market/avatar/49/497/4979.jpg">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-sm-9 col-xs-7">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <h3>
-                                            <a href="https://sohot.vn/tp-ho-chi-minh/gach-tham-chieu-nghi-cau-thang-4979.html" class="f-black">Gạch thảm - chiếu nghỉ cầu thang</a>
-                                        </h3>
-                                        <!--.infoline
-                                                                    if !$byUser
-                                                                        //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
-                                                                        //&nbsp;
-                                                                        span.f-grey=$i->up_date_h
-                                                                    else
-                                                                        span.f-grey=$i->up_date_h
-                                        -->
+                    @foreach (var item in ViewBag.Items)
+                    {
+                        <div class="item grid col-md-5ths col-xs-6">
+                            <div class="itemcontainer">
+                                <div class="col-md-4 col-sm-3 col-xs-5">
+                                    <div style="padding-left:15px" class="row">
+                                        <a class="thumb" asp-action="Details" asp-route-id="@item.Id">
+                                            <img src="~/images/items/@item.Photo">
+                                        </a>
                                     </div>
-                                    <div class="col-sm-3 f-red text-right">
-
-                                        <strong>1.8 triệu</strong>
-                                        <div class="text-nowrap">
-
+                                </div>
+                                <div class="col-md-8 col-sm-9 col-xs-7">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h3>
+                                                <a class="f-black">@item.Title</a>
+                                            </h3>
+                                            <!--.infoline
+                                                                        if !$byUser
+                                                                            //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
+                                                                            //&nbsp;
+                                                                            span.f-grey=$i->up_date_h
+                                                                        else
+                                                                            span.f-grey=$i->up_date_h
+                                            -->
                                         </div>
-                                        <div class="spacer"></div>
+                                        <div class="col-sm-3 f-red text-right">
+
+                                            <strong>@item.Price</strong>
+                                            <div class="text-nowrap">
+
+                                            </div>
+                                            <div class="spacer"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
+
                     <!--foreach-->
 
                 </div>

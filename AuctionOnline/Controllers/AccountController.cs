@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 
 namespace AuctionOnline.Controllers
 {
-    [Route("account")]
     public class AccountController : Controller
     {
         private IConfiguration configuration;
@@ -29,7 +28,6 @@ namespace AuctionOnline.Controllers
 
 
         [HttpGet]
-        [Route("login")]
         public IActionResult Login()
         {
             return View("Login");
@@ -37,7 +35,6 @@ namespace AuctionOnline.Controllers
 
 
         [HttpPost]
-        [Route("login")]
         public IActionResult Login(string username, string password)
         {
             var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username) && a.Status == true);
@@ -52,11 +49,11 @@ namespace AuctionOnline.Controllers
                     }
                     else if ( account.RoleId == 0)
                     {
-                        return RedirectToAction("Edit", "ListUser", new { area = "Admin" });
+                        return RedirectToAction("Index", "ListUser", new { area = "Admin" });
                     }
                     else
                     {
-                        return RedirectToAction("404error", "Home");
+                        return RedirectToAction("error", "Home");
                     }
                 }
             }
@@ -67,7 +64,6 @@ namespace AuctionOnline.Controllers
 
 
         [HttpGet]
-        [Route("register")]
         public IActionResult Register()
         {
             return View("Register");
@@ -75,7 +71,6 @@ namespace AuctionOnline.Controllers
 
 
         [HttpPost]
-        [Route("register")]
         public IActionResult Register(string fullname, string username, string email, string password)
         {
             var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
@@ -108,20 +103,18 @@ namespace AuctionOnline.Controllers
             }
         }
 
-        [Route("logout")]
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("username");
             return RedirectToAction("Index", "Home");
         }
 
-        [Route("index")]
         public IActionResult DemoIndex()
         {
             ViewBag.Account = db.Accounts.Where(x => x.RoleId == 1).ToList();
             return View("DemoIndex");
         }
-        [Route("list")]
+
         public IActionResult List()
         {
             ViewBag.SellerCount = db.Accounts.Select(x => x.RoleId == 1).Count();
@@ -131,14 +124,12 @@ namespace AuctionOnline.Controllers
 
 
         [HttpGet]
-        [Route("Forgotpassword")]
         public IActionResult Forgotpassword()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("Forgotpassword")]
         public IActionResult Forgotpassword(string email)
         {
             var checkemail = db.Accounts.SingleOrDefault(a => a.Email.Equals(email));
@@ -177,13 +168,11 @@ namespace AuctionOnline.Controllers
             }
         }
         [HttpGet]
-        [Route("Resetpassword")]
         public IActionResult Resetpassword()
         {
             return View();
         }
         [HttpPost]
-        [Route("Resetpassword")]
         public IActionResult Resetpassword(string password, string confirmpassword , Account account)
         {
 
@@ -193,10 +182,9 @@ namespace AuctionOnline.Controllers
                 {
                     if (HttpContext.Session.GetInt32("checkid") != null)
                     {
-                        var checkpassword = HttpContext.Session.GetString("checkpassword");
-                        var hashupdatepassword = BCrypt.Net.BCrypt.HashPassword(password);
-                        checkpassword=hashupdatepassword;
-                        account.Password = checkpassword;
+                        var hashpassword = BCrypt.Net.BCrypt.HashPassword(password);
+                        account = db.Accounts.Find((HttpContext.Session.GetInt32("checkid")));
+                        account.Password = hashpassword;
                         db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                         db.SaveChanges();
                         return RedirectToAction("Login");

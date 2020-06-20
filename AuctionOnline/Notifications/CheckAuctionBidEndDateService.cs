@@ -57,7 +57,8 @@ namespace AuctionOnline.Notifications
                 {
                     ItemId = item.Id,
                     IsExpired = item.BidEndDate.Value.Date.CompareTo(now.Date) <= 0,
-                    CurrentDate = now
+                    CurrentDate = now,
+                    IsSeen = false
                 };
 
                 dbContext.ExpiredItems.Add(model);

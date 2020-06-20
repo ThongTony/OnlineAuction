@@ -1,0 +1,67 @@
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
+    <!--IEnumerable<>-->
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table" border="1" align="center" style="text-align:center;">
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Name)*@
+                    Name
+                </th>
+                <th>
+                    Creating Date
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Parent)*@
+                    Parent
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CategoriesVM)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        @if (item.ParentId != null)
+                        {
+                            <p>@Html.DisplayFor(modelItem => item.Parent.Name)</p>
+                        }
+                        else
+                        {
+                            <p>None</p>
+                        }
+
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

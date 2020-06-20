@@ -7,7 +7,7 @@
         <div class="modal-content row">
             <div class="col-md-12">
 
-                <form name="loginform" id="loginform"  method="post" asp-action="login" asp-controller="account">
+                <form name="loginform" id="loginform"  method="post" asp-action="Login" asp-controller="account">
 
                     <p class="login-username">
                         <label for="user_login">Username or Email Address</label>
@@ -35,7 +35,7 @@
                             <a class="btn btn-register" id="register-modal">Register</a>
                         </p>
                         <p class="woocommerce-LostPassword lost_password">
-                            <a  asp-controller="account"asp-action="resetpassword">Forgot your password?</a>
+                            <a  asp-controller="account"asp-action="Resetpassword">Forgot your password?</a>
                         </p>
                     </div>
 
@@ -50,7 +50,7 @@
         <div class="modal-content row">
             <div class="col-md-12">
                 <div class="u-column2 col-2">
-                    <form method="post" class="woocommerce-form woocommerce-form-register register" asp-action="register" asp-controller="account">
+                    <form method="post" class="woocommerce-form woocommerce-form-register register" asp-action="Register" asp-controller="account">
                         <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
                             <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="fullname" id="reg_username" autocomplete="username" value="" placeholder="Full Name" />
                         </p>
