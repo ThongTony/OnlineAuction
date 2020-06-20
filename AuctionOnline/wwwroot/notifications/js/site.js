@@ -24,6 +24,7 @@ $(() => {
             method: 'GET',
             success: (result) => {
                 $.each(result, (k, v) => {
+                    var isAvailable = v.isSeen ? 'notavailable' : '';
                     var className = !v.isSeen ? 'linebg' : '';
                     tr = tr + `<li class="notifiedline ${className}">
                             <a href="/Item/Details/${v.itemId}" role="button" tabindex="0">
@@ -53,7 +54,7 @@ $(() => {
                                     </div>
                                     <div style="font-size:12px;">
                                          <div><a href="#" alt="Remove this notification">X</a></div>
-                                         <div><a href="#" alt="Mark as read">...</a></div>
+                                         <div class="${isAvailable}"><a href="#" alt="Mark as read">...</a></div>
                                     </div>
                                 </div>
                             </a>
@@ -68,5 +69,7 @@ $(() => {
                 console.log(error);
             }
         });
+
     }
+
 });
