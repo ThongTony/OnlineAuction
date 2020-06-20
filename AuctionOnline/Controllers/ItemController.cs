@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,46 +31,43 @@ namespace AuctionOnline.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var getAllItem = db.Items.Include(i => i.Account);
-
-            return View(await getAllItem.ToListAsync());
+            var items = db.Items.Include(i => i.Account);
+            var viewVM = new LayoutViewModel();
+            viewVM.ItemsVM = ItemUtility.MapModelsToVMs(items.ToList());
+            return View(viewVM);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id");
-            var model = new ItemVM();
-            model.Categories = db.Categories.Select(a =>
+            //ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id");
+            var viewmodel = new LayoutViewModel();
+            viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
                                   new SelectListItem
                                   {
                                       Value = a.Id.ToString(),
                                       Text = a.Name
                                   }).ToList();
-            return View(model);
+            return View(viewmodel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ItemVM itemVM)
         {
-            ViewBag.Item = "Failed";
+            ViewBag.ItemAdd = "Failed";
             itemVM.CreatedAt = DateTime.Now;
-
+            itemVM.Status = false;
             if (itemVM != null)
             {
                 string fileName = await UploadAsync(itemVM.Photo, photoPath);
                 string documentName = await UploadAsync(itemVM.Document, documentPath);
-                var item = new Item()
-                {
-                    Title = itemVM.Title,
-                    Price = itemVM.Price,
-                    AccountId = 1 /*itemVM.AccountId*/,
-                    Photo = fileName,
-                    Document = documentName,
-                    CreatedAt = itemVM.CreatedAt,
-                    CategoryItems = new List<CategoryItem>()
-                };
+                var item = ItemUtility.MapVMToModel(itemVM);
+
+                item.AccountId = 1; /*itemVM.AccountId*/
+                item.Photo = fileName;
+                item.Document = documentName;
+                item.CategoryItems = new List<CategoryItem>();
 
                 foreach (var id in itemVM.SelectedCategoryIds)
                 {
@@ -81,14 +79,14 @@ namespace AuctionOnline.Controllers
                 }
                 db.Items.Add(item);
                 await db.SaveChangesAsync();
-                return RedirectToAction(nameof(ListInShop));
+                return RedirectToAction(nameof(Index));
             }
             ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id", itemVM.AccountId);
             return View(itemVM);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
@@ -96,33 +94,73 @@ namespace AuctionOnline.Controllers
             }
 
             var item = await db.Items.FindAsync(id);
-            //var itemVM = new ItemVM()
-            //{
-            //    Title = item.Title,
-            //    Price = item.Price,
-            //    AccountId = 1 /*itemVM.AccountId*/,
-            //    Photo = item.Photo,
-            //    Document = documentName,
-            //    CreatedAt = item.CreatedAt,
-            //    CategoryItems = new List<CategoryItem>()
-            //};
+            var layoutVM = new LayoutViewModel();
+            layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
+
+            int[] selectedCategoryIds = db.CategoryItems.Where(x => x.ItemId == id).Select(i => i.CategoryId).ToArray();
+            layoutVM.ItemVM.Categories = db.Categories.Select(a =>
+                                  new SelectListItem
+                                  {
+                                      Value = a.Id.ToString(),
+                                      Text = a.Name
+                                  }).ToList();
+            layoutVM.ItemVM.SelectedCategoryIds = selectedCategoryIds;
             if (item == null)
             {
                 return NotFound();
             }
-            ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id", item.AccountId);
-            return View(item);
+            return View(layoutVM);
         }
+
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, /*[Bind("Id,Title,Description,Price,Status,Photo,Document,AccountId,CreatedAt")]*/ Item item)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ItemVM itemVM)
         {
-            if (id != item.Id)
+            var item = await db.Items.FindAsync(itemVM.Id);
+            if (itemVM.Photo != null)
             {
-                return NotFound();
+                string fileName = await UploadAsync(itemVM.Photo, photoPath);
+                item.Photo = fileName;
             }
 
-            if (ModelState.IsValid)
+            if (itemVM.Document != null)
             {
+                string documentName = await UploadAsync(itemVM.Document, documentPath);
+                item.Document = documentName;
+            }
+
+            //map vm to model
+            //item = ItemUtility.MapVMToModel(itemVM);
+            item.Title = itemVM.Title;
+            item.Description = itemVM.Description;
+            item.Price = itemVM.Price;
+            item.CreatedAt = itemVM.CreatedAt;
+            //item.CategoryItems = itemVM.CategoryItems;
+
+            //update selected Categories' Ids
+            if (itemVM.SelectedCategoryIds != null)
+            {
+                //remove related categories
+                var categoryitems = db.CategoryItems.Where(c => c.ItemId == itemVM.Id).ToList();
+                if (categoryitems.Count > 0)
+                {
+                    foreach (var categoryitem in categoryitems)
+                    {
+                        item.CategoryItems.Remove(categoryitem);
+                    }
+                }
+                //add selected categories
+                foreach (var cateId in itemVM.SelectedCategoryIds)
+                {
+                    item.CategoryItems.Add(new CategoryItem
+                    {
+                        CategoryId = cateId,
+                        ItemId = item.Id,
+                        CreatedAt = DateTime.Now
+                    });
+                }
+                db.Items.Add(item);
+
                 try
                 {
                     db.Update(item);
@@ -136,16 +174,32 @@ namespace AuctionOnline.Controllers
                     }
                     else
                     {
-                        throw;
+                        ModelState.AddModelError("", "Unable to save changes. " +
+                        "Try again, and if the problem persists, " +
+                        "see your system administrator.");
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id", item.AccountId);
-            return View(item);
+
+            var layoutVM = new LayoutViewModel()
+            {
+                ItemVM = itemVM
+            };
+
+            layoutVM.ItemVM.Categories = db.Categories.Select(a =>
+                                 new SelectListItem
+                                 {
+                                     Value = a.Id.ToString(),
+                                     Text = a.Name
+                                 }).ToList();
+
+            return View(layoutVM);
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
@@ -160,16 +214,21 @@ namespace AuctionOnline.Controllers
                 return NotFound();
             }
 
-            return View(item);
+            var viewlayout = new LayoutViewModel()
+            {
+                ItemVM = ItemUtility.MapModelToVM(item)
+            };
+            return View(viewlayout);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(ItemVM itemVM)
         {
-            var item = await db.Items.FindAsync(id);
+            var item = await db.Items.FindAsync(itemVM.Id);
 
-            var categoryitems = db.CategoryItems.Where(c => c.ItemId == id);
+            var categoryitems = db.CategoryItems.Where(c => c.ItemId == itemVM.Id);
+
             foreach (var categoryitem in categoryitems)
             {
                 item.CategoryItems.Remove(categoryitem);
@@ -179,7 +238,7 @@ namespace AuctionOnline.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Detail(int id)
         {
             if (id == null)
             {
@@ -194,10 +253,19 @@ namespace AuctionOnline.Controllers
                 return NotFound();
             }
 
-            return View(item);
+            var viewmodel = new LayoutViewModel()
+            {
+                ItemVM = ItemUtility.MapModelToVM(item)
+            };
+
+            return View(viewmodel);
         }
 
-
+        public IActionResult Model()
+        {
+            var items = db.Items.ToList();
+            return View(items);
+        }
         public async Task<IActionResult> ListedByCategory(int id)
         {
             ViewBag.Category = db.Categories.Find(id);

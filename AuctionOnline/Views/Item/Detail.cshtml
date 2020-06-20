@@ -1,0 +1,219 @@
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <script src="~/library/javascript/slick/slick.min.js"></script>
+    <link href="~/library/javascript/slick/slick-theme.css" rel="stylesheet">
+    <link href="~/library/javascript/slick/slick.css" rel="stylesheet">
+
+    <div style="margin-bottom:10px" class="panel panel-default">
+        <div class="panel-heading">
+            <ul class="breadcrumb lean">
+                <li>
+                    <a asp-action="Index">Home</a>
+                </li>
+
+                <li>
+                    <a>Province / City Name</a>
+                </li>
+                <li>
+                    @*@foreach(var cate in Model.ItemVM.Categories)
+                        {
+                        <a>@Html.DisplayFor(modelCate => cate.)</a>
+                        }*@
+                    <a>Cateogry Name</a>
+
+                </li>
+                <!--li.active=$topic->title-->
+
+                <li class="pull-right">
+                    <button style="padding:0px 10px" onclick="javascript:saveProduct()" class="btn btn-default">
+                        <i class="fa fa-save"></i>
+                        <span style="margin-left:10px">Save</span>
+                    </button>
+                    <div data-href="https://sohot.vn/tp-ho-chi-minh/ghe-aston-co-tay-110.html" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true" class="fb-like fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=586511584891073&amp;container_width=92&amp;href=https%3A%2F%2Fsohot.vn%2Ftp-ho-chi-minh%2Fghe-aston-co-tay-110.html&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=false&amp;size=small">
+                        <span style="vertical-align: bottom; width: 122px; height: 20px;">
+                            <iframe name="f3fc1bc6b18bb58" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v2.6/plugins/like.php?action=like&amp;app_id=586511584891073&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df15e235094dbeb8%26domain%3Dsohot.vn%26origin%3Dhttps%253A%252F%252Fsohot.vn%252Ff24309e4d5aa12c%26relation%3Dparent.parent&amp;container_width=92&amp;href=https%3A%2F%2Fsohot.vn%2Ftp-ho-chi-minh%2Fghe-aston-co-tay-110.html&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey&amp;share=true&amp;show_faces=false&amp;size=small" style="border: none; visibility: visible; width: 122px; height: 20px;" class=""></iframe>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div style="min-height:300px" class="row">
+                <div class="col-md-6">
+                    <div id="swap-info" style="margin-bottom:10px"></div>
+                    <div id="slick-container">
+                        <div class="slick slick-initialized slick-slider">
+                            <div aria-live="polite" class="slick-list draggable">
+                                <div class="slick-track" role="listbox" style="opacity: 1; width: 600px; transform: translate3d(0px, 0px, 0px);">
+                                    <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 600px;">
+                                        <img src="~/images/items/@Html.DisplayFor(model => model.ItemVM.PhotoName)" alt="@Html.DisplayFor(model => model.ItemVM.Title)" class="img-rounded" width="500" height="auto">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slick-counter">
+                            <span>1 / 1</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bidding" style="margin: 25px">
+                        <p><h1 style="color: olivedrab"><b>@Html.DisplayFor(model => model.ItemVM.Title)</b></h1></p>
+                        <br>
+                        <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 60px;margin-top: 0px;"></p>
+                        <script>
+                            // Set the date we're counting down to
+                            var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+
+                            // Update the count down every 1 second
+                            var x = setInterval(function () {
+
+                                // Get today's date and time
+                                var now = new Date().getTime();
+
+                                // Find the distance between now and the count down date
+                                var distance = countDownDate - now;
+
+                                // Time calculations for days, hours, minutes and seconds
+                                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                // Output the result in an element with id="demo"
+                                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                                    + minutes + "m " + seconds + "s ";
+
+                                // If the count down is over, write some text
+                                if (distance < 0) {
+                                    clearInterval(x);
+                                    document.getElementById("demo").innerHTML = "EXPIRED";
+                                }
+                            }, 1000);
+                        </script>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Current Price:</label>
+                                <h4>$@Html.DisplayFor(model => model.ItemVM.Price)</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Winner:</label>
+                                <h4>Name</h4>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default">-</button>
+                            <button type="button" class="btn btn-default">15K</button>
+                            <button type="button" class="btn btn-default">+</button>
+                        </div>
+                        <button type="button" class="btn btn-success" style="margin-left: 25px">BID</button>
+                    </div>
+                </div>
+                <div class="spacer"></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div style="margin:auto" class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="info" style="text-align: center">
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="text-align: center" >
+                            <td>John Wick</td>
+                            <td>john@example.com</td>
+                            <td>hcm City</td>
+                            <td>0000000000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="spacer"></div>
+            <hr />
+            <div class="item_detail" style="text-align:left">
+                <h1 style="color: olivedrab"><b>Item Information</b></h1>
+                <br>
+                <h2>Bid Session : ........</h2>
+                <h2>Item Id : @Html.DisplayFor(model => model.ItemVM.Id)</h2>
+                @if (Model.ItemVM.Status != false)
+                {
+                    <h3 style="color:green">On Bidding</h3>
+                }
+                else
+                {
+                    <h3 style="color: red">Ended</h3>
+                }
+                <br />
+                <h1><b>Description</b></h1>
+                <p>@Html.DisplayFor(model => model.ItemVM.Description)</p>
+            </div>
+            <div class="spacer"></div>
+        </div>
+    </div>
+    <div id="related-topics" class="panel panel-default">
+        <div class="panel-heading">Others items in shop</div>
+        <div style="margin:auto" class="panel-body text-center">
+            @*foreach*@
+            <div class="col-md-3 col-sm-3 col-xs-6 s-pad">
+                <a href="https://sohot.vn/tp-ho-chi-minh/ban-sofa-kim-cuong-ma-vang-hx1b-2201.html" style="margin:auto !important" class="thumb text-nowrap f-black">
+                    <div style="position:absolute;right:0px;top:10px;max-width:160px;overflow:hidden" class="badge b-red xs-pad">3.8 triệu</div>
+                    <img src="https://sohot.vn/uploads/market/avatar/22/220/2201.jpg" align="center" style="margin:auto !important">
+                </a>
+                <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="block">
+                    <a href="https://sohot.vn/tp-ho-chi-minh/ban-sofa-kim-cuong-ma-vang-hx1b-2201.html">Bàn sofa kim cương mạ vàng HX1B</a>
+                </div>
+            </div>
+            @*end foreach*@
+        </div>
+    </div>
+    <div id="related-topics" class="panel panel-default">
+        <div class="panel-heading">Related items</div>
+        <div style="margin:auto" class="panel-body text-center">
+            @*foreach*@
+            <div class="col-md-3 col-sm-3 col-xs-6 s-pad">
+                <a href="https://sohot.vn/tp-ho-chi-minh/ghe-aston-ash-959.html" style="margin:auto !important" class="thumb text-nowrap f-black">
+                    <div style="position:absolute;right:0px;top:10px;max-width:160px;overflow:hidden" class="badge b-red xs-pad">2.3 triệu</div>
+                    <img src="https://sohot.vn/uploads/market/avatar/95/959/959.jpg" align="center" style="margin:auto !important">
+                </a>
+                <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="block">
+                    <a href="https://sohot.vn/tp-ho-chi-minh/ghe-aston-ash-959.html">Ghế Aston ash</a>
+                </div>
+            </div>
+            @*end foreach*@
+        </div>
+    </div>
+    <div id="tel" class="hidden">MDkzMzQ1NjQ1Nw==</div>
+    <div id="map" role="dialog" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Địa chỉ
+                    <div class="pull-right">
+                        <a href="javascript:;" onclick="$(&quot;#map&quot;).modal(&quot;hide&quot;);">
+                            <i class="fa fa-close fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <iframe src="" width="100%" height="100%" style="min-height:400px"></iframe>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

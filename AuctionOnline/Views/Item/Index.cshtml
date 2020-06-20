@@ -1,4 +1,4 @@
-﻿@model AuctionOnline.ViewModels.ItemVM;
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,23 +11,22 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Account</th>
             <th>Date Creation</th>
             <th>Photo</th>
             <th>Actions</th>
         </tr>
-        @foreach (var item in ViewBag.Item)
+        @foreach (var item in Model.ItemsVM)
         {
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Title</td>
-                <td>@item.AccountId</td>
-                <td>@item.CreatedAt</td>
+                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
                 <td>
-                    <img src="~/images/items/@item.Photo" width="50" height="50"/>
+                    <img src="~/images/items/@item.PhotoName" width="50" height="50"/>
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Detail" asp-route-id="@item.Id">Detail</a>
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>

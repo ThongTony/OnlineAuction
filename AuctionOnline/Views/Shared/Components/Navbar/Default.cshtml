@@ -25,7 +25,7 @@
             </button>
             <a href="/toan-quoc" class="navbar-brand">
                 <img src="base/view/images/logo-white-256.png" width="48" align="left" style="vertical-align:middle;margin-top:-10px;margin-right:10px;">
-                <span style="color:#333;line-height:30px">Siêu thị nội thất</span>
+                <span style="color:#333;line-height:30px">Online Auction</span>
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -59,7 +59,7 @@
                         <div id="notificationTitle">
                             <div style="float:left;">Notifications</div>
                             <div style="text-align:right;font-weight:normal;" id="markasread">
-                                <a asp-controller="ManageExpiredItem" asp-action="MarkAllAsRead">Mark all as read</a>
+                                <a style="cursor:pointer;" onclick="markAllAsRead()">Mark all as read</a>
                             </div>
                         </div>
                         <div id="notificationsBody" class="notifications">
@@ -73,7 +73,7 @@
                 </li>
 
                 <li>
-                    <a href="/user/action/login">
+                    <a asp-controller="Item" asp-action="Create">
                         <i class="fa fa-sign-in"></i>
                         Add new item
                     </a>
@@ -140,3 +140,44 @@
             </ul>
         </div>
     }*@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#notificationLink").click(function () {
+            var notificationCount = $("#notification_count").text();
+            if (!notificationCount) {
+                $("#notificationContainer").hide();
+            } else {
+                $("#notificationContainer").fadeToggle(300);
+                $("#notification_count").fadeOut("slow");
+                return false;
+            }
+        });
+
+        //Document Click
+        $(document).click(function () {
+            $("#notificationContainer").hide();
+        });
+        //Popup Click
+        $("#notificationContainer").click(function () {
+            return false
+        });
+
+
+
+    });
+
+    function markAllAsRead() {
+        $.ajax({
+            url: '/ManageExpiredItem/MarkAllAsRead',
+            method: 'GET',
+            success: (result) => {
+                console.log("MarkAllAsRead");
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+    }
+
+</script>

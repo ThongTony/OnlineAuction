@@ -100,3 +100,6 @@
 #markasread a:hover {
     text-decoration: underline;
 }
+.notavailable{
+    display:none;
+}
