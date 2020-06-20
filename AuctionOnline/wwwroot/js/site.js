@@ -24,13 +24,12 @@ $(() => {
             method: 'GET',
             success: (result) => {
                 $.each(result, (k, v) => {
-                    var isAvailable = v.isAvailable ? 'available' : 'not available';
-                    var className = v.isAvailable ? 'badge badge-success' : 'not badge badge-warning';
                     tr = tr + `<tr style="width:90px;">
                         <td style="width:90px;">${v.itemId}</td>
                         <td style="width:90px;">${v.currentDate}</td>
                         <td style="width:90px;">${v.isExpired}</td>
                         <td style="width:90px;">${v.isSeen}</td>
+                        <td style="width:140px;"><a href="/ManageExpiredItem/SeeExpiredItem/${v.id}">See Expired Item</a></td>
                     </tr>`;
                 });
 
