@@ -128,7 +128,6 @@ namespace AuctionOnline.Controllers
                 //item = ItemUtility.MapVMToModel(itemVM);
                 item.Title = itemVM.Title;
                 item.Description = itemVM.Description;
-                item.Price = itemVM.Price;
                 item.AccountId = itemVM.AccountId;
                 item.Photo = fileName;
                 item.Document = documentName;
@@ -232,6 +231,8 @@ namespace AuctionOnline.Controllers
             var item = await db.Items
                 .Include(i => i.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBidPrice).ToList();
+
             if (item == null)
             {
                 return NotFound();

@@ -1,4 +1,5 @@
 ﻿@model AuctionOnline.ViewModels.LayoutViewModel
+@using AuctionOnline.Utilities
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -45,8 +46,65 @@
             <div style="min-height:300px" class="row">
 
                 <div class="col-md-9">
+                    @{
+                        decimal currentPrice = 0;
+                        decimal availableBidPrice = 0;
+
+                        var latestSessionBid = Model.ItemVM.Bids.OrderByDescending(x => x.BidSession).FirstOrDefault();
+
+                        if (latestSessionBid != null)
+                        {
+                            var latestCurrentPriceBid = Model.ItemVM.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBidPrice).FirstOrDefault();
+
+                            if (latestCurrentPriceBid == null)
+                            {
+                                availableBidPrice = Model.ItemVM.MinimumBid.Value;
+                            }
+                            else
+                            {
+                                if (!latestCurrentPriceBid.IsWinned)
+                                {
+                                    currentPrice = latestCurrentPriceBid.CurrentBidPrice;
+                                    availableBidPrice = latestCurrentPriceBid.CurrentBidPrice + Model.ItemVM.BidIncrement;
+                                }
+                                else
+                                {
+                                    currentPrice = 0;
+                                    availableBidPrice = Model.ItemVM.MinimumBid.Value;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            availableBidPrice = Model.ItemVM.MinimumBid.Value;
+                        }
+                    }
+
                     <h1>@Html.DisplayFor(model => model.ItemVM.Title)</h1>
                     <hr>
+                    Current Price:
+                    <h1>@Html.DisplayFor(model => currentPrice)</h1>
+                    <hr>
+
+
+
+                    Increment Bid Price:
+                    <h1>@Html.DisplayFor(model => model.ItemVM.BidIncrement)</h1>
+                    <hr>
+
+                    @if (Model.ItemVM.BidStatus == BidStatus.InProgress)
+                    {
+                        <form asp-controller="Bid" asp-action="Create">
+                            <input type="hidden" asp-for="ItemVM.BidStartDate" />
+                            <input type="hidden" asp-for="ItemVM.BidEndDate" />
+                            <input type="hidden" asp-for="ItemVM.Id" />
+                            <input type="hidden" asp-for="ItemVM.Id" />
+                            <input type="number" asp-for="ItemVM.BidPrice" value="@availableBidPrice" />
+                            @Html.ValidationMessageFor(model => Model.ItemVM.BidPrice, "", new { @class = "text-danger" })
+                            <button type="submit" id="bid" name="bid">Start Bid</button>
+                        </form>
+                    }
+
                     <div id="swap-info" style="margin-bottom:10px"></div>
 
                     <div id="slick-container">

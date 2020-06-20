@@ -12,8 +12,11 @@ namespace AuctionOnline.Models
         public Account Account { get; set; }    
                 
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal CurrentBid { get; set; }
-     
+        public decimal CurrentBidPrice { get; set; }
+        public int BidSession { get; set; }
+        public DateTime BidStartDate { get; set; }
+        public DateTime BidEndDate { get; set; }
         public DateTime CreatedAt { get; set; }
+        public bool IsWinned { get; set; }
     }
 }

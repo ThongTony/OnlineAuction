@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AuctionOnline.ViewModels
 {
@@ -27,6 +28,9 @@ namespace AuctionOnline.ViewModels
         public DateTime? BidEndDate { get; set; }
         public decimal? MinimumBid { get; set; }
         public decimal BidIncrement { get; set; }
+
+        [Range(0, double.MaxValue, ErrorMessage = "Please enter only number")]
+        public decimal BidPrice { get; set; }
 
         public List<SelectListItem> Categories { get; set; }
         public int[] SelectedCategoryIds { get; set; }

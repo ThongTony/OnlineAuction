@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuctionOnline.Migrations
 {
-    public partial class abcc : Migration
+    public partial class newmodel4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,6 +24,11 @@ namespace AuctionOnline.Migrations
             migrationBuilder.DropColumn(
                 name: "BidIncrementDefinitionId",
                 table: "Items");
+
+            migrationBuilder.RenameColumn(
+                name: "Price",
+                table: "Items",
+                newName: "BidIncrement");
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "MinimumBid",
@@ -53,13 +58,6 @@ namespace AuctionOnline.Migrations
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<decimal>(
-                name: "BidIncrement",
-                table: "Items",
-                type: "decimal(18,1)",
-                nullable: false,
-                defaultValue: 0m);
-
             migrationBuilder.AddColumn<bool>(
                 name: "Status",
                 table: "Items",
@@ -71,6 +69,12 @@ namespace AuctionOnline.Migrations
                 table: "Accounts",
                 nullable: true);
 
+            migrationBuilder.AddColumn<int>(
+                name: "PhoneNumber",
+                table: "Accounts",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.CreateTable(
                 name: "Bids",
                 columns: table => new
@@ -79,8 +83,12 @@ namespace AuctionOnline.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ItemId = table.Column<int>(nullable: false),
                     AccountId = table.Column<int>(nullable: false),
-                    CurrentBid = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false)
+                    CurrentBidPrice = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    BidSession = table.Column<int>(nullable: false),
+                    BidStartDate = table.Column<DateTime>(nullable: false),
+                    BidEndDate = table.Column<DateTime>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    IsWinned = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,46 +130,32 @@ namespace AuctionOnline.Migrations
 
             migrationBuilder.InsertData(
                 table: "Accounts",
-                columns: new[] { "Id", "Address", "CreatedAt", "Email", "Fullname", "IsBlocked", "Password", "RoleId", "Status", "Username" },
+                columns: new[] { "Id", "Address", "CreatedAt", "Email", "Fullname", "IsBlocked", "Password", "PhoneNumber", "RoleId", "Status", "Username" },
                 values: new object[,]
                 {
-                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user1@gmail.com", "User 1", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 1, true, "user1" },
-                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user2@gmail.com", "User 2", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 1, true, "user2" }
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user1@gmail.com", "User 1", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 0, 1, true, "user1" },
+                    { 3, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "user2@gmail.com", "User 2", false, "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", 0, 1, true, "user2" }
                 });
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "CreatedAt",
-                value: new DateTime(2020, 6, 19, 10, 7, 42, 645, DateTimeKind.Local).AddTicks(2544));
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "CreatedAt",
-                value: new DateTime(2020, 6, 19, 10, 7, 42, 645, DateTimeKind.Local).AddTicks(2675));
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
-                values: new object[] { 3, new DateTime(2020, 6, 19, 10, 7, 42, 645, DateTimeKind.Local).AddTicks(2720), "Smarts", 2 });
+                values: new object[] { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smarts", 2 });
 
             migrationBuilder.InsertData(
                 table: "Items",
-                columns: new[] { "Id", "AccountId", "BidEndDate", "BidIncrement", "BidStartDate", "BidStatus", "CreatedAt", "Description", "Document", "MinimumBid", "Photo", "Price", "Status", "Title" },
+                columns: new[] { "Id", "AccountId", "BidEndDate", "BidIncrement", "BidStartDate", "BidStatus", "CreatedAt", "Description", "Document", "MinimumBid", "Photo", "Status", "Title" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2020, 6, 22, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(3333), 2m, new DateTime(2020, 6, 19, 10, 7, 42, 389, DateTimeKind.Local).AddTicks(2397), 1, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(5003), "description 1", null, 7m, null, 5m, true, "product 1" },
-                    { 2, 1, new DateTime(2020, 6, 22, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6796), 2m, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6784), 1, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6823), "description 2", null, 7m, null, 10m, true, "product 2" },
-                    { 3, 1, new DateTime(2020, 6, 22, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6850), 2m, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6849), 1, new DateTime(2020, 6, 19, 10, 7, 42, 390, DateTimeKind.Local).AddTicks(6852), "description 3", null, 7m, null, 15m, true, "product 3" }
+                    { 1, 1, new DateTime(2020, 6, 23, 13, 33, 58, 443, DateTimeKind.Local).AddTicks(6221), 3m, new DateTime(2020, 6, 20, 13, 33, 58, 442, DateTimeKind.Local).AddTicks(6294), 1, new DateTime(2020, 6, 20, 13, 33, 58, 443, DateTimeKind.Local).AddTicks(7608), "description 1", null, 2m, null, true, "product 1" },
+                    { 2, 1, new DateTime(2020, 6, 23, 13, 33, 58, 443, DateTimeKind.Local).AddTicks(9699), 3m, new DateTime(2020, 6, 20, 13, 33, 58, 443, DateTimeKind.Local).AddTicks(9685), 1, new DateTime(2020, 6, 20, 13, 33, 58, 443, DateTimeKind.Local).AddTicks(9719), "description 2", null, 2m, null, true, "product 2" },
+                    { 3, 1, new DateTime(2020, 6, 23, 13, 33, 58, 443, DateTimeKind.Local).AddTicks(9755), 3m, new DateTime(2020, 6, 20, 13, 33, 58, 443, DateTimeKind.Local).AddTicks(9754), 1, new DateTime(2020, 6, 20, 13, 33, 58, 443, DateTimeKind.Local).AddTicks(9757), "description 3", null, 2m, null, true, "product 3" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CreatedAt", "Name", "ParentId" },
-                values: new object[] { 4, new DateTime(2020, 6, 19, 10, 7, 42, 645, DateTimeKind.Local).AddTicks(2798), "Laptops & Macs", 3 });
+                values: new object[] { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Laptops & Macs", 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_AccountId",
@@ -248,16 +242,21 @@ namespace AuctionOnline.Migrations
                 table: "Items");
 
             migrationBuilder.DropColumn(
-                name: "BidIncrement",
-                table: "Items");
-
-            migrationBuilder.DropColumn(
                 name: "Status",
                 table: "Items");
 
             migrationBuilder.DropColumn(
                 name: "Address",
                 table: "Accounts");
+
+            migrationBuilder.DropColumn(
+                name: "PhoneNumber",
+                table: "Accounts");
+
+            migrationBuilder.RenameColumn(
+                name: "BidIncrement",
+                table: "Items",
+                newName: "Price");
 
             migrationBuilder.AlterColumn<decimal>(
                 name: "MinimumBid",
@@ -330,20 +329,6 @@ namespace AuctionOnline.Migrations
                 {
                     table.PrimaryKey("PK_BidIncrementDefinitions", x => x.Id);
                 });
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "CreatedAt",
-                value: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "CreatedAt",
-                value: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.CreateIndex(
                 name: "IX_Items_BidIncrementDefinitionId",

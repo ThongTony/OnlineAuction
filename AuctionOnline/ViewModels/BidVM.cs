@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AuctionOnline.ViewModels
 {
-    public class Bid
+    public class BidVM
     {
         public int Id { get; set; }
         public int AccountId { get; set; }

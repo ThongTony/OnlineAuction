@@ -40,8 +40,18 @@
     <Compile Remove="Migrations\20200616081349_khoa7.Designer.cs" />
     <Compile Remove="Migrations\20200617080046_abc.cs" />
     <Compile Remove="Migrations\20200617080046_abc.Designer.cs" />
+    <Compile Remove="Migrations\20200619030742_abcc.cs" />
+    <Compile Remove="Migrations\20200619030742_abcc.Designer.cs" />
     <Compile Remove="Migrations\20200620014547_khoa1.cs" />
     <Compile Remove="Migrations\20200620014547_khoa1.Designer.cs" />
+    <Compile Remove="Migrations\20200620051731_newmodel.cs" />
+    <Compile Remove="Migrations\20200620051731_newmodel.Designer.cs" />
+    <Compile Remove="Migrations\20200620051952_newmodel1.cs" />
+    <Compile Remove="Migrations\20200620051952_newmodel1.Designer.cs" />
+    <Compile Remove="Migrations\20200620053754_newmodel2.cs" />
+    <Compile Remove="Migrations\20200620053754_newmodel2.Designer.cs" />
+    <Compile Remove="Migrations\20200620054637_newmodel3.cs" />
+    <Compile Remove="Migrations\20200620054637_newmodel3.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
