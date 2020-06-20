@@ -42,9 +42,13 @@ namespace AuctionOnline.Controllers
             {
                 return NotFound();
             }
-            var categoryVM = CategoryUtility.MapModeltoVM(category);
+            var viewmodel = new LayoutViewModel()
+            {
+                CategoryVM = CategoryUtility.MapModeltoVM(category)
+            };
 
-            return View(categoryVM);
+
+            return View(viewmodel);
         }
 
         [HttpGet]
@@ -157,7 +161,6 @@ namespace AuctionOnline.Controllers
             {
                 return NotFound();
             }
-
 
             var viewlayout = new LayoutViewModel()
             {

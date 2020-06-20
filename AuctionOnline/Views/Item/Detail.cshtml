@@ -1,8 +1,7 @@
-﻿@{
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var item = ViewBag.DetailItem;
-    var seller = ViewBag.Account;
 }
 <div class="row">
     <script src="~/library/javascript/slick/slick.min.js"></script>
@@ -17,10 +16,15 @@
                 </li>
 
                 <li>
-                    <a href="https://sohot.vn/tp-ho-chi-minh">Province / City Name</a>
+                    <a>Province / City Name</a>
                 </li>
                 <li>
-                    <a href="https://sohot.vn/tp-ho-chi-minh/ghe">@item.Name</a>
+                    @*@foreach(var cate in Model.ItemVM.Categories)
+                        {
+                        <a>@Html.DisplayFor(modelCate => cate.)</a>
+                        }*@
+                    <a>Cateogry Name</a>
+
                 </li>
                 <!--li.active=$topic->title-->
 
@@ -41,9 +45,7 @@
             <div style="min-height:300px" class="row">
 
                 <div class="col-md-9">
-
-
-                    <h1>Ghế Aston có tay</h1>
+                    <h1>@Html.DisplayFor(model => model.ItemVM.Title)</h1>
                     <hr>
                     <div id="swap-info" style="margin-bottom:10px"></div>
 
@@ -53,7 +55,7 @@
                             <div aria-live="polite" class="slick-list draggable">
                                 <div class="slick-track" role="listbox" style="opacity: 1; width: 869px; transform: translate3d(0px, 0px, 0px);">
                                     <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 869px;">
-                                        <img src="https://sohot.vn/uploads/market/attachment/89/898/8987-5ee05ea002413.jpg" alt="Ghế Aston có tay">
+                                        <img src="~/images/items/@Html.DisplayFor(model => model.ItemVM.PhotoName)" alt="@Html.DisplayFor(model => model.ItemVM.Title)">
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +68,7 @@
                     <div class="spacer"></div>
 
 
-                    Ghế Aston có tay<br><br>Chân ash <br><br>Bọc vải hoặc simili tùy chọn màu sắc
+                    @Html.DisplayFor(model => model.ItemVM.Title)<br><br>Chân ash <br><br>Bọc vải hoặc simili tùy chọn màu sắc
 
                     <div style="padding: 10px 0px">
 
@@ -138,17 +140,23 @@
         </div>
     </div>
     <div id="related-topics" class="panel panel-default">
-        <div class="panel-heading">Sản phẩm khác của shop</div>
+        <div class="panel-heading">Others items in shop</div>
         <div style="margin:auto" class="panel-body text-center">
             @*foreach*@
             <div class="col-md-3 col-sm-3 col-xs-6 s-pad">
-                <a href="https://sohot.vn/tp-ho-chi-minh/ban-sofa-kim-cuong-ma-vang-hx1b-2201.html" style="margin:auto !important" class="thumb text-nowrap f-black"><div style="position:absolute;right:0px;top:10px;max-width:160px;overflow:hidden" class="badge b-red xs-pad">3.8 triệu</div><img src="https://sohot.vn/uploads/market/avatar/22/220/2201.jpg" align="center" style="margin:auto !important"></a>        <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="block"><a href="https://sohot.vn/tp-ho-chi-minh/ban-sofa-kim-cuong-ma-vang-hx1b-2201.html">Bàn sofa kim cương mạ vàng HX1B</a></div>
+                <a href="https://sohot.vn/tp-ho-chi-minh/ban-sofa-kim-cuong-ma-vang-hx1b-2201.html" style="margin:auto !important" class="thumb text-nowrap f-black">
+                    <div style="position:absolute;right:0px;top:10px;max-width:160px;overflow:hidden" class="badge b-red xs-pad">3.8 triệu</div>
+                    <img src="https://sohot.vn/uploads/market/avatar/22/220/2201.jpg" align="center" style="margin:auto !important">
+                </a>
+                <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="block">
+                    <a href="https://sohot.vn/tp-ho-chi-minh/ban-sofa-kim-cuong-ma-vang-hx1b-2201.html">Bàn sofa kim cương mạ vàng HX1B</a>
+                </div>
             </div>
             @*end foreach*@
         </div>
     </div>
     <div id="related-topics" class="panel panel-default">
-        <div class="panel-heading">Sản phẩm liên quan</div>
+        <div class="panel-heading">Related items</div>
         <div style="margin:auto" class="panel-body text-center">
             @*foreach*@
             <div class="col-md-3 col-sm-3 col-xs-6 s-pad">
