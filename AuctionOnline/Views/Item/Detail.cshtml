@@ -20,10 +20,6 @@
                     <a>Province / City Name</a>
                 </li>
                 <li>
-                    @*@foreach(var cate in Model.ItemVM.Categories)
-                        {
-                        <a>@Html.DisplayFor(modelCate => cate.)</a>
-                        }*@
                     <a>Cateogry Name</a>
 
                 </li>
@@ -45,7 +41,7 @@
         <div class="panel-body">
             <div style="min-height:300px" class="row">
 
-                <div class="col-md-9">
+                @*<div class="col-md-9">
                     @{
                         decimal currentPrice = 0;
                         decimal availableBidPrice = 0;
@@ -164,12 +160,12 @@
                         </div>
                         <button type="button" class="btn btn-success" style="margin-left: 25px">BID</button>
                     </div>
-                </div>
+                </div>*@
                 <div class="spacer"></div>
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
+    @*<div class="panel panel-default">
         <div style="margin:auto" class="panel-body text-center">
             <div class="table-responsive">
                 <table class="table">
@@ -212,7 +208,7 @@
             </div>
             <div class="spacer"></div>
         </div>
-    </div>
+    </div>*@
     <div id="related-topics" class="panel panel-default">
         <div class="panel-heading">Others items in shop</div>
         <div style="margin:auto" class="panel-body text-center">
