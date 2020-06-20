@@ -29,25 +29,7 @@
 </head>
 <body>
 
-    <div style="margin:0 auto;width:900px">
-        <ul id="nav">
-            <li id="notification_li">
-                <span id="notification_count">3</span>
-                <a href="#" id="notificationLink">Notifications</a>
-                <div id="notificationContainer">
-                    <div id="notificationTitle">Notifications</div>
-                    <div id="notificationsBody" class="notifications">
-                    </div>
-                    <div id="notificationFooter"><a href="#">See All</a></div>
-                </div>
-
-            </li>
-        </ul>
-
-    </div>
-
     @RenderBody()
-
 
     <script src="~/notifications/lib/signalR/browser/signalr.js"></script>
     <script src="~/notifications/js/site.js" asp-append-version="true"></script>
