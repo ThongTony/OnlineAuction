@@ -41,7 +41,7 @@
         <div class="panel-body">
             <div style="min-height:300px" class="row">
 
-                @*<div class="col-md-9">
+                <div class="col-md-9">
                     @{
                         decimal currentPrice = 0;
                         decimal availableBidPrice = 0;
@@ -50,7 +50,7 @@
 
                         if (latestSessionBid != null)
                         {
-                            var latestCurrentPriceBid = Model.ItemVM.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBidPrice).FirstOrDefault();
+                            var latestCurrentPriceBid = Model.ItemVM.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
 
                             if (latestCurrentPriceBid == null)
                             {
@@ -60,8 +60,8 @@
                             {
                                 if (!latestCurrentPriceBid.IsWinned)
                                 {
-                                    currentPrice = latestCurrentPriceBid.CurrentBidPrice;
-                                    availableBidPrice = latestCurrentPriceBid.CurrentBidPrice + Model.ItemVM.BidIncrement;
+                                    currentPrice = latestCurrentPriceBid.CurrentBid;
+                                    availableBidPrice = latestCurrentPriceBid.CurrentBid + Model.ItemVM.BidIncrement;
                                 }
                                 else
                                 {
@@ -78,15 +78,76 @@
 
                     <h1>@Html.DisplayFor(model => model.ItemVM.Title)</h1>
                     <hr>
-                    Current Price:
-                    <h1>@Html.DisplayFor(model => currentPrice)</h1>
-                    <hr>
-
-
 
                     Increment Bid Price:
                     <h1>@Html.DisplayFor(model => model.ItemVM.BidIncrement)</h1>
                     <hr>
+
+                    @{
+                        var dt = Model.ItemVM.BidEndDate;
+                        var stringDateTime = String.Format("{0:MMM dd, yyyy HH:mm:ss}", dt);
+                        var itemId = Model.ItemVM.Id;
+                    }
+                    <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 60px;margin-top: 0px;"></p>
+                    <script>
+                        // Set the date we're counting down to
+                        @*var countDownDate = new Date("@stringDateTime").getTime();*@
+                        var countDownDate = new Date("Jun 21, 2020 00:22:00").getTime();
+
+
+                        // Update the count down every 1 second
+                        var x = setInterval(function () {
+
+                            // Get today's date and time
+                            var now = new Date().getTime();
+
+                            // Find the distance between now and the count down date
+                            var distance = countDownDate - now;
+
+                            // Time calculations for days, hours, minutes and seconds
+                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                            // Output the result in an element with id="demo"
+                            document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                                + minutes + "m " + seconds + "s ";
+
+                            // If the count down is over, write some text
+                            if (distance < 0) {
+                                clearInterval(x);
+                                document.getElementById("demo").innerHTML = "EXPIRED";
+                                endBid(@itemId);
+                            }
+                        }, 1000);
+
+                        function endBid(itemId) {
+                            $.ajax({
+                                url: '/Bid/EndBid',
+                                data: "itemId=" + itemId ,
+                                method: 'GET',
+                                success: (result) => {
+                                    if (result) {
+                                        location.reload();
+                                    }
+                                },
+                                error: (error) => {
+                                    console.log(error);
+                                }
+                            });
+
+                        }
+
+                    </script>
+                    <hr>
+
+                    Current BID:
+                    <h1>@Html.DisplayFor(model => currentPrice)</h1>
+                    <hr>
+
+                    Current Winner:
+                    Khoa
 
                     @if (Model.ItemVM.BidStatus == BidStatus.InProgress)
                     {
@@ -101,6 +162,13 @@
                         </form>
                     }
 
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default">-</button>
+                        <button type="button" class="btn btn-default">15K</button>
+                        <button type="button" class="btn btn-default">+</button>
+                    </div>
+                    <button type="button" class="btn btn-success" style="margin-left: 25px">BID</button>
+
                     <div id="swap-info" style="margin-bottom:10px"></div>
                     <div id="slick-container">
                         <div class="slick slick-initialized slick-slider">
@@ -112,60 +180,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="slick-counter">
-                            <span>1 / 1</span>
-                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="bidding" style="margin: 25px">
-                        <p><h1 style="color: olivedrab"><b>@Html.DisplayFor(model => model.ItemVM.Title)</b></h1></p>
-                        <br>
-                        <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 60px;margin-top: 0px;"></p>
-                        <script>
-                            // Set the date we're counting down to
-                            var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
-
-                            // Update the count down every 1 second
-                            var x = setInterval(function () {
-
-                                // Get today's date and time
-                                var now = new Date().getTime();
-
-                                // Find the distance between now and the count down date
-                                var distance = countDownDate - now;
-
-                                // Time calculations for days, hours, minutes and seconds
-                                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                                // Output the result in an element with id="demo"
-                                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-                                    + minutes + "m " + seconds + "s ";
-
-                                // If the count down is over, write some text
-                                if (distance < 0) {
-                                    clearInterval(x);
-                                    document.getElementById("demo").innerHTML = "EXPIRED";
-                                }
-                            }, 1000);
-                        </script>
-                        <br>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default">-</button>
-                            <button type="button" class="btn btn-default">15K</button>
-                            <button type="button" class="btn btn-default">+</button>
-                        </div>
-                        <button type="button" class="btn btn-success" style="margin-left: 25px">BID</button>
-                    </div>
-                </div>*@
-                <div class="spacer"></div>
             </div>
         </div>
     </div>
-    @*<div class="panel panel-default">
+    <div class="panel panel-default">
         <div style="margin:auto" class="panel-body text-center">
             <div class="table-responsive">
                 <table class="table">
@@ -190,7 +210,7 @@
             <div class="spacer"></div>
             <hr />
             <div class="item_detail" style="text-align:left">
-                <h1 style="color: olivedrab"><b>Item Information</b></h1>
+                <h1 style="color: olivedrab"><b>Product Details</b></h1>
                 <br>
                 <h2>Bid Session : ........</h2>
                 <h2>Item Id : @Html.DisplayFor(model => model.ItemVM.Id)</h2>
@@ -208,7 +228,7 @@
             </div>
             <div class="spacer"></div>
         </div>
-    </div>*@
+    </div>
     <div id="related-topics" class="panel panel-default">
         <div class="panel-heading">Others items in shop</div>
         <div style="margin:auto" class="panel-body text-center">

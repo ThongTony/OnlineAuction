@@ -233,6 +233,7 @@ namespace AuctionOnline.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
             if (id == null)
@@ -243,7 +244,7 @@ namespace AuctionOnline.Controllers
             var item = await db.Items
                 .Include(i => i.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBidPrice).ToList();
+            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBid).ToList();
 
             if (item == null)
             {

@@ -29,7 +29,7 @@ namespace AuctionOnline.Controllers
 
                 if (latestSessionBid != null)
                 {
-                    var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBidPrice).FirstOrDefault();
+                    var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
 
                     if (latestCurrentPriceBid != null)
                     {
@@ -48,7 +48,7 @@ namespace AuctionOnline.Controllers
                 {
                     AccountId = 1,
                     ItemId = itemVM.Id,
-                    CurrentBidPrice = itemVM.BidPrice,
+                    CurrentBid = itemVM.BidPrice,
                     BidSession = bidSession,
                     BidStartDate = itemVM.BidStartDate.Value,
                     BidEndDate = itemVM.BidEndDate.Value,
@@ -62,6 +62,27 @@ namespace AuctionOnline.Controllers
             return RedirectToAction("Detail", "Item", new { id = itemVM.Id });
         }
 
+        [HttpGet]
+        public async Task<Boolean> EndBid(int itemId)
+        {
+            var latestSessionBid = db.Bids.Where(x => x.ItemId == itemId).OrderByDescending(x => x.BidSession).FirstOrDefault();
+
+            var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
+
+            if (latestCurrentPriceBid != null)
+            {
+                latestCurrentPriceBid.IsWinned = true;
+                latestCurrentPriceBid.IsWinnedDateTime = DateTime.Now;
+
+                db.Bids.Update(latestCurrentPriceBid);
+
+                await db.SaveChangesAsync();
+
+                return latestCurrentPriceBid.IsWinned;
+            }
+
+            return false;
+        }
 
     }
 }
