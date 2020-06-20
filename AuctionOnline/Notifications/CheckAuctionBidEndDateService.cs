@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AuctionOnline.Data;
@@ -18,9 +19,10 @@ namespace AuctionOnline.Notifications
 
         private readonly IServiceScopeFactory scopeFactory;
         private readonly IHubContext<SignalRHub> hubContext;
+        private const double notifiedPeriod = 5;
 
         public CheckAuctionBidEndDateService(
-            ILogger<CheckAuctionBidEndDateService> logger, 
+            ILogger<CheckAuctionBidEndDateService> logger,
             IHubContext<SignalRHub> hubContext,
             IServiceScopeFactory scopeFactory)
         {
@@ -34,7 +36,7 @@ namespace AuctionOnline.Notifications
             _logger.LogInformation("Timed Hosted Service running.");
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(5));
+                TimeSpan.FromSeconds(notifiedPeriod));
 
             return Task.CompletedTask;
         }
@@ -45,21 +47,28 @@ namespace AuctionOnline.Notifications
 
             var dbContext = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
 
-            var model = new ExpiredItem
-            {
-                ItemId = 3,
-                IsExpired = true,
-                CurrentDate = DateTime.Now
-            };
+            DateTime now = DateTime.Now;
 
-            dbContext.ExpiredItems.Add(model);
+            var expiredItems = dbContext.Items.Where(t => t.BidEndDate.Value.Date.CompareTo(now.Date) <= 0).OrderBy(d => d.BidEndDate).ToList();
+
+            foreach (var item in expiredItems)
+            {
+                var model = new ExpiredItem
+                {
+                    ItemId = item.Id,
+                    IsExpired = item.BidEndDate.Value.Date.CompareTo(now.Date) <= 0,
+                    CurrentDate = now
+                };
+
+                dbContext.ExpiredItems.Add(model);
+            }
+
             dbContext.SaveChanges();
             hubContext.Clients.All.SendAsync("refreshNotifications");
 
-            var count = Interlocked.Increment(ref executionCount) + "----" + DateTime.Now.ToLongDateString();
+            var count = Interlocked.Increment(ref executionCount) + "----" + now;
 
-            _logger.LogInformation(
-                "Timed Hosted Service is working. Count: {Count}", count);
+            _logger.LogInformation("Timed Hosted Service is working. Count: {1}", "Expired Items Count: { 2}", count, expiredItems.Count);
         }
 
         public Task StopAsync(CancellationToken stoppingToken)
