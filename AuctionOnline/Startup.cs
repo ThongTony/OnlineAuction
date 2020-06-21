@@ -2,6 +2,7 @@ using AuctionOnline.Data;
 using AuctionOnline.Notifications;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace AuctionOnline
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //var connection = configuration.GetConnectionString("DefaultConnection");
             services.AddMvc();
             //services.AddDbContext<AuctionDbContext>(options => options.UseSqlServer(configuration.GetConnectionString(connection)));

@@ -6,6 +6,7 @@ using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace AuctionOnline.Controllers
 {
@@ -14,9 +15,13 @@ namespace AuctionOnline.Controllers
         private IConfiguration configuration;
 
         private AuctionDbContext db;
+        private readonly ILogger<AccountController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public AccountController(IConfiguration _configuration,
-            AuctionDbContext _db)
+            AuctionDbContext _db, ILogger<AccountController> logger, IHttpContextAccessor httpContextAccessor)
         {
+            _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
             db = _db;
             configuration = _configuration;
         }
@@ -108,8 +113,10 @@ namespace AuctionOnline.Controllers
 
         public IActionResult Logout()
         {
+            HttpContext.Session.Remove("checkiduser");
+            HttpContext.Session.Remove("checkidAdmin");
             HttpContext.Session.Remove("username");
-            return RedirectToAction("Index", "Home");
+            return View("Index", "Home");
         }
 
         public IActionResult AdminListUser()
@@ -147,7 +154,8 @@ namespace AuctionOnline.Controllers
             var checkemail = db.Accounts.SingleOrDefault(a => a.Email.Equals(email));
             if (checkemail != null)
             {
-                string body = "Please reset your password by clicking  https://localhost:44378/account/resetpassword";
+                string host = _httpContextAccessor.HttpContext.Request.Host.Value;
+                string body = "Please reset your password by clicking  https://"+ host +"/account/resetpassword";
                 var mailHelper = new MailHelper(configuration);
                 if (mailHelper.Send(configuration["Gmail:Username"], email, "From Bookshop", body))
                 {
