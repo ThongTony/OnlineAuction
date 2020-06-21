@@ -2,6 +2,7 @@
 using System.Linq;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +50,7 @@ namespace AuctionOnline.Controllers
                         HttpContext.Session.SetInt32("checkiduser", checkiduser);
                         return RedirectToAction("Index", "Home");
                     }
-                    else if ( account.RoleId == 0)
+                    else if (account.RoleId == 0)
                     {
                         int checkidadmin = (from i in db.Accounts
                                        where i.RoleId == 0
@@ -133,14 +134,15 @@ namespace AuctionOnline.Controllers
 
         }
 
-        [HttpPost]
         public IActionResult ListUser()
         {
-            ViewBag.SellerCount = db.Accounts.Select(x => x.RoleId == 1).Count();
-            ViewBag.Seller = db.Accounts.Where(x => x.RoleId == 1).ToList();
-            return View();
+            var users = db.Accounts.Where(x => x.RoleId == 1).ToList();
+            var layoutVM = new LayoutViewModel()
+            {
+                AccountsVM = AccountUtility.MapModelsToVMs(users)
+            };
+            return View(layoutVM);
         }
-
 
         [HttpGet]
         public IActionResult Forgotpassword()
@@ -186,7 +188,7 @@ namespace AuctionOnline.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Resetpassword(string password, string confirmpassword , Account account)
+        public IActionResult Resetpassword(string password, string confirmpassword, Account account)
         {
 
             if (HttpContext.Session.GetString("email") != null)

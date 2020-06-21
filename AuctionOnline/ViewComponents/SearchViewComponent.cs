@@ -19,7 +19,7 @@ namespace AuctionOnline.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var allCate = db.Categories.ToList();
-            var cate =  new CategoryController(db).GetallMenu();
+            //var cate =  new CategoryController(db).GetallMenu();
             //var layoutVM = new LayoutViewModel()
             //{
             //    CategoriesVM = CategoryUtility.MapModelsToVMs(getCate)
