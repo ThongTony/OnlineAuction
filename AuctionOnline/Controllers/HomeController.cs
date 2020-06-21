@@ -1,5 +1,6 @@
 ﻿using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace AuctionOnline.Controllers
             }
             var layoutVM = new LayoutViewModel()
             {
-                Categories = categories
+                CategoriesVM = CategoryUtility.MapModelsToVMs(categories)
             };
 
             return View(layoutVM);

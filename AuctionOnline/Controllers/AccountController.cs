@@ -2,6 +2,8 @@
 using System.Linq;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
+using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -37,11 +39,19 @@ namespace AuctionOnline.Controllers
                     if (account.RoleId == 1 && account.IsBlocked == false)
                     {
                         HttpContext.Session.SetString("username", username);
+                        int checkiduser = (from i in db.Accounts
+                                           where i.RoleId == 1
+                                           select i.Id).FirstOrDefault();
+                        HttpContext.Session.SetInt32("checkiduser", checkiduser);
                         return RedirectToAction("Index", "Home");
                     }
-                    else if ( account.RoleId == 0)
+                    else if (account.RoleId == 0)
                     {
-                        return RedirectToAction("Index", "ListUser", new { area = "Admin" });
+                        int checkidadmin = (from i in db.Accounts
+                                            where i.RoleId == 0
+                                            select i.Id).FirstOrDefault();
+                        HttpContext.Session.SetInt32("checkidAdmin", checkidadmin);
+                        return RedirectToAction("AdminListUser");
                     }
                     else
                     {
@@ -98,6 +108,8 @@ namespace AuctionOnline.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("username");
+            HttpContext.Session.Remove("checkiduser");
+            HttpContext.Session.Remove("checkidAdmin");
             return RedirectToAction("Index", "Home");
         }
 
@@ -109,11 +121,13 @@ namespace AuctionOnline.Controllers
 
         public IActionResult ListUser()
         {
-            ViewBag.SellerCount = db.Accounts.Select(x => x.RoleId == 1).Count();
-            ViewBag.Seller = db.Accounts.Where(x => x.RoleId == 1).ToList();
-            return View();
+            var users = db.Accounts.Where(x => x.RoleId == 1).ToList();
+            var layoutVM = new LayoutViewModel()
+            {
+                AccountsVM = AccountUtility.MapModelsToVMs(users)
+            };
+            return View(layoutVM);
         }
-
 
         [HttpGet]
         public IActionResult Forgotpassword()
@@ -140,8 +154,8 @@ namespace AuctionOnline.Controllers
                                    select i.Id).FirstOrDefault();
                     HttpContext.Session.SetInt32("checkid", checkid);
                     var checkpassword = (from i in db.Accounts
-                                   where i.Email == email
-                                   select i.Password).FirstOrDefault();
+                                         where i.Email == email
+                                         select i.Password).FirstOrDefault();
                     HttpContext.Session.SetInt32("checkid", checkid);
                     HttpContext.Session.SetString("checkpassword", checkpassword);
                     ViewBag.Success = "Your password has been sent in gmail: " + email;
@@ -165,7 +179,7 @@ namespace AuctionOnline.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Resetpassword(string password, string confirmpassword , Account account)
+        public IActionResult Resetpassword(string password, string confirmpassword, Account account)
         {
 
             if (HttpContext.Session.GetString("email") != null)
