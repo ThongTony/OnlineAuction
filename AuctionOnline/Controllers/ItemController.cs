@@ -40,15 +40,23 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            //ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id");
-            var viewmodel = new LayoutViewModel();
-            viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
-                                  new SelectListItem
-                                  {
-                                      Value = a.Id.ToString(),
-                                      Text = a.Name
-                                  }).ToList();
-            return View(viewmodel);
+            if (HttpContext.Session.GetInt32("checkiduser") != null)
+            {
+                //ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id");
+                var viewmodel = new LayoutViewModel();
+                viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
+                                      new SelectListItem
+                                      {
+                                          Value = a.Id.ToString(),
+                                          Text = a.Name
+                                      }).ToList();
+                return View(viewmodel);
+            }
+            else
+            {
+                return RedirectToAction("Login","Account");
+            }
+
         }
 
         [HttpPost]
@@ -233,6 +241,7 @@ namespace AuctionOnline.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
             if (id == null)
@@ -243,7 +252,7 @@ namespace AuctionOnline.Controllers
             var item = await db.Items
                 .Include(i => i.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBidPrice).ToList();
+            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBid).ToList();
 
             if (item == null)
             {

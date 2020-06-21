@@ -16,7 +16,7 @@ namespace AuctionOnline
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    //services.AddHostedService<CheckAuctionBidEndDateService>();
+                    services.AddHostedService<CheckAuctionBidEndDateService>();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
