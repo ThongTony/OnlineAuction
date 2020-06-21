@@ -16,7 +16,7 @@ namespace AuctionOnline.Controllers
         public IActionResult GetExpiredItems()
         {
             // Nhớ filter theo AccountId
-            return Ok(db.ExpiredItems.OrderByDescending(x => x.Id).Take(7).ToList());
+            return Ok(db.ExpiredItems.Where(x => !x.IsSeen).OrderByDescending(x => x.Id).Take(7).ToList());
         }
 
     }

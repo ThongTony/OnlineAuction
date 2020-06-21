@@ -11,10 +11,7 @@
                 @Html.DisplayNameFor(model => model.ItemId)
             </th>
             <th style="width:60px;">
-                @Html.DisplayNameFor(model => model.CurrentDate)
-            </th>
-            <th style="width:60px;">
-                @Html.DisplayNameFor(model => model.IsExpired)
+                @Html.DisplayNameFor(model => model.ExpiredDate)
             </th>
             <th style="width:60px;">
                 @Html.DisplayNameFor(model => model.IsSeen)
@@ -30,10 +27,7 @@
                     @Html.DisplayFor(modelItem => item.ItemId)
                 </td>
                 <td style="width:60px;">
-                    @Html.DisplayFor(modelItem => item.CurrentDate)
-                </td>
-                <td style="width:60px;">
-                    @Html.DisplayFor(modelItem => item.IsExpired)
+                    @Html.DisplayFor(modelItem => item.ExpiredDate)
                 </td>
                 <td style="width:60px;">
                     @Html.DisplayFor(modelItem => item.IsSeen)

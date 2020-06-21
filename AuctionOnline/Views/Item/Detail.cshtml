@@ -84,15 +84,18 @@
                     <hr>
 
                     @{
-                        var dt = Model.ItemVM.BidEndDate;
+                        var detailItem = Model.ItemVM;
+                        var dt = detailItem.BidEndDate;
                         var stringDateTime = String.Format("{0:MMM dd, yyyy HH:mm:ss}", dt);
-                        var itemId = Model.ItemVM.Id;
+                        var itemId = detailItem.Id;
+                        var bidStatus = detailItem.BidStatus != BidStatus.Complete && detailItem.BidStatus != BidStatus.NotStart;
                     }
                     <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 60px;margin-top: 0px;"></p>
+                    <p id="bidstatus" style="display:none;">@bidStatus</p>
                     <script>
                         // Set the date we're counting down to
-                        @*var countDownDate = new Date("@stringDateTime").getTime();*@
-                        var countDownDate = new Date("Jun 21, 2020 00:22:00").getTime();
+                        var countDownDate = new Date("@stringDateTime").getTime();
+                        //var countDownDate = new Date("Jun 21, 2020 11:13:00").getTime();
 
 
                         // Update the count down every 1 second
@@ -118,18 +121,23 @@
                             if (distance < 0) {
                                 clearInterval(x);
                                 document.getElementById("demo").innerHTML = "EXPIRED";
-                                endBid(@itemId);
+                                var bidstatus = $("#bidstatus").text();
+                                var isTrueBidstatus = (bidstatus.toLowerCase() === 'true');
+                                if (isTrueBidstatus) {
+                                    finalizeBid(@itemId);
+                                    location.reload(); 
+                                }
                             }
                         }, 1000);
 
-                        function endBid(itemId) {
+                        function finalizeBid(itemId) {
                             $.ajax({
-                                url: '/Bid/EndBid',
+                                url: '/Bid/FinalizeBid',
                                 data: "itemId=" + itemId ,
                                 method: 'GET',
                                 success: (result) => {
                                     if (result) {
-                                        location.reload();
+                                        return result;
                                     }
                                 },
                                 error: (error) => {

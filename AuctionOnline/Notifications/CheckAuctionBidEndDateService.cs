@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -49,29 +50,47 @@ namespace AuctionOnline.Notifications
 
             DateTime now = DateTime.Now;
 
-            var expiredItems = dbContext.Items.Where(t => t.BidEndDate.Value.Date.CompareTo(now.Date) <= 0 && t.AccountId == 1).OrderBy(d => d.BidEndDate).ToList();
-
-            foreach (var item in expiredItems)
+            //var expiredItems = dbContext.Items.Where(t => t.BidEndDate.Value.Date.CompareTo(now.Date) <= 0 && t.AccountId == 1).OrderBy(d => d.BidEndDate).ToList();
+            //var expiredItems = dbContext.Items.Where(t => t.BidStatus == BidStatus.Complete && t.AccountId == 1).OrderBy(d => d.BidEndDate).ToList();
+            var latestEndSessionBid = dbContext.Bids.Where(x => x.AccountId == 1 && x.Item.BidStatus == BidStatus.Complete).OrderByDescending(x => x.BidSession).FirstOrDefault();
+            if (latestEndSessionBid != null)
             {
-                var model = new ExpiredItem
+                var latestEndBid = dbContext.Bids.Where(x => x.BidSession == latestEndSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
+
+                var existingExpiredItem = dbContext.ExpiredItems.FirstOrDefault(x => x.ItemId == latestEndBid.ItemId && x.SessionId == latestEndBid.BidSession);
+
+                if (existingExpiredItem == null)
                 {
-                    ItemId = item.Id,
-                    IsExpired = item.BidEndDate.Value.Date.CompareTo(now.Date) <= 0,
-                    CurrentDate = now,
-                    IsSeen = false
-                };
+                    var model = new ExpiredItem
+                    {
+                        ItemId = latestEndBid.ItemId,
+                        ExpiredDate = now,
+                        SessionId = latestEndBid.BidSession,
+                        IsSeen = false
+                    };
 
-                dbContext.ExpiredItems.Add(model);
+                    dbContext.ExpiredItems.Add(model);
+
+                    dbContext.SaveChanges();
+
+                    _logger.LogInformation("Expired Item ID: { Expired Item}", latestEndBid.ItemId + "was sent notification successful!");
+                }
+                else
+                {
+                    _logger.LogInformation("Notification of expired Item ID: { Expired Item}", latestEndBid.ItemId + " is existed");
+                }
+
+                hubContext.Clients.All.SendAsync("refreshNotifications");
             }
-
-            dbContext.SaveChanges();
-            hubContext.Clients.All.SendAsync("refreshNotifications");
+            else
+            {
+                _logger.LogInformation("Expired Item: There is no expired items");
+            }
 
             var count = Interlocked.Increment(ref executionCount) + "----" + now;
 
             _logger.LogInformation("Timed Hosted Service is working");
             _logger.LogInformation("Count {Count}", count);
-            _logger.LogInformation("Total Expired Items: { Total}", expiredItems.Count);
         }
 
         public Task StopAsync(CancellationToken stoppingToken)

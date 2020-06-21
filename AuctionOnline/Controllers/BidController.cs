@@ -1,5 +1,6 @@
 ﻿using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -63,22 +64,32 @@ namespace AuctionOnline.Controllers
         }
 
         [HttpGet]
-        public async Task<Boolean> EndBid(int itemId)
+        public async Task<Boolean> FinalizeBid(int itemId) 
         {
-            var latestSessionBid = db.Bids.Where(x => x.ItemId == itemId).OrderByDescending(x => x.BidSession).FirstOrDefault();
+            var item = await db.Items.FindAsync(itemId);
 
-            var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
-
-            if (latestCurrentPriceBid != null)
+            if (item != null && item.BidStatus == BidStatus.InProgress)
             {
-                latestCurrentPriceBid.IsWinned = true;
-                latestCurrentPriceBid.IsWinnedDateTime = DateTime.Now;
+                var latestSessionBid = db.Bids.Where(x => x.ItemId == itemId).OrderByDescending(x => x.BidSession).FirstOrDefault();
 
-                db.Bids.Update(latestCurrentPriceBid);
+                var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
+
+                if (latestCurrentPriceBid != null)
+                {
+                    latestCurrentPriceBid.IsWinned = true;
+
+                    latestCurrentPriceBid.IsWinnedDateTime = DateTime.Now;
+
+                    db.Bids.Update(latestCurrentPriceBid);
+                }
+
+                item.BidStatus = BidStatus.Complete;
+
+                db.Items.Update(item);
 
                 await db.SaveChangesAsync();
 
-                return latestCurrentPriceBid.IsWinned;
+                return true;
             }
 
             return false;

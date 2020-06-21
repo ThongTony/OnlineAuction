@@ -220,16 +220,16 @@ namespace AuctionOnline.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CurrentDate")
+                    b.Property<DateTime>("ExpiredDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsExpired")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsSeen")
                         .HasColumnType("bit");
 
                     b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SessionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -293,11 +293,11 @@ namespace AuctionOnline.Migrations
                         {
                             Id = 1,
                             AccountId = 1,
-                            BidEndDate = new DateTime(2020, 6, 21, 23, 34, 12, 843, DateTimeKind.Local).AddTicks(6640),
+                            BidEndDate = new DateTime(2020, 6, 21, 12, 3, 57, 983, DateTimeKind.Local).AddTicks(1531),
                             BidIncrement = 3m,
-                            BidStartDate = new DateTime(2020, 6, 20, 23, 34, 12, 841, DateTimeKind.Local).AddTicks(2672),
+                            BidStartDate = new DateTime(2020, 6, 21, 12, 0, 57, 979, DateTimeKind.Local).AddTicks(3529),
                             BidStatus = 1,
-                            CreatedAt = new DateTime(2020, 6, 20, 23, 34, 12, 844, DateTimeKind.Local).AddTicks(1918),
+                            CreatedAt = new DateTime(2020, 6, 21, 12, 0, 57, 983, DateTimeKind.Local).AddTicks(6602),
                             Description = "description 1",
                             MinimumBid = 2m,
                             Status = true,
@@ -307,11 +307,11 @@ namespace AuctionOnline.Migrations
                         {
                             Id = 2,
                             AccountId = 1,
-                            BidEndDate = new DateTime(2020, 6, 21, 23, 34, 12, 845, DateTimeKind.Local).AddTicks(6129),
+                            BidEndDate = new DateTime(2020, 6, 21, 12, 3, 57, 984, DateTimeKind.Local).AddTicks(4395),
                             BidIncrement = 3m,
-                            BidStartDate = new DateTime(2020, 6, 20, 23, 34, 12, 845, DateTimeKind.Local).AddTicks(5922),
+                            BidStartDate = new DateTime(2020, 6, 21, 12, 0, 57, 984, DateTimeKind.Local).AddTicks(4340),
                             BidStatus = 1,
-                            CreatedAt = new DateTime(2020, 6, 20, 23, 34, 12, 845, DateTimeKind.Local).AddTicks(6311),
+                            CreatedAt = new DateTime(2020, 6, 21, 12, 0, 57, 984, DateTimeKind.Local).AddTicks(4497),
                             Description = "description 2",
                             MinimumBid = 2m,
                             Status = true,
@@ -321,11 +321,11 @@ namespace AuctionOnline.Migrations
                         {
                             Id = 3,
                             AccountId = 1,
-                            BidEndDate = new DateTime(2020, 6, 21, 23, 34, 12, 845, DateTimeKind.Local).AddTicks(6457),
+                            BidEndDate = new DateTime(2020, 6, 21, 12, 3, 57, 984, DateTimeKind.Local).AddTicks(4608),
                             BidIncrement = 3m,
-                            BidStartDate = new DateTime(2020, 6, 20, 23, 34, 12, 845, DateTimeKind.Local).AddTicks(6451),
+                            BidStartDate = new DateTime(2020, 6, 21, 12, 0, 57, 984, DateTimeKind.Local).AddTicks(4604),
                             BidStatus = 1,
-                            CreatedAt = new DateTime(2020, 6, 20, 23, 34, 12, 845, DateTimeKind.Local).AddTicks(6465),
+                            CreatedAt = new DateTime(2020, 6, 21, 12, 0, 57, 984, DateTimeKind.Local).AddTicks(4615),
                             Description = "description 3",
                             MinimumBid = 2m,
                             Status = true,
