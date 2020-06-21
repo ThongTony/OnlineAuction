@@ -54,7 +54,7 @@ namespace AuctionOnline.Data
                 new Category() { Id = 1, Name = "Furniture" },
                 new Category() { Id = 2, Name = "Electric" },
                 new Category() { Id = 3, Name = "Smarts", ParentId = 2 },
-                new Category() { Id = 4, Name = "Laptops & Macs", ParentId = 3 }
+                new Category() { Id = 4, Name = "Laptops & Macs", ParentId = 2 }
                 );
 
             modelBuilder.Entity<Item>().HasData(
