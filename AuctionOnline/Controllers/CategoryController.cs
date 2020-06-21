@@ -2,6 +2,7 @@
 using AuctionOnline.Models;
 using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -23,10 +24,18 @@ namespace AuctionOnline.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var categories = db.Categories.Include(c => c.Parent);
-            var viewmodel = new LayoutViewModel();
-            viewmodel.CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList());
-            return View(viewmodel);
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
+            {
+                var categories = db.Categories.Include(c => c.Parent);
+                var viewmodel = new LayoutViewModel();
+                viewmodel.CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList());
+                return View(viewmodel);
+            }
+            else
+            {
+                return RedirectToAction("Login","Account");
+            }
+
         }
 
         public async Task<IActionResult> Detail(int id)
