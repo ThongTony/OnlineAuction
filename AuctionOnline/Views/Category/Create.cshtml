@@ -33,7 +33,7 @@
 
                     <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <@*input type="hidden" asp-for="CategoryVM.Id" />*@
+                        @*<input type="hidden" asp-for="CategoryVM.Id" />*@
                         <div class="form-group">
                             <label asp-for="CategoryVM.Name" class="control-label"></label>
                             <input asp-for="CategoryVM.Name" class="form-control" />

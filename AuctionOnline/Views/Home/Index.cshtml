@@ -20,16 +20,15 @@
                     <a asp-controller="Item" asp-action="ListedByCategory" asp-route-id="@category.Id" style="position:absolute;right:10px;text-align:right">See More &raquo;</a>
                 </h2>
                 <div class="clearfix"></div>
-                @foreach (var ci in category.CategoryItems)
-                {
-                    <div class="topiclist-wrapper">
-
+                <div class="topiclist-wrapper">
+                    @foreach (var ci in category.CategoryItems)
+                    {
                         <div class="item grid col-md-5ths col-xs-6">
                             <div class="itemcontainer">
                                 <div class="col-md-4 col-sm-3 col-xs-5">
                                     <div style="padding-left:15px" class="row">
                                         <a href="/tp-ho-chi-minh/ghe-aston-co-tay-110.html" class="thumb">
-                                            <img src="~/images/items/@ci.Item.Photo">
+                                            <img src="~/images/items/@ci.Item.Photo" style="width: 220px; height:220px">
                                         </a>
                                     </div>
                                 </div>
@@ -50,7 +49,6 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="col-sm-6 f-red text-right">
-
                                                 <div class="text-nowrap">
 
                                                 </div>
@@ -64,11 +62,9 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                }
+                    }
+                </div>
                 <div class="clearfix"></div>
-
                 <div class="spacer"></div>
                 <hr style="border-top: 1px solid #cf0f19;">
                 <div class="spacer"></div>

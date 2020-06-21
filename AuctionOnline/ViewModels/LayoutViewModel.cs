@@ -27,6 +27,7 @@ namespace AuctionOnline.ViewModels
         public List<ItemVM> ItemsVM { get; set; }
 
         public AccountVM AccountVM { get; set; }
+        public List<AccountVM> AccountsVM { get; set; }
 
         public List<Category> Categories { get; set; }
         public Bid Bid { get; set; }
