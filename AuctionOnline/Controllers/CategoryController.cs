@@ -201,40 +201,7 @@ namespace AuctionOnline.Controllers
             var categories = db.Categories.ToList();
             return View("Index", categories);
         }
-
-        public async Task<IActionResult> GetallMenu()
-        {
-            List<Category> category = new List<Category>();
-            List<Category> categories = db.Categories.ToList();
-            category = categories
-                .Where(c => c.ParentId == null)
-                .Select(c => new Category()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    ParentId = c.ParentId,
-                    Children = GetChildren(categories, c.Id)
-                }).ToList();
-            var layoutVM = new LayoutViewModel()
-            {
-                CategoriesVM = CategoryUtility.MapModelsToVMs(category)
-            };
-            return View(layoutVM);
-        }
-
-        public static List<Category> GetChildren(List<Category> categories, int parentId)
-        {
-            return categories
-                .Where(c => c.ParentId == parentId)
-                .Select(c => new Category
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    ParentId = c.ParentId,
-                    Parent = c,
-                    Children = GetChildren(categories, c.Id)
-                }).ToList();
-        }
+                
         private bool CategoryExists(int id)
         {
             return db.Categories.Any(e => e.Id == id);
