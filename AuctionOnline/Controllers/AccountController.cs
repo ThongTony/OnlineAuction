@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 
 namespace AuctionOnline.Controllers
 {
@@ -18,21 +15,22 @@ namespace AuctionOnline.Controllers
         private IConfiguration configuration;
 
         private AuctionDbContext db;
+        private readonly ILogger<AccountController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public AccountController(IConfiguration _configuration,
-            AuctionDbContext _db)
+            AuctionDbContext _db, ILogger<AccountController> logger, IHttpContextAccessor httpContextAccessor)
         {
-
+            _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
             db = _db;
             configuration = _configuration;
         }
-
 
         [HttpGet]
         public IActionResult Login()
         {
             return View("Login");
         }
-
 
         [HttpPost]
         public IActionResult Login(string username, string password)
@@ -45,11 +43,19 @@ namespace AuctionOnline.Controllers
                     if (account.RoleId == 1 && account.IsBlocked == false)
                     {
                         HttpContext.Session.SetString("username", username);
+                        int checkiduser = (from i in db.Accounts
+                                       where i.RoleId == 1
+                                       select i.Id).FirstOrDefault();
+                        HttpContext.Session.SetInt32("checkiduser", checkiduser);
                         return RedirectToAction("Index", "Home");
                     }
                     else if ( account.RoleId == 0)
                     {
-                        return RedirectToAction("Index", "ListUser", new { area = "Admin" });
+                        int checkidadmin = (from i in db.Accounts
+                                       where i.RoleId == 0
+                                       select i.Id).FirstOrDefault();
+                        HttpContext.Session.SetInt32("checkidAdmin", checkidadmin);
+                        return RedirectToAction("AdminListUser");
                     }
                     else
                     {
@@ -71,7 +77,7 @@ namespace AuctionOnline.Controllers
 
 
         [HttpPost]
-        public IActionResult Register(string fullname, string username, string email, string password)
+        public IActionResult Register(string fullname, string username, string email, string password , int phone , string address)
         {
             var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
             var emails = db.Accounts.SingleOrDefault(a => a.Email.Equals(email));
@@ -92,6 +98,8 @@ namespace AuctionOnline.Controllers
                 accounts.Fullname = fullname;
                 accounts.Username = username;
                 accounts.Email = email;
+                accounts.Address = address;
+                accounts.PhoneNumber = phone;
                 accounts.Password = BCrypt.Net.BCrypt.HashPassword(password);
                 accounts.Status = true;
                 accounts.RoleId = 1;
@@ -105,21 +113,32 @@ namespace AuctionOnline.Controllers
 
         public IActionResult Logout()
         {
+            HttpContext.Session.Remove("checkiduser");
+            HttpContext.Session.Remove("checkidAdmin");
             HttpContext.Session.Remove("username");
-            return RedirectToAction("Index", "Home");
+            return View("Index", "Home");
         }
 
-        public IActionResult DemoIndex()
+        public IActionResult AdminListUser()
         {
-            ViewBag.Account = db.Accounts.Where(x => x.RoleId == 1).ToList();
-            return View("DemoIndex");
+            if(HttpContext.Session.GetInt32("checkidAdmin") != null)
+            {
+                ViewBag.Accounts = db.Accounts.Where(x => x.RoleId == 1).ToList();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
         }
 
-        public IActionResult List()
+        [HttpPost]
+        public IActionResult ListUser()
         {
             ViewBag.SellerCount = db.Accounts.Select(x => x.RoleId == 1).Count();
-            ViewBag.SellerList = db.Accounts.Where(x => x.RoleId == 1).ToList();
-            return View("List");
+            ViewBag.Seller = db.Accounts.Where(x => x.RoleId == 1).ToList();
+            return View();
         }
 
 
@@ -135,23 +154,17 @@ namespace AuctionOnline.Controllers
             var checkemail = db.Accounts.SingleOrDefault(a => a.Email.Equals(email));
             if (checkemail != null)
             {
-
-
-                string body = "Please reset your password by clicking  https://localhost:44378/account/resetpassword";
+                string host = _httpContextAccessor.HttpContext.Request.Host.Value;
+                string body = "Please reset your password by clicking  https://"+ host +"/account/resetpassword";
                 var mailHelper = new MailHelper(configuration);
                 if (mailHelper.Send(configuration["Gmail:Username"], email, "From Bookshop", body))
                 {
                     HttpContext.Session.SetString("email", email);
-                    // send mail
+                     //send mail
                     int checkid = (from i in db.Accounts
                                    where i.Email == email
                                    select i.Id).FirstOrDefault();
                     HttpContext.Session.SetInt32("checkid", checkid);
-                    var checkpassword = (from i in db.Accounts
-                                   where i.Email == email
-                                   select i.Password).FirstOrDefault();
-                    HttpContext.Session.SetInt32("checkid", checkid);
-                    HttpContext.Session.SetString("checkpassword", checkpassword);
                     ViewBag.Success = "Your password has been sent in gmail: " + email;
                     return View("Forgotpassword");
                 }
@@ -198,6 +211,60 @@ namespace AuctionOnline.Controllers
                 }
             }
             return View();
+        }
+        
+        public IActionResult Delete(AccountVM accountVM)
+        {
+                     
+           if(accountVM.Id != null)
+            {
+                db.Accounts.Remove(db.Accounts.Find(accountVM.Id));
+                db.SaveChanges();
+                return RedirectToAction("AdminListUser");
+            }
+            else
+            {
+                return RedirectToAction("AdminListUser");
+            }
+        }
+
+        public IActionResult Blocked(AccountVM accountVM , Account account)
+        {
+            var checkid = db.Accounts.Find(accountVM.Id);
+            if (checkid != null)
+            {
+                var i = db.Accounts.Where(a => a.IsBlocked == false);
+                if (i != null)
+                {
+                    account = db.Accounts.Find(accountVM.Id);
+                    account.IsBlocked = true;
+                    db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("AdminListUser");
+                }
+            }
+            return View("AdminListUser");
+
+        }
+
+        public IActionResult Unlock(AccountVM accountVM, Account account)
+        {
+            var checkid = db.Accounts.Find(accountVM.Id);
+            if (checkid != null)
+            {
+                var i = db.Accounts.Where(a => a.IsBlocked == true);
+                if (i != null)
+                {
+                    account = db.Accounts.Find(accountVM.Id);
+                    account.IsBlocked = false;
+
+                    db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("AdminListUser");
+                }
+            }
+            return View("AdminListUser");
+
         }
 
 

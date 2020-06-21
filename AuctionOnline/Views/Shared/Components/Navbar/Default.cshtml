@@ -23,8 +23,8 @@
                     <span class="icon-bar"></span>
                 </div>
             </button>
-            <a href="/toan-quoc" class="navbar-brand">
-                <img src="base/view/images/logo-white-256.png" width="48" align="left" style="vertical-align:middle;margin-top:-10px;margin-right:10px;">
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand">
+                <img src="~/base/view/images/logo-white-256.png" alt="Logo" width="48" align="left" style="vertical-align:middle;margin-top:-10px;margin-right:10px;">
                 <span style="color:#333;line-height:30px">Online Auction</span>
             </a>
         </div>
@@ -109,37 +109,6 @@
         </div>
     </div>
 </nav>
-
-@*if (@Context.Session.GetString("username") == null)
-    {
-
-        <div class="col-md-2 my-account-navbar">
-            <ul>
-                <!-- logged out -->
-                <li id="nav-menu-login" class="ibid-logoin">
-                    <a href="#" data-modal="modal-log-in" class="modeltheme-trigger">
-                        Sign In
-                    </a>
-                </li>
-            </ul>
-        </div>
-    }
-    else
-    {
-        <div class="col-md-2 my-account-navbar">
-            <ul>
-                <!-- logged out -->
-                <li id="nav-menu-login" class="ibid-logoin">
-                    <a asp-action="Logout" asp-controller="Account">
-                        Log Out
-                    </a>
-                </li>
-                <li id="nav-menu-login" class="ibid-logoin">
-                    <h5 style="color:#2695ff">Welcome @Context.Session.GetString("username")</h5>
-                </li>
-            </ul>
-        </div>
-    }*@
 
 <script type="text/javascript">
     $(document).ready(function () {

@@ -1,48 +1,34 @@
 ﻿@model AuctionOnline.ViewModels.LayoutViewModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<!DOCTYPE html>
+<!-- Content Header (Page header) -->
+<h2>Are you sure you want to delete this?</h2>
+<form asp-action="Delete" method="post">
+    <div class="card card-success">
+        <div class="card-body">
+            <dt>
+                @Html.DisplayNameFor(model => model.CategoryVM.Name)
+            </dt>
+            <input class="form-control form-control-lg" type="text" value="@Html.DisplayFor(model => model.CategoryVM.Name)" readonly>
+            <br>
+            <dt>
+                @Html.DisplayNameFor(model => model.CategoryVM.CreatedAt)
+            </dt>
+            <input class="form-control" type="text" value=" @Html.DisplayFor(model => model.CategoryVM.CreatedAt)" readonly>
+            <br>
+            <dt>
+                @Html.DisplayNameFor(model => model.CategoryVM.Parent)
+            </dt>
+            <input class="form-control form-control-sm" type="text" value=" @Html.DisplayFor(model => model.CategoryVM.Parent.Name)" readonly>
+        </div>
+        <!-- /.card-body -->
+    </div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
-</head>
-<body>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Category</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryVM.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CategoryVM.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryVM.CreatedAt)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CategoryVM.CreatedAt)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryVM.Parent)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CategoryVM.Parent.Name)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="CategoryVM.Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
-</body>
-</html>
+    <input type="hidden" asp-for="CategoryVM.Id" />
+    <input type="submit" value="Delete" class="btn btn-default" /> |
+    <a asp-action="Index">Back to List</a>
+</form>

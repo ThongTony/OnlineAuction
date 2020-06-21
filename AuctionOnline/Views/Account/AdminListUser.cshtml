@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model AuctionOnline.Models.Account
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>List User</h1>
+                <h3>
+                    <a asp-action="Logout" asp-controller="Account">Log Out</a>
+                </h3>
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<form method="post">
+    <section class="content">
+        <div class="row">
+            <div class="col-16">
+                <div class="card">
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>FullName</th>
+                                    <th>Address</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Username</th>
+                                    <th>Status</th>
+                                    <th>Isblocked</th>
+                                    <th>Created</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var account in ViewBag.Accounts)
+                                {
+                                    <tr>
+                                        <td>@account.Id</td>
+                                        <td>@account.Fullname</td>
+                                        <td>@account.Address</td>
+                                        <td>@account.Email</td>
+                                        <td>@account.PhoneNumber</td>
+                                        <td>@account.Username</td>
+                                        <td>@(account.Status ? "active" : "unactive")</td>
+                                        <td>@(account.IsBlocked ? "blocked" : "unblock")</td>
+                                        <td>@account.CreatedAt.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <a asp-controller="Account" asp-action="Blocked" asp-route-id="@account.Id">Blocked</a>
+                                            <br />
+                                            <a asp-controller="Account" asp-action="Unlock" asp-route-id="@account.Id">UnBlock</a>
+                                            <br />
+                                            <a asp-controller="Account" asp-action="Delete" asp-route-id="@account.Id">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</form>
+<!-- /.content -->

@@ -2,6 +2,7 @@
 using AuctionOnline.Models;
 using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -23,13 +24,21 @@ namespace AuctionOnline.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var categories = db.Categories.Include(c => c.Parent);
-            var viewmodel = new LayoutViewModel();
-            viewmodel.CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList());
-            return View(viewmodel);
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
+            {
+                var categories = db.Categories.Include(c => c.Parent);
+                var viewmodel = new LayoutViewModel();
+                viewmodel.CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList());
+                return View(viewmodel);
+            }
+            else
+            {
+                return RedirectToAction("Login","Account");
+            }
+
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Detail(int id)
         {
             if (id == null)
             {
@@ -193,7 +202,7 @@ namespace AuctionOnline.Controllers
             return View("Index", categories);
         }
 
-        public IActionResult GetallMenu()
+        public async Task<IActionResult> GetallMenu()
         {
             List<Category> category = new List<Category>();
             List<Category> categories = db.Categories.ToList();
@@ -206,8 +215,11 @@ namespace AuctionOnline.Controllers
                     ParentId = c.ParentId,
                     Children = GetChildren(categories, c.Id)
                 }).ToList();
-
-            return View(category);
+            var layoutVM = new LayoutViewModel()
+            {
+                CategoriesVM = CategoryUtility.MapModelsToVMs(category)
+            };
+            return View(layoutVM);
         }
 
         public static List<Category> GetChildren(List<Category> categories, int parentId)

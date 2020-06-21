@@ -50,8 +50,6 @@ namespace AuctionOnline.Notifications
 
             DateTime now = DateTime.Now;
 
-            //var expiredItems = dbContext.Items.Where(t => t.BidEndDate.Value.Date.CompareTo(now.Date) <= 0 && t.AccountId == 1).OrderBy(d => d.BidEndDate).ToList();
-            //var expiredItems = dbContext.Items.Where(t => t.BidStatus == BidStatus.Complete && t.AccountId == 1).OrderBy(d => d.BidEndDate).ToList();
             var latestEndSessionBid = dbContext.Bids.Where(x => x.AccountId == 1 && x.Item.BidStatus == BidStatus.Complete).OrderByDescending(x => x.BidSession).FirstOrDefault();
             if (latestEndSessionBid != null)
             {
