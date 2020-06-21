@@ -18,12 +18,11 @@ $(() => {
 
     function loadData() {
         var tr = '';
-
         $.ajax({
             url: '/NotifiedExpiredItem/GetExpiredItems',
             method: 'GET',
             success: (result) => {
-                $.each(result, (k, v) => {
+                $.each(result.expiredItems, (k, v) => {
                     var isAvailable = v.isSeen ? 'notavailable' : '';
                     var className = !v.isSeen ? 'linebg' : '';
                     tr = tr + `<li class="notifiedline ${className}">
@@ -63,7 +62,7 @@ $(() => {
                 });
 
                 $("#notificationBody").html(tr);
-                $("#notification_count").html(result.length);
+                $("#notification_count").html(result.notSeen);
             },
             error: (error) => {
                 console.log(error);
