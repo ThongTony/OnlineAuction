@@ -1,7 +1,6 @@
 ﻿using AuctionOnline.Data;
 using AuctionOnline.Models;
 using AuctionOnline.ViewModels;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;

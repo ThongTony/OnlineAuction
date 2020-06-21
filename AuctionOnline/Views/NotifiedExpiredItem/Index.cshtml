@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Notified Expired Item Page";
+    Layout = "~/Views/Shared/_NotificationLayout.cshtml";
+}
+
+<div style="margin:0 auto;width:900px">
+    <ul id="nav">
+        <li style="margin-left: -20px;">
+            <span id="notification_count"></span>
+            <a href="#" id="notificationLink">Notifications</a>
+            <div id="notificationContainer">
+                <div id="notificationTitle">Notifications</div>
+                <div id="notificationsBody" class="notifications">
+                    <ul style="list-style-type:none;margin-block-start:-20px;" id="notificationBody"></ul>
+
+                    @*<table class="table">
+                            <thead>
+                                <tr style="width:90px;">
+                                    <th style="width:90px;">Item Id</th>
+                                    <th style="width:90px;">Current Date</th>
+                                    <th style="width:90px;">Is Expired</th>
+                                    <th style="width:90px;">Is Seen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="notificationBody"></tbody>
+                        </table>*@
+                </div>
+                <div id="notificationFooter"><a href="#">See All</a></div>
+            </div>
+
+        </li>
+    </ul>
+</div>
+

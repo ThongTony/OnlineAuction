@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuctionOnline.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20200616095940_abc")]
+    [Migration("20200617080046_abc")]
     partial class abc
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,18 +108,6 @@ namespace AuctionOnline.Migrations
                     b.Property<int>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("BidEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("BidIncrement")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<DateTime?>("BidStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("BidStatus")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -128,9 +116,6 @@ namespace AuctionOnline.Migrations
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("MinimumBid")
-                        .HasColumnType("decimal(18,1)");
 
                     b.HasKey("Id");
 
@@ -167,26 +152,26 @@ namespace AuctionOnline.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 6, 17, 15, 0, 46, 433, DateTimeKind.Local).AddTicks(5894),
                             Name = "Furniture"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 6, 17, 15, 0, 46, 433, DateTimeKind.Local).AddTicks(6011),
                             Name = "Electric"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 6, 17, 15, 0, 46, 433, DateTimeKind.Local).AddTicks(6060),
                             Name = "Smarts",
                             ParentId = 2
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2020, 6, 17, 15, 0, 46, 433, DateTimeKind.Local).AddTicks(6102),
                             Name = "Laptops & Macs",
                             ParentId = 3
                         });
@@ -210,6 +195,31 @@ namespace AuctionOnline.Migrations
                     b.ToTable("CategoryItems");
                 });
 
+            modelBuilder.Entity("AuctionOnline.Models.ExpiredItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CurrentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ExpiredItems");
+                });
+
             modelBuilder.Entity("AuctionOnline.Models.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -218,6 +228,18 @@ namespace AuctionOnline.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("BidEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("BidIncrement")
+                        .HasColumnType("decimal(18,1)");
+
+                    b.Property<DateTime?>("BidStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("BidStatus")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -229,14 +251,17 @@ namespace AuctionOnline.Migrations
                     b.Property<string>("Document")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal?>("MinimumBid")
+                        .HasColumnType("decimal(18,1)");
+
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,1)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -246,6 +271,53 @@ namespace AuctionOnline.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = 1,
+                            BidEndDate = new DateTime(2020, 6, 20, 15, 0, 45, 955, DateTimeKind.Local).AddTicks(9157),
+                            BidIncrement = 2m,
+                            BidStartDate = new DateTime(2020, 6, 17, 15, 0, 45, 955, DateTimeKind.Local).AddTicks(446),
+                            BidStatus = 1,
+                            CreatedAt = new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(297),
+                            Description = "description 1",
+                            MinimumBid = 7m,
+                            Price = 5m,
+                            Status = true,
+                            Title = "product 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = 1,
+                            BidEndDate = new DateTime(2020, 6, 20, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2017),
+                            BidIncrement = 2m,
+                            BidStartDate = new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2002),
+                            BidStatus = 1,
+                            CreatedAt = new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2040),
+                            Description = "description 2",
+                            MinimumBid = 7m,
+                            Price = 10m,
+                            Status = true,
+                            Title = "product 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccountId = 1,
+                            BidEndDate = new DateTime(2020, 6, 20, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2068),
+                            BidIncrement = 2m,
+                            BidStartDate = new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2067),
+                            BidStatus = 1,
+                            CreatedAt = new DateTime(2020, 6, 17, 15, 0, 45, 956, DateTimeKind.Local).AddTicks(2070),
+                            Description = "description 3",
+                            MinimumBid = 7m,
+                            Price = 15m,
+                            Status = true,
+                            Title = "product 3"
+                        });
                 });
 
             modelBuilder.Entity("AuctionOnline.Models.Bid", b =>
@@ -280,6 +352,15 @@ namespace AuctionOnline.Migrations
 
                     b.HasOne("AuctionOnline.Models.Item", "Item")
                         .WithMany("CategoryItems")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AuctionOnline.Models.ExpiredItem", b =>
+                {
+                    b.HasOne("AuctionOnline.Models.Item", "Item")
+                        .WithMany()
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -5,13 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\js\**" />
-    <Content Remove="wwwroot\js\**" />
-    <EmbeddedResource Remove="wwwroot\js\**" />
-    <None Remove="wwwroot\js\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Remove="Controllers\ItemsController.cs" />
     <Compile Remove="Migrations\20200610123621_abc.cs" />
     <Compile Remove="Migrations\20200610123621_abc.Designer.cs" />
     <Compile Remove="Migrations\20200610123744_abc.cs" />
@@ -28,18 +22,97 @@
     <Compile Remove="Migrations\20200612020631_abc.Designer.cs" />
     <Compile Remove="Migrations\20200612023734_abc.cs" />
     <Compile Remove="Migrations\20200612023734_abc.Designer.cs" />
+    <Compile Remove="Migrations\20200615022906_khoa.cs" />
+    <Compile Remove="Migrations\20200615022906_khoa.Designer.cs" />
+    <Compile Remove="Migrations\20200615064618_khoa1.cs" />
+    <Compile Remove="Migrations\20200615064618_khoa1.Designer.cs" />
+    <Compile Remove="Migrations\20200615091059_khoa2.cs" />
+    <Compile Remove="Migrations\20200615091059_khoa2.Designer.cs" />
+    <Compile Remove="Migrations\20200616031202_khoa3.cs" />
+    <Compile Remove="Migrations\20200616031202_khoa3.Designer.cs" />
+    <Compile Remove="Migrations\20200616074310_khoa4.cs" />
+    <Compile Remove="Migrations\20200616074310_khoa4.Designer.cs" />
+    <Compile Remove="Migrations\20200616080707_khoa5.cs" />
+    <Compile Remove="Migrations\20200616080707_khoa5.Designer.cs" />
+    <Compile Remove="Migrations\20200616081240_khoa6.cs" />
+    <Compile Remove="Migrations\20200616081240_khoa6.Designer.cs" />
+    <Compile Remove="Migrations\20200616081349_khoa7.cs" />
+    <Compile Remove="Migrations\20200616081349_khoa7.Designer.cs" />
+    <Compile Remove="Migrations\20200617051108_abc.cs" />
+    <Compile Remove="Migrations\20200617051108_abc.Designer.cs" />
+    <Compile Remove="Migrations\20200620014547_khoa1.cs" />
+    <Compile Remove="Migrations\20200620014547_khoa1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\library\bootstrap\js\bootstrap.min.js" />
-    <None Include="wwwroot\library\javascript\jquery-3.1.1.min.js" />
-    <None Include="wwwroot\library\javascript\jquery.cookie.js" />
-    <None Include="wwwroot\library\javascript\nprogress\nprogress.js" />
-    <None Include="wwwroot\library\javascript\push.min.js" />
+    <None Include="wwwroot\notifications\js\site.js" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed01a0" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed0774" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed0f1f" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed0ff7" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed137a" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed1720" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed2378" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed2423" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed2478" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed2724" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed281a" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed29db" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed2b83" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed346b" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed3ccf" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed3e99" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed42a7" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed4399" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed4677" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed49de" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed4d13" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed521d" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed5a45" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed5e95" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed5e9c" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed60f7" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed6376" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed68a0" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed699a" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed70ac" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed7187" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed75e6" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed8a5e" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed8f37" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed912f" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed9179" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed93e5" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embed9cd2" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embeda10d" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embeda1d5" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embeda97a" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedab2c" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedacb3" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedb423" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedb4a5" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedb736" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedbf81" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedc08e" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedc125" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedc365" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedc8e0" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedd314" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedd4aa" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedd6ac" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedda0d" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embeddcd2" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embeddd16" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embede49d" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embede7c2" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embede9b5" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedee33" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedf7c3" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedf9f4" />
+    <None Include="wwwroot\wp-json\oembed\1.0\embedfbc0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.5" />
@@ -50,14 +123,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
-    <PackageReference Include="PagedList.Core.Mvc" Version="3.0.0" />
-    <PackageReference Include="PagedList.NetCore" Version="1.0.6" />
+    <PackageReference Include="PagedList" Version="1.17.0" />
+    <PackageReference Include="PagedList.Core" Version="1.17.4" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\library\bootstrap\css\github.com\necolas\" />
-    <Folder Include="wwwroot\library\font_awesome\fonts\" />
   </ItemGroup>
 
 </Project>
