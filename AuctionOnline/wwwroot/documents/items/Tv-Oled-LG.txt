@@ -1,0 +1,38 @@
+*Thông số kỹ thuật chi tiết Smart Tivi OLED LG 4K 55 inch 55C9PTA
+
+*Tổng quan
+Loại Tivi:Smart Tivi OLED
+Kích cỡ màn hình:55 inch
+Độ phân giải:Ultra HD 4K
+
+*Kết nối
+Bluetooth:Có (kết nối loa bluetooth)
+Kết nối Internet:Cổng LAN, Wifi
+Cổng AV:Có cổng Composite và cổng Component
+Cổng HDMI:4 cổng
+Cổng xuất âm thanh:Cổng Optical (Digital Audio Out), Jack loa 3.5 mm, HDMI ARC
+USB:3 cổng
+Tích hợp đầu thu kỹ thuật số:DVB-C, DVB-T2, DVB-T2C
+Tính năng thông minh (Cập nhật 3/2019)
+
+*Hệ điều hành, giao diện:WebOS 4.5
+Các ứng dụng sẵn có:YouTube, Netflix, Trình duyệt web, LG Content Store
+Các ứng dụng phổ biến có thể tải thêm:MyTV, Nhaccuatui, Clip TV, Spotify, ZingTV, FPT Play
+Remote thông minh:Có Magic Remote (tìm kiếm bằng giọng nói có hỗ trợ tiếng Việt)
+Điều khiển tivi bằng điện thoại:Bằng ứng dụng LG TV Plus
+Kết nối không dây với điện thoại, máy tính bảng:Chiếu màn hình qua AirPlay 2, Chiếu màn hình Screen Mirroring
+Kết nối Bàn phím, chuột:Có
+Tính năng thông minh khác:Tìm kiếm bằng giọng nói (có hỗ trợ tiếng Việt), Trợ lý ảo Google Assistant, AI ThinQ
+Công nghệ hình ảnh, âm thanh
+Công nghệ hình ảnh:Xử lý hình ảnh AI chuyên sâu, 4K Upscaler, Công nghệ màn hình OLED, HDR10 Pro, Ultra Luminance PRO, HLG, 4K Cinema HDR, AI Brightness điều chỉnh độ sáng tự động, Dolby Vision, Chip xử lý thông minh α9 Gen 2, Billion Rich Colors
+Công nghệ âm thanh:AI Sound, Chế độ âm thanh vòm Dolby Surround, Công nghệ âm thanh DTS, Dolby Atmos, Clear Voice III, Ultra Surround
+Tổng công suất loa:40 W
+
+*Thông tin chung
+Công suất:357W
+Kích thước có chân, đặt bàn:Ngang 122.8 cm - Cao 73.8 cm - Dày 25.1 cm
+Khối lượng có chân:23 kg
+Kích thước không chân, treo tường:Ngang 122.8 cm - Cao 70.6 cm - Dày 4.69 cm
+Khối lượng không chân:18.9 kg
+Nơi sản xuất:Indonesia
+Dòng sản phẩm:2019

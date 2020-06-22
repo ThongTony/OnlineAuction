@@ -1,4 +1,5 @@
-﻿@model AuctionOnline.ViewModels.LayoutViewModel
+﻿@using Microsoft.AspNetCore.Http;
+@model AuctionOnline.ViewModels.LayoutViewModel
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -47,7 +48,7 @@
                         <option value="3">Trên 2 triệu</option>
                     </select>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <div class="input-group">
                         <input type="text" name="keyword" placeholder="Tìm sản phẩm" class="form-control" size="90" id="ItemName">
                         <div class="input-group-btn">
@@ -57,7 +58,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-2" style="align-self: end">
+                    <a asp-controller="Item" asp-action="ListInShop" asp-route-id="@Context.Session.GetInt32("checkiduser")">
+                        <btn class="btn btn-primary">Go To Shop</btn>
+                    </a>
+                </div>
             </form>
+
         </div>
     </div>
 </body>

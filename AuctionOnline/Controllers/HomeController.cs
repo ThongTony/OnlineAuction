@@ -20,8 +20,9 @@ namespace AuctionOnline.Controllers
         {
             ViewBag.IsHome = true;
 
+            //Recursive
             List<Category> category = new List<Category>();
-            List<Category> categories = db.Categories.ToList();
+            List<Category> categories = db.Categories.OrderByDescending(c => c.Children.Any()).ToList();
             category = categories
                 .Where(c => c.ParentId == null)
                 .Select(c => new Category()
@@ -31,9 +32,24 @@ namespace AuctionOnline.Controllers
                     ParentId = c.ParentId,
                     Children = GetChildren(categories, c.Id)
                 }).ToList();
+
+            //main items
+            //var categories = db.Categories.Where(e => e.ParentId == null).ToList();
+            foreach (var cate in categories)
+            {
+                var categoryItems = db.CategoryItems.Where(x => x.CategoryId == cate.Id).ToList();
+
+                foreach (var categoryItem in categoryItems)
+                {
+                    categoryItem.Item = db.Items.FirstOrDefault(x => x.Id == categoryItem.ItemId);
+                }
+                cate.CategoryItems = categoryItems;
+            }
+
             var layoutVM = new LayoutViewModel()
             {
-                CategoriesVM = CategoryUtility.MapModelsToVMs(category)
+                CategoriesVM = CategoryUtility.MapModelsToVMs(category),
+                Categories = categories
             };
             return View(layoutVM);
 
@@ -51,11 +67,6 @@ namespace AuctionOnline.Controllers
                     Parent = c,
                     Children = GetChildren(categories, c.Id)
                 }).ToList();
-        }
-
-        public IActionResult Logout()
-        {
-            return View("Index");
         }
 
         public IActionResult Error()
