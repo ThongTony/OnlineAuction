@@ -6,17 +6,27 @@
 
   <ItemGroup>
     <Compile Remove="Areas\**" />
+    <Compile Remove="Migrations\**" />
     <Compile Remove="wwwroot\wp-json\**" />
     <Content Remove="Areas\**" />
+    <Content Remove="Migrations\**" />
     <Content Remove="wwwroot\wp-json\**" />
     <EmbeddedResource Remove="Areas\**" />
+    <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="wwwroot\wp-json\**" />
     <None Remove="Areas\**" />
+    <None Remove="Migrations\**" />
     <None Remove="wwwroot\wp-json\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Controllers\ItemsController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\20200622071832_abc.cs" />
+    <Compile Include="Migrations\20200622071832_abc.Designer.cs" />
+    <Compile Include="Migrations\AuctionDbContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <script src="~/library/javascript/slick/slick.min.js"></script>
+    <link href="~/library/javascript/slick/slick-theme.css" rel="stylesheet">
+    <link href="~/library/javascript/slick/slick.css" rel="stylesheet">
+
+    <form method="post" asp-action="Profileuser" asp-controller="Account">
+        <div style="margin-bottom:10px" class="panel panel-default">
+            <div class="panel-heading">
+                <ul class="breadcrumb lean">
+                    <li>
+                        <a>Home</a>
+                    </li>
+
+                    <li>
+                        <a>Province / City Name</a>
+                    </li>
+                    <li>
+                        @*@foreach(var cate in Model.ItemVM.Categories)
+                    {
+                    <a>@Html.DisplayFor(modelCate => cate.)</a>
+                    }*@
+                        <a>Profile User</a>
+
+                    </li>
+                    <!--li.active=$topic->title-->
+                </ul>
+            </div>
+            @foreach (var i in ViewBag.listuser)
+            {
+
+                <div class="panel-body">
+                    <div style="min-height:300px" class="row">
+                        <div class="col-md-6">
+                            <div id="swap-info" style="margin-bottom:10px"></div>
+                            <div id="slick-container">
+                                <div class="slick slick-initialized slick-slider">
+                                    <div aria-live="polite" class="slick-list draggable">
+                                        <div class="slick-track" role="listbox" style="opacity: 1; width: 600px; transform: translate3d(0px, 0px, 0px);">
+                                            <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 600px;">
+                                                <img src="~/images/items/" alt="" class="img-rounded" width="500" height="auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slick-counter">
+                                    <span style="font-weight:bold">Photo User </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bidding" style="margin: 25px">
+                                <p><h1 style="color: olivedrab"><b></b></h1></p>
+                                <br>
+                                <p align="left" style="font-weight:bold;font-size: x-large"> Profile &nbsp;&nbsp;&nbsp;&nbsp; @i.Username </p>
+                                <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 30px;margin-top: 0px;"></p>
+                                <br>
+                                <div class="row">
+
+                                    <a style="font-weight:bold">Full Name: &nbsp;&nbsp;</a> @i.Fullname
+                                    <br /><br />
+                                    <a style="font-weight:bold">Address:  &nbsp;&nbsp;</a> @i.Address
+                                    <br /><br />
+                                    <a style="font-weight:bold">Email:  &nbsp;&nbsp;</a> @i.Email
+                                    <br /><br />
+                                    <a style="font-weight:bold">Phone Number:  &nbsp;&nbsp;</a> @i.PhoneNumber
+                                    <br /><br />
+                                    <a style="font-weight:bold">Creat At:   &nbsp;&nbsp;</a> @i.CreatedAt.ToString("dd/MM/yyyy")
+                                    <br /><br />
+                                    <a  asp-action="Edituser" asp-controller="Account">
+                                        <btn class="btn btn-success">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                            Edit
+                                        </btn>
+                                    </a>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spacer"></div>
+                    </div>
+                </div>
+
+            }
+        </div>
+        <div id="tel" class="hidden">MDkzMzQ1NjQ1Nw==</div>
+        <div id="map" role="dialog" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Địa chỉ
+                        <div class="pull-right">
+                            <a href="javascript:;" onclick="$(&quot;#map&quot;).modal(&quot;hide&quot;);">
+                                <i class="fa fa-close fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <iframe src="" width="100%" height="100%" style="min-height:400px"></iframe>
+                    </div>
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+

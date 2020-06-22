@@ -43,7 +43,7 @@
                 {
                    
                     <li>
-                        <a href="#">
+                        <a asp-action="Profileuser" asp-controller="Account">
                             <i class="fa fa-sign-in"></i>
                             Welcome
                             <span style="color:blue;font-weight:bold">@Context.Session.GetString("username")</span>
@@ -71,7 +71,8 @@
                     </div>
 
                 </li>
-
+                    
+                
                 <li>
                     <a asp-controller="Item" asp-action="Create" asp-route-id="@Context.Session.GetInt32("checkiduser")">
                         <i class="fa fa-sign-in"></i>
@@ -86,7 +87,7 @@
                     @if (@Context.Session.GetString("username") == null)
                     {
                         @*<a asp-controller="item" asp-action="Add" asp-route-id="@user.Id" style="margin:7px 5px !important" class="hasbtn lean ta-center">*@
-                        <a asp-controller="account" asp-action="login" style="margin:7px 5px !important" class="hasbtn lean ta-center">
+                        <a asp-controller="Account" asp-action="Login" style="margin:7px 5px !important" class="hasbtn lean ta-center">
                             <btn class="btn btn-success">
                                 <i class="fa fa-pencil-square-o"></i>
                                 Login
@@ -96,7 +97,7 @@
                     else
                     {
 
-                        <a asp-controller="account" asp-action="logout" style="margin:7px 5px !important" class="hasbtn lean ta-center">
+                        <a asp-controller="Account" asp-action="Logout" style="margin:7px 5px !important" class="hasbtn lean ta-center">
                             <btn class="btn btn-success">
                                 <i class="fa fa-pencil-square-o"></i>
                                 Logout
