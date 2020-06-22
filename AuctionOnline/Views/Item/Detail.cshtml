@@ -37,7 +37,9 @@
                     decimal currentBid = 0;
                     decimal yourBidPrice = 0;
 
-                    var latestSessionBid = Model.ItemVM.Bids.OrderByDescending(x => x.BidSession).FirstOrDefault();
+                    var latestSessionBid = Model.ItemVM.Bids
+                        .OrderByDescending(x => x.BidSession)
+                        .FirstOrDefault();
 
                     if (latestSessionBid == null)
                     {
@@ -47,7 +49,10 @@
                     {
                         bidSessionNo = "###: " + latestSessionBid.BidSession.ToString();
 
-                        var latestPriceBid = Model.ItemVM.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
+                        var latestPriceBid = Model.ItemVM.Bids
+                            .Where(x => x.BidSession == latestSessionBid.BidSession && x.ItemId == latestSessionBid.ItemId)
+                            .OrderByDescending(x => x.CurrentBid)
+                            .FirstOrDefault();
 
                         if (latestPriceBid == null)
                         {
