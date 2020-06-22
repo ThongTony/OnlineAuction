@@ -12,7 +12,7 @@
             @*await Html.PartialAsync("~/Views/Category/_CategoryPartial.cshtml", cate.Children)*@
             @foreach (var cate2 in cate.Children)
             {
-                <a asp-controller="Item" asp-action="ListedByCategory" asp-route-id="@cate.Id" class="list-group-item">@cate2.Name</a>
+                <a asp-controller="Item" asp-action="ListedByCategory" asp-route-id="@cate2.Id" class="list-group-item">@cate2.Name</a>
             }
         </div>
     }
