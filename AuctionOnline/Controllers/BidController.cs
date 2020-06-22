@@ -1,5 +1,6 @@
 ﻿using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -29,7 +30,7 @@ namespace AuctionOnline.Controllers
 
                 if (latestSessionBid != null)
                 {
-                    var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBidPrice).FirstOrDefault();
+                    var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
 
                     if (latestCurrentPriceBid != null)
                     {
@@ -48,7 +49,7 @@ namespace AuctionOnline.Controllers
                 {
                     AccountId = 1,
                     ItemId = itemVM.Id,
-                    CurrentBidPrice = itemVM.BidPrice,
+                    CurrentBid = itemVM.BidPrice,
                     BidSession = bidSession,
                     BidStartDate = itemVM.BidStartDate.Value,
                     BidEndDate = itemVM.BidEndDate.Value,
@@ -62,6 +63,37 @@ namespace AuctionOnline.Controllers
             return RedirectToAction("Detail", "Item", new { id = itemVM.Id });
         }
 
+        [HttpGet]
+        public async Task<Boolean> FinalizeBid(int itemId) 
+        {
+            var item = await db.Items.FindAsync(itemId);
+
+            if (item != null && item.BidStatus == BidStatus.InProgress)
+            {
+                var latestSessionBid = db.Bids.Where(x => x.ItemId == itemId).OrderByDescending(x => x.BidSession).FirstOrDefault();
+
+                var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
+
+                if (latestCurrentPriceBid != null)
+                {
+                    latestCurrentPriceBid.IsWinned = true;
+
+                    latestCurrentPriceBid.IsWinnedDateTime = DateTime.Now;
+
+                    db.Bids.Update(latestCurrentPriceBid);
+                }
+
+                item.BidStatus = BidStatus.Complete;
+
+                db.Items.Update(item);
+
+                await db.SaveChangesAsync();
+
+                return true;
+            }
+
+            return false;
+        }
 
     }
 }

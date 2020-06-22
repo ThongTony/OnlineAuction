@@ -72,7 +72,7 @@ namespace AuctionOnline.Controllers
                 string documentName = await UploadAsync(itemVM.Document, documentPath);
                 var item = ItemUtility.MapVMToModel(itemVM);
 
-                item.AccountId = 1; /*itemVM.AccountId*/
+                item.AccountId = (int)HttpContext.Session.GetInt32("checkiduser");
                 item.MinimumBid = itemVM.MinimumBid;
                 item.Photo = fileName;
                 item.Document = documentName;
@@ -241,6 +241,7 @@ namespace AuctionOnline.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
             if (id == null)
@@ -251,7 +252,7 @@ namespace AuctionOnline.Controllers
             var item = await db.Items
                 .Include(i => i.Account)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBidPrice).ToList();
+            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBid).ToList();
 
             if (item == null)
             {
@@ -282,8 +283,13 @@ namespace AuctionOnline.Controllers
         {
             var username = HttpContext.Session.GetString("username");
             var account = db.Accounts.FirstOrDefault(a => a.Username.Equals(username));
-            ViewBag.Items = db.Items.Where(i => i.AccountId == account.Id).ToList();
-            return View();
+            var items = db.Items.Where(i => i.AccountId == account.Id).ToList();
+
+            var viewVM = new LayoutViewModel()
+            {
+                ItemsVM = ItemUtility.MapModelsToVMs(items)
+            };
+            return View(viewVM);
         }
 
         private async Task<string> UploadAsync(IFormFile fileType, string path)

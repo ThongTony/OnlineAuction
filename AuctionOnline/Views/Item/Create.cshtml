@@ -1,4 +1,5 @@
-﻿@model AuctionOnline.ViewModels.LayoutViewModel
+﻿@using Microsoft.AspNetCore.Http;
+@model AuctionOnline.ViewModels.LayoutViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -11,6 +12,7 @@
             <div class="panel-body">
                 <form class="ajax-form" asp-action="Create" asp-controller="Home" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ItemVM.Id" />
                     <div class="xs-pad input-group">
                         <span class="input-group-addon">
                             <i class="fas fa-heading"></i>

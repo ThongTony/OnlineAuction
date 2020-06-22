@@ -2,6 +2,7 @@
 using System.Linq;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
+using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -139,14 +140,15 @@ namespace AuctionOnline.Controllers
 
         }
 
-        [HttpPost]
         public IActionResult ListUser()
         {
-            ViewBag.SellerCount = db.Accounts.Select(x => x.RoleId == 1).Count();
-            ViewBag.Seller = db.Accounts.Where(x => x.RoleId == 1).ToList();
-            return View();
+            var users = db.Accounts.Where(x => x.RoleId == 1).ToList();
+            var layoutVM = new LayoutViewModel()
+            {
+                AccountsVM = AccountUtility.MapModelsToVMs(users)
+            };
+            return View(layoutVM);
         }
-
 
         [HttpGet]
         public IActionResult Forgotpassword()

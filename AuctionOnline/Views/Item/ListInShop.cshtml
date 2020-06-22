@@ -1,8 +1,8 @@
-﻿@model System.Collections.Generic.List<AuctionOnline.ViewModels.ItemVM>;
+﻿@using Microsoft.AspNetCore.Http;
+@model AuctionOnline.ViewModels.LayoutViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var user = ViewBag.Account;
 }
 <div class="row">
     @await Component.InvokeAsync("Search")
@@ -12,24 +12,22 @@
             <div class="row">
                 <div class="col-xs-6">
 
-                    <h1>@user.Fullname</h1>
+                    <h1>@Context.Session.GetString("username")</h1>
 
                 </div>
                 <div class="col-xs-6">
                     <div class="dropdown pull-right">
-                        Sắp xếp theo:&nbsp;
+                        Sort by :&nbsp;
                         <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">
 
-                            Tin mới nhất
+                            Most expensive
 
                             <div style="margin-left:5px" class="caret"></div>
                         </button>
                         <ul class="dropdown-menu">
 
-                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham">Tin mới nhất</a></li>
-
-                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-desc">Giá cao nhất</a></li>
-                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Giá thấp nhất</a></li>
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-desc">Most expensive</a></li>
+                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Cheapiest</a></li>
                         </ul>
                     </div>
                     <!--.btn-group.btn-group-justified
@@ -43,49 +41,49 @@
                 </div>
             </div>
             <hr>
-            <script src="https://sohot.vn/library/javascript/infinite-scroll.pkgd.min.js"></script>
+            <script src="~/library/javascript/infinite-scroll.pkgd.min.js"></script>
             <div id="mainTopiclist" class="topiclist">
                 <div class="topiclist-wrapper">
-                    @foreach(var item in ViewBag.Items)
+                    @foreach (var item in Model.ItemsVM)
                     {
-                    <div class="item grid col-md-5ths col-xs-6">
-                        <div class="itemcontainer">
-                            <div class="col-md-4 col-sm-3 col-xs-5">
-                                <div style="padding-left:15px" class="row">
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="thumb">
-                                        <img src="~/images/items/@item.Photo">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-sm-9 col-xs-7">
-                                <div class="row">
-                                    <div class="col-sm-9">
-                                        <h3>
-                                            <a asp-action="Details" asp-route-id="@item.Id" class="f-black">@item.Title</a>
-                                        </h3>
-                                        <!--.infoline
-                                                if !$byUser
-                                                    //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
-                                                    //&nbsp;
-                                                    span.f-grey=$i->up_date_h
-                                                else
-                                                    span.f-grey=$i->up_date_h
-                    -->
+                        <div class="item grid col-md-5ths col-xs-6">
+                            <div class="itemcontainer">
+                                <div class="col-md-4 col-sm-3 col-xs-5">
+                                    <div style="padding-left:15px" class="row">
+                                        <a class="thumb" asp-action="Details" asp-route-id="@Html.DisplayFor(modelItem => item.Id)">
+                                            <img src="~/images/items/@item.PhotoName">
+                                        </a>
                                     </div>
-                                    <div class="col-sm-3 f-red text-right">
-
-                                        <strong>@item.Price</strong>
-                                        <div class="text-nowrap">
-
+                                </div>
+                                <div class="col-md-8 col-sm-9 col-xs-7">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h3>
+                                                <a class="f-black">@Html.DisplayFor(modelItem => item.Title)</a>
+                                            </h3>
+                                            <!--.infoline
+                                                                        if !$byUser
+                                                                            //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
+                                                                            //&nbsp;
+                                                                            span.f-grey=$i->up_date_h
+                                                                        else
+                                                                            span.f-grey=$i->up_date_h
+                                            -->
                                         </div>
-                                        <div class="spacer"></div>
+                                        <div class="col-sm-3 f-red text-right">
+
+                                            <button type="button" class="btn btn-success">Bid</button>
+                                            <div class="text-nowrap">
+
+                                            </div>
+                                            <div class="spacer"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     }
-                    
+
                     <!--foreach-->
 
                 </div>
@@ -93,21 +91,20 @@
 
                 <!--.center.text-center!=pagestr-->
 
-                <div class="col-xs-4 text-left">
+                <div style="line-height:35px" class="col-xs-12 text-center">
                     <div class="row">
-
-                    </div>
-                </div>
-                <div style="line-height:35px" class="col-xs-4 text-center">1 / 2</div>
-                <div class="col-xs-4 text-right">
-                    <div class="row">
-
-                        <a id="nextpage" href="https://sohot.vn/tp-ho-chi-minh/tham?page=2" class="btn btn-default f-red">
+                        <a id="nextpage" href="" class="btn btn-default f-red">
+                            <i style="margin-right:5px" class="fa fa-chevron-circle-left fa-lg"></i>
+                            Sau
+                        </a>
+                        &nbsp;
+                        <a id="nextpage" href="" class="btn btn-default f-red">
                             <i style="margin-right:5px" class="fa fa-chevron-circle-right fa-lg"></i>
                             Tiếp
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="spacer">

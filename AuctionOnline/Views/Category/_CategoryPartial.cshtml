@@ -1,28 +1,25 @@
-﻿@model AuctionOnline.ViewModels.LayoutViewModel
+﻿@model System.Collections.Generic.List<AuctionOnline.ViewModels.CategoryVM>
 
-@foreach (var cate in Model.CategoriesVM)
+@foreach (var cate in Model)
 {
     if (cate.Children.Any())
     {
         <div class="list-group-item">
-            <a href="#sub_2" data-toggle="collapse"><i style="margin-right:5px" class="fa fa-angle-right"></i></a>
-            <a href="/toan-quoc/noi-that-gia-dinh" class="list-group-item">@cate.Name</a>
-            <div id="sub_2" class="list-group list-group-root well">
-                @await Html.PartialAsync("~/Views/Category/_CategoryPartial.cshtml", cate.Children)
-            </div>
+            <a href="#sub_2" data-toggle="collapse" class="collapsed" aria-expanded="false"><i style="margin-right:5px" class="fa fa-angle-right"></i></a>
+            <a href="/toan-quoc/noi-that-gia-dinh">@cate.Name</a>
         </div>
-        @*<div id="sub_2" style="position:relative" class="list-group collapse">
-
-                <a href="/toan-quoc/ban" class="list-group-item">Bàn</a>
-                <a href="/toan-quoc/ghe" class="list-group-item">Ghế</a>
-                <a href="/toan-quoc/tu" class="list-group-item">Tủ</a>
-                <a href="/toan-quoc/giuong" class="list-group-item">Giường</a>
-                <a href="/toan-quoc/sofa" class="list-group-item">Sofa</a>
-            </div>*@
+        <div id="sub_2" class="list-group list-group-root well">
+            @*await Html.PartialAsync("~/Views/Category/_CategoryPartial.cshtml", cate.Children)*@
+            @foreach (var cate2 in cate.Children)
+            {
+                <a href="/toan-quoc/noi-that-gia-dinh" class="list-group-item">@cate2.Name</a>
+            }
+        </div>
     }
     else
     {
         <div class="list-group-item">
+            <a data-toggle="collapse" class="collapsed" aria-expanded="false"></a>
             <a href="/toan-quoc/noi-that-gia-dinh">@cate.Name</a>
         </div>
 
