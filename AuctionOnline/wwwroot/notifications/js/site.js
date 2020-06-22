@@ -11,12 +11,12 @@ $(() => {
     connection.start();
 
     connection.on("refreshNotifications", function () {
-        loadData();
+        getExpiredItems();
     });
 
-    loadData();
+    getExpiredItems();
 
-    function loadData() {
+    function getExpiredItems() {
         var tr = '';
         $.ajax({
             url: '/NotifiedExpiredItem/GetExpiredItems',

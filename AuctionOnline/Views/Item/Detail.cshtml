@@ -48,36 +48,57 @@
                 </div>
                 <div class="col-lg-6">
                     @{
-                        decimal currentPrice = 0;
-                        decimal availableBidPrice = 0;
+                        string bidSessionNo = "The item does not have bid.";
+                        decimal currentBid = 0;
+                        decimal yourBidPrice = 0;
 
-                        var latestSessionBid = Model.ItemVM.Bids.OrderByDescending(x => x.BidSession).FirstOrDefault();
+                        var latestSessionBid = Model.ItemVM.Bids
+                            .OrderByDescending(x => x.BidSession)
+                            .FirstOrDefault();
 
-                        if (latestSessionBid != null)
+                        if (latestSessionBid == null)
                         {
-                            var latestCurrentPriceBid = Model.ItemVM.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
-
-                            if (latestCurrentPriceBid == null)
-                            {
-                                availableBidPrice = Model.ItemVM.MinimumBid.Value;
-                            }
-                            else
-                            {
-                                if (!latestCurrentPriceBid.IsWinned)
-                                {
-                                    currentPrice = latestCurrentPriceBid.CurrentBid;
-                                    availableBidPrice = latestCurrentPriceBid.CurrentBid + Model.ItemVM.BidIncrement;
-                                }
-                                else
-                                {
-                                    currentPrice = 0;
-                                    availableBidPrice = Model.ItemVM.MinimumBid.Value;
-                                }
-                            }
+                            yourBidPrice = Model.ItemVM.MinimumBid.Value;
                         }
                         else
                         {
-                            availableBidPrice = Model.ItemVM.MinimumBid.Value;
+                            bidSessionNo = "###: " + latestSessionBid.BidSession.ToString();
+
+                            var latestPriceBid = Model.ItemVM.Bids
+                                .Where(x => x.BidSession == latestSessionBid.BidSession && x.ItemId == latestSessionBid.ItemId)
+                                .OrderByDescending(x => x.CurrentBid)
+                                .FirstOrDefault();
+
+                            if (latestPriceBid == null)
+                            {
+                                yourBidPrice = Model.ItemVM.MinimumBid.Value;
+                            }
+                            else
+                            {
+                                if (!latestPriceBid.IsWinned)
+                                {
+                                    currentBid = latestPriceBid.CurrentBid;
+                                    yourBidPrice = latestPriceBid.CurrentBid + Model.ItemVM.BidIncrement;
+                                }
+                                else
+                                {
+                                    if (latestPriceBid.Item.BidStatus == BidStatus.Complete)
+                                    {
+                                        currentBid = latestPriceBid.CurrentBid;
+                                        yourBidPrice = latestPriceBid.CurrentBid + Model.ItemVM.BidIncrement;
+                                    }
+                                    else if (latestPriceBid.Item.BidStatus == BidStatus.InProgress)
+                                    {
+                                        currentBid = 0;
+                                        yourBidPrice = Model.ItemVM.MinimumBid.Value;
+                                    }
+                                    else
+                                    {
+                                        currentBid = 0;
+                                        yourBidPrice = 0;
+                                    }
+                                }
+                            }
                         }
                     }
                     <div class="spacer"></div>
@@ -91,13 +112,11 @@
                         var itemId = detailItem.Id;
                         var bidStatus = detailItem.BidStatus != BidStatus.Complete && detailItem.BidStatus != BidStatus.NotStart;
                     }
-                    
-                    <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 25px;margin-top: 0px;"></p>
+
+                    <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 25px;margin-top: 0px; text-align:left;"></p>
                     <script>
                         // Set the date we're counting down to
                         var countDownDate = new Date("@stringDateTime").getTime();
-                        //var countDownDate = new Date("Jun 21, 2020 11:13:00").getTime();
-
 
                         // Update the count down every 1 second
                         var x = setInterval(function () {
@@ -115,13 +134,12 @@
                             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                             // Output the result in an element with id="demo"
-                            document.getElementById("demo").innerHTML = days + ":" + hours + ":"
-                                + minutes + ":" + seconds + "";
+                            document.getElementById("demo").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
                             // If the count down is over, write some text
                             if (distance < 0) {
                                 clearInterval(x);
-                                document.getElementById("demo").innerHTML = "EXPIRED";
+                                document.getElementById("demo").innerHTML = "BID EXPIRED";
                                 var bidstatus = $("#bidstatus").text();
                                 var isTrueBidstatus = (bidstatus.toLowerCase() === 'true');
                                 if (isTrueBidstatus) {
@@ -151,17 +169,17 @@
                     </script>
                     <br />
                     Increment Bid Price:
-                    <h1>@Html.DisplayFor(model => model.ItemVM.BidIncrement)</h1>
+                    <h1 style="font-size:16px;">@Html.DisplayFor(model => model.ItemVM.BidIncrement)</h1>
                     <p id="bidstatus" style="display:none;">@bidStatus</p>
                     <br />
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             Current BID:
-                            <h1>@Html.DisplayFor(model => currentPrice)</h1>
+                            <h1 style="font-size:16px; color: blue;">@Html.DisplayFor(model => currentBid) đ</h1>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             Current Winner:
-                            <h1>Khoa</h1>
+                            <h1 style="font-size:16px;">@Model.ItemVM.Account.Fullname</h1>
                         </div>
                     </div>
 
@@ -172,18 +190,24 @@
                             <input type="hidden" asp-for="ItemVM.BidEndDate" />
                             <input type="hidden" asp-for="ItemVM.Id" />
                             <input type="hidden" asp-for="ItemVM.Id" />
-                            <input type="number" asp-for="ItemVM.BidPrice" value="@availableBidPrice" />
+
+                            <div class="spacer" style="padding-top:20px"></div>
+                            <div class="btn-group btn-group-lg">
+                                <button type="button" class="btn btn-default">-</button>
+                                <input style="width: 100px;" type="number" asp-for="ItemVM.BidPrice" value="@yourBidPrice" class="btn btn-default" />
+                                <button type="button" class="btn btn-default">+</button>
+                            </div>
                             @Html.ValidationMessageFor(model => Model.ItemVM.BidPrice, "", new { @class = "text-danger" })
-                            <button type="submit" id="bid" name="bid">Start Bid</button>
+
+                            <button type="submit" class="btn btn-success btn-lg" style="margin-left: 10px">BID</button>
                         </form>
                     }
-                    <div class="spacer" style="padding-top:20px"></div>
-                    <div class="btn-group btn-group-lg">
-                        <button type="button" class="btn btn-default">-</button>
-                        <button type="button" class="btn btn-default">15K</button>
-                        <button type="button" class="btn btn-default">+</button>
-                    </div>
-                    <button type="button" class="btn btn-success btn-lg" style="margin-left: 10px">BID</button>
+                    else
+                    {
+                        <input style="width: 100px;" type="number" asp-for="ItemVM.BidPrice" value="@yourBidPrice" class="btn btn-default" />
+                        <button disabled type="button" class="btn btn-success btn-lg" style="margin-left: 10px">BID</button>
+                    }
+
                 </div>
             </div>
         </div>
@@ -218,7 +242,7 @@
             <div class="item_detail" style="text-align:left">
                 <h1 style="color: olivedrab"><b>Product Details</b></h1>
                 <br>
-                <h2>Bid Session : ........</h2>
+                <h2>Bid Session: @bidSessionNo</h2>
                 <h2>Item Id : @Html.DisplayFor(model => model.ItemVM.Id)</h2>
                 @if (Model.ItemVM.Status != false)
                 {
@@ -230,59 +254,16 @@
                 }
                 <br />
                 <h1><b>Description</b></h1>
-                <p style="font-size:10px">@Html.DisplayFor(model => model.ItemVM.Description)</p>
+                <p>@Html.DisplayFor(model => model.ItemVM.Description)</p>
             </div>
             <div class="spacer"></div>
-        </div>
-    </div>
-    <div id="related-topics" class="panel panel-default">
-        <div class="panel-heading">Others items in shop</div>
-        <div style="margin:auto" class="panel-body text-center">
-            @*foreach*@
-            <div class="col-md-3 col-sm-3 col-xs-6 s-pad">
-                <a href="https://sohot.vn/tp-ho-chi-minh/ban-sofa-kim-cuong-ma-vang-hx1b-2201.html" style="margin:auto !important" class="thumb text-nowrap f-black">
-                    <div style="position:absolute;right:0px;top:10px;max-width:160px;overflow:hidden" class="badge b-red xs-pad">3.8 triệu</div>
-                    <img src="https://sohot.vn/uploads/market/avatar/22/220/2201.jpg" align="center" style="margin:auto !important">
-                </a>
-                <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="block">
-                    <a href="https://sohot.vn/tp-ho-chi-minh/ban-sofa-kim-cuong-ma-vang-hx1b-2201.html">Bàn sofa kim cương mạ vàng HX1B</a>
+            <div class="productDataBlock" style="text-align:left;">
+                <h1>
+                    Return Policy
+                </h1>
+                <div class="contData">
+                    <span id="ContentPlaceHolder1_lb342">We offer a 30 day return policy after we receive your order. Our 30 days return policy applies for all products so you can safely purchase clothes, shoes etc. Note: All products should be returned in the same condition as received. You will receive a full refund excluding return shipping fees and the 10% service charge.</span>
                 </div>
-            </div>
-            @*end foreach*@
-        </div>
-    </div>
-    <div id="related-topics" class="panel panel-default">
-        <div class="panel-heading">Related items</div>
-        <div style="margin:auto" class="panel-body text-center">
-            @*foreach*@
-            <div class="col-md-3 col-sm-3 col-xs-6 s-pad">
-                <a href="https://sohot.vn/tp-ho-chi-minh/ghe-aston-ash-959.html" style="margin:auto !important" class="thumb text-nowrap f-black">
-                    <div style="position:absolute;right:0px;top:10px;max-width:160px;overflow:hidden" class="badge b-red xs-pad">2.3 triệu</div>
-                    <img src="https://sohot.vn/uploads/market/avatar/95/959/959.jpg" align="center" style="margin:auto !important">
-                </a>
-                <div style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" class="block">
-                    <a href="https://sohot.vn/tp-ho-chi-minh/ghe-aston-ash-959.html">Ghế Aston ash</a>
-                </div>
-            </div>
-            @*end foreach*@
-        </div>
-    </div>
-    <div id="tel" class="hidden">MDkzMzQ1NjQ1Nw==</div>
-    <div id="map" role="dialog" class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    Địa chỉ
-                    <div class="pull-right">
-                        <a href="javascript:;" onclick="$(&quot;#map&quot;).modal(&quot;hide&quot;);">
-                            <i class="fa fa-close fa-lg"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <iframe src="" width="100%" height="100%" style="min-height:400px"></iframe>
-                </div>
-                <div class="modal-footer"></div>
             </div>
         </div>
     </div>
