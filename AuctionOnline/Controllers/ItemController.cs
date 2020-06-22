@@ -316,9 +316,23 @@ namespace AuctionOnline.Controllers
             return db.Items.Any(e => e.Id == id);
         }
 
-
-
+        [Produces("application/json")]
         [HttpGet]
+        public async Task<IActionResult> Searchkeyword()
+        {
+            try
+            {
+                string term = HttpContext.Request.Query["term"].ToString();
+                var postTitle = db.Items.Where(i => i.Title.Contains(term)).Select(i => i.Title).ToList();
+                return Ok(postTitle);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
         public IActionResult Searchkeyword(string keyword)
         {
             if (!string.IsNullOrEmpty(keyword))

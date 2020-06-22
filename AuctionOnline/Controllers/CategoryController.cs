@@ -64,16 +64,24 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
-            var viewmodel = new LayoutViewModel();
-            //var cateVM = new CategoryVM();
-            viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
-                                   new SelectListItem
-                                   {
-                                       Value = a.Id.ToString(),
-                                       Text = a.Name
-                                   }).ToList();
-            return View(viewmodel);
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
+            {
+                ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
+                var viewmodel = new LayoutViewModel();
+                //var cateVM = new CategoryVM();
+                viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
+                                       new SelectListItem
+                                       {
+                                           Value = a.Id.ToString(),
+                                           Text = a.Name
+                                       }).ToList();
+                return View(viewmodel);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
         }
 
         [HttpPost]

@@ -17,6 +17,7 @@ namespace AuctionOnline.Controllers
         private AuctionDbContext db;
         private readonly ILogger<AccountController> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
+
         public AccountController(IConfiguration _configuration,
             AuctionDbContext _db, ILogger<AccountController> logger, IHttpContextAccessor httpContextAccessor)
         {
@@ -24,7 +25,9 @@ namespace AuctionOnline.Controllers
             _httpContextAccessor = httpContextAccessor;
             db = _db;
             configuration = _configuration;
+
         }
+
 
         [HttpGet]
         public IActionResult Login()
@@ -44,16 +47,16 @@ namespace AuctionOnline.Controllers
                     {
                         HttpContext.Session.SetString("username", username);
                         int checkiduser = (from i in db.Accounts
-                                       where i.RoleId == 1
-                                       select i.Id).FirstOrDefault();
+                                           where i.RoleId == 1
+                                           select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkiduser", checkiduser);
                         return RedirectToAction("Index", "Home");
                     }
-                    else if ( account.RoleId == 0)
+                    else if (account.RoleId == 0)
                     {
                         int checkidadmin = (from i in db.Accounts
-                                       where i.RoleId == 0
-                                       select i.Id).FirstOrDefault();
+                                            where i.RoleId == 0
+                                            select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkidAdmin", checkidadmin);
                         return RedirectToAction("AdminListUser");
                     }
@@ -77,18 +80,18 @@ namespace AuctionOnline.Controllers
 
 
         [HttpPost]
-        public IActionResult Register(string fullname, string username, string email, string password , int phone , string address)
+        public IActionResult Register(string fullname, string username, string email, string password, int phone, string address)
         {
             var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
             var emails = db.Accounts.SingleOrDefault(a => a.Email.Equals(email));
             if (account != null)
             {
-                ViewBag.failed = "Username đã tồn tại ";
+                ViewBag.failed = "The Username already exists ";
                 return View();
             }
             else if (emails != null)
             {
-                ViewBag.failed = "Email đã tồn tại ";
+                ViewBag.failed = "The Emails already exists";
                 return View();
             }
             else
@@ -113,15 +116,18 @@ namespace AuctionOnline.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("checkiduser");
-            HttpContext.Session.Remove("checkidAdmin");
-            HttpContext.Session.Remove("username");
-            return View("Index", "Home");
+            HttpContext.Session.Clear();
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+            return RedirectToAction("Index", "Home");
+
         }
 
         public IActionResult AdminListUser()
         {
-            if(HttpContext.Session.GetInt32("checkidAdmin") != null)
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
             {
                 ViewBag.Accounts = db.Accounts.Where(x => x.RoleId == 1).ToList();
                 return View();
@@ -145,7 +151,15 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Forgotpassword()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("checkid") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpPost]
@@ -155,12 +169,12 @@ namespace AuctionOnline.Controllers
             if (checkemail != null)
             {
                 string host = _httpContextAccessor.HttpContext.Request.Host.Value;
-                string body = "Please reset your password by clicking  https://"+ host +"/account/resetpassword";
+                string body = "Please reset your password by clicking  https://" + host + "/account/resetpassword";
                 var mailHelper = new MailHelper(configuration);
                 if (mailHelper.Send(configuration["Gmail:Username"], email, "From Bookshop", body))
                 {
                     HttpContext.Session.SetString("email", email);
-                     //send mail
+                    //send mail
                     int checkid = (from i in db.Accounts
                                    where i.Email == email
                                    select i.Id).FirstOrDefault();
@@ -183,10 +197,18 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Resetpassword()
         {
-            return View();
+            if (HttpContext.Session.GetString("email") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
         [HttpPost]
-        public IActionResult Resetpassword(string password, string confirmpassword , Account account)
+        public IActionResult Resetpassword(string password, string confirmpassword, Account account)
         {
 
             if (HttpContext.Session.GetString("email") != null)
@@ -206,17 +228,17 @@ namespace AuctionOnline.Controllers
                 }
                 else
                 {
-                    ViewBag.Failed = "Password va Confirm Password khong khop";
+                    ViewBag.Failed = "The password and confirm password do not match";
                     return View();
                 }
             }
             return View();
         }
-        
+
         public IActionResult Delete(AccountVM accountVM)
         {
-                     
-           if(accountVM.Id != null)
+
+            if (accountVM.Id != null)
             {
                 db.Accounts.Remove(db.Accounts.Find(accountVM.Id));
                 db.SaveChanges();
@@ -228,7 +250,7 @@ namespace AuctionOnline.Controllers
             }
         }
 
-        public IActionResult Blocked(AccountVM accountVM , Account account)
+        public IActionResult Blocked(AccountVM accountVM, Account account)
         {
             var checkid = db.Accounts.Find(accountVM.Id);
             if (checkid != null)
@@ -267,6 +289,36 @@ namespace AuctionOnline.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult Profileuser()
+        {
+            if (HttpContext.Session.GetInt32("checkiduser") != null)
+            {
+                var id = HttpContext.Session.GetInt32("checkiduser");
+                var listuser = db.Accounts.Where(a => a.Id == id).ToList();
+                ViewBag.listuser = listuser;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
 
+        }
+
+        [HttpGet]
+        public IActionResult Edituser()
+        {
+            if (HttpContext.Session.GetInt32("checkiduser") != null)
+            {
+                return View("Edituser");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
+
+        }
     }
 }
