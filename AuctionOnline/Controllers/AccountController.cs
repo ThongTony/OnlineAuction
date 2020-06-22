@@ -21,6 +21,7 @@ namespace AuctionOnline.Controllers
 
         private readonly ILogger<AccountController> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
+
         public AccountController(IConfiguration _configuration,
             AuctionDbContext _db, ILogger<AccountController> logger, IHttpContextAccessor httpContextAccessor)
         {
@@ -28,7 +29,9 @@ namespace AuctionOnline.Controllers
             _httpContextAccessor = httpContextAccessor;
             db = _db;
             configuration = _configuration;
+
         }
+
 
         [HttpGet]
         public IActionResult Login()
@@ -122,12 +125,12 @@ namespace AuctionOnline.Controllers
 
             if (account != null)
             {
-                ViewBag.failed = "Username đã tồn tại ";
+                ViewBag.failed = "The Username already exists ";
                 return View();
             }
             else if (email != null)
             {
-                ViewBag.failed = "Email đã tồn tại ";
+                ViewBag.failed = "The Emails already exists";
                 return View();
             }
             else
@@ -153,10 +156,13 @@ namespace AuctionOnline.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("checkiduser");
-            HttpContext.Session.Remove("checkidAdmin");
-            HttpContext.Session.Remove("username");
+            HttpContext.Session.Clear();
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
             return RedirectToAction("Index", "Home");
+
         }
 
         public IActionResult AdminListUser()
@@ -194,7 +200,8 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Forgotpassword()
         {
-            return View();
+                return View();
+
         }
 
         [HttpPost]
@@ -232,7 +239,15 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Resetpassword()
         {
-            return View();
+            if (HttpContext.Session.GetString("email") != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
         }
         [HttpPost]
         public IActionResult Resetpassword(string password, string confirmpassword, Account account)
@@ -255,7 +270,7 @@ namespace AuctionOnline.Controllers
                 }
                 else
                 {
-                    ViewBag.Failed = "Password va Confirm Password khong khop";
+                    ViewBag.Failed = "The password and confirm password do not match";
                     return View();
                 }
             }
@@ -318,5 +333,36 @@ namespace AuctionOnline.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult Profileuser()
+        {
+            if (HttpContext.Session.GetInt32("checkiduser") != null)
+            {
+                var id = HttpContext.Session.GetInt32("checkiduser");
+                var listuser = db.Accounts.Where(a => a.Id == id).ToList();
+                ViewBag.listuser = listuser;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
+        }
+
+        [HttpGet]
+        public IActionResult Edituser()
+        {
+            if (HttpContext.Session.GetInt32("checkiduser") != null)
+            {
+                return View("Edituser");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
+
+        }
     }
 }
