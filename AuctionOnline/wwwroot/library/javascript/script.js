@@ -222,3 +222,8 @@ function rememberme(a) {
     else
         $('#facebooklogin').attr('href', 'https://sohot.vn/user/action/login?facebook=1');
 }
+
+//approvecheckitem
+function itemApproveWaiting() {
+    alert("Item created successfully! Your item will be approved within 24 hours.");
+}
