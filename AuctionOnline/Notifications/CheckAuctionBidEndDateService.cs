@@ -47,61 +47,45 @@ namespace AuctionOnline.Notifications
         {
             DateTime now = DateTime.Now;
 
-            const string baseUrl = "https://localhost:44378/Base/GetSession/";
+            var scope = scopeFactory.CreateScope();
 
-            var client = new HttpClient();
+            var dbContext = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
 
-            var accountSession = client.GetStringAsync(baseUrl).Result;
-
-            accountSession = "user1";
-
-            if (!string.IsNullOrEmpty(accountSession))
+            var latestEndSessionBid = dbContext.Bids.Where(x => x.AccountId == 1 && x.Item.BidStatus == BidStatus.Complete).OrderByDescending(x => x.BidSession).FirstOrDefault();
+            if (latestEndSessionBid != null)
             {
-                var scope = scopeFactory.CreateScope();
+                var latestEndBid = dbContext.Bids.Where(x => x.BidSession == latestEndSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
 
-                var dbContext = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
+                var existingExpiredItem = dbContext.ExpiredItems.FirstOrDefault(x => x.ItemId == latestEndBid.ItemId && x.SessionId == latestEndBid.BidSession);
 
-                var account = dbContext.Accounts.FirstOrDefault(x => x.Username.Equals(accountSession));
-
-                var latestEndSessionBid = dbContext.Bids.Where(x => x.AccountId == account.Id && x.Item.BidStatus == BidStatus.Complete).OrderByDescending(x => x.BidSession).FirstOrDefault();
-                if (latestEndSessionBid != null)
+                if (existingExpiredItem == null)
                 {
-                    var latestEndBid = dbContext.Bids.Where(x => x.BidSession == latestEndSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
-
-                    var existingExpiredItem = dbContext.ExpiredItems.FirstOrDefault(x => x.ItemId == latestEndBid.ItemId && x.SessionId == latestEndBid.BidSession);
-
-                    if (existingExpiredItem == null)
+                    var model = new ExpiredItem
                     {
-                        var model = new ExpiredItem
-                        {
-                            ItemId = latestEndBid.ItemId,
-                            ExpiredDate = now,
-                            SessionId = latestEndBid.BidSession,
-                            IsSeen = false
-                        };
+                        ItemId = latestEndBid.ItemId,
+                        ExpiredDate = now,
+                        SessionId = latestEndBid.BidSession,
+                        IsSeen = false
+                    };
 
-                        dbContext.ExpiredItems.Add(model);
+                    dbContext.ExpiredItems.Add(model);
 
-                        dbContext.SaveChanges();
+                    dbContext.SaveChanges();
 
-                        _logger.LogInformation("Expired Item ID: { Expired Item}", latestEndBid.ItemId + "was sent notification successful!");
-                    }
-                    else
-                    {
-                        _logger.LogInformation("Notification of expired Item ID: { Expired Item}", latestEndBid.ItemId + " is existed");
-                    }
-
-                    hubContext.Clients.All.SendAsync("refreshNotifications");
+                    _logger.LogInformation("Expired Item ID: { Expired Item}", latestEndBid.ItemId + "was sent notification successful!");
                 }
                 else
                 {
-                    _logger.LogInformation("Expired Item: There is no expired items");
+                    _logger.LogInformation("Notification of expired Item ID: { Expired Item}", latestEndBid.ItemId + " is existed");
                 }
+
+                hubContext.Clients.All.SendAsync("refreshNotifications");
             }
             else
             {
-                _logger.LogInformation("There is no account login.");
+                _logger.LogInformation("Expired Item: There is no expired items");
             }
+
 
             var count = Interlocked.Increment(ref executionCount) + "----" + now;
 
