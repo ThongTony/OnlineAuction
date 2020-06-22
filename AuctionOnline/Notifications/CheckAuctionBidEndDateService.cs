@@ -92,7 +92,6 @@ namespace AuctionOnline.Notifications
                 _logger.LogInformation("Expired Item: There is no expired items");
             }
 
-
             var count = Interlocked.Increment(ref executionCount) + "----" + now;
 
             _logger.LogInformation("Timed Hosted Service is working");

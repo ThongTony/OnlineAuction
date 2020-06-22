@@ -1,6 +1,7 @@
 ﻿using AuctionOnline.ViewModels;
 using AuctionOnline.Models;
 using System.Collections.Generic;
+using AuctionOnline.Data;
 
 namespace AuctionOnline.Utilities
 {
@@ -29,6 +30,8 @@ namespace AuctionOnline.Utilities
                 ParentId = category.ParentId,
                 CreatedAt = category.CreatedAt,
                 Parent = category.Parent,
+
+                CategoryItems = category.CategoryItems 
             };
 
             return viewModel;
@@ -67,7 +70,7 @@ namespace AuctionOnline.Utilities
                     ParentId = category.ParentId,
                     CreatedAt = category.CreatedAt,
                     Parent = category.Parent,
-                    Children = MapModelsToVMs(category.Children)
+                    Children = category.Children//MapModeltoVM(category.Children)
                 };
                 categoriesVM.Add(categoryVM);
             }

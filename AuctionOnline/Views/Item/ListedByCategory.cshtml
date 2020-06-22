@@ -1,8 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var category = ViewBag.Category;
 }
 
 <div class="row">
@@ -13,7 +11,7 @@
             <div class="row">
                 <div class="col-xs-6">
 
-                    <h1>@category.Name</h1>
+                    <h1>@Model.CategoryVM.Name</h1>
 
                 </div>
                 <div class="col-xs-6">
@@ -45,14 +43,14 @@
             <script src="~/library/javascript/infinite-scroll.pkgd.min.js"></script>
             <div id="mainTopiclist" class="topiclist">
                 <div class="topiclist-wrapper">
-                    @foreach (var item in ViewBag.Items)
+                    @foreach (var ci in Model.CategoryVM.CategoryItems)
                     {
                         <div class="item grid col-md-5ths col-xs-6">
                             <div class="itemcontainer">
                                 <div class="col-md-4 col-sm-3 col-xs-5">
                                     <div style="padding-left:15px" class="row">
-                                        <a class="thumb" asp-action="Details" asp-route-id="@item.Id">
-                                            <img src="~/images/items/@item.Photo">
+                                        <a class="thumb" asp-action="Details" asp-route-id="@ci.Item.Id">
+                                            <img src="~/images/items/@ci.Item.Photo">
                                         </a>
                                     </div>
                                 </div>
@@ -60,7 +58,7 @@
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h3>
-                                                <a class="f-black">@item.Title</a>
+                                                <a class="f-black">@ci.Item.Title</a>
                                             </h3>
                                             <!--.infoline
                                                                         if !$byUser

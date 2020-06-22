@@ -12,11 +12,9 @@
             <div class="col-sm-6">
                 <h1>Create Category</h1>
             </div>
-
         </div>
     </div><!-- /.container-fluid -->
 </section>
-
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -39,16 +37,15 @@
                             <input asp-for="CategoryVM.Name" class="form-control" />
                             <span asp-validation-for="CategoryVM.Name" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <label asp-for="CategoryVM.ParentId" class="control-label"></label>
                             <select asp-for="CategoryVM.ParentId" class="form-control" asp-items="Model.CategoryVM.Categories">
                                 <option value="">Choose category</option>
                             </select>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-default" />
                         </div>
-
                     </form>
                     <div>
                         <a asp-action="Index">Back to List</a>

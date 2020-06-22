@@ -13,7 +13,7 @@ namespace AuctionOnline.ViewModels
         public int? ParentId { get; set; }      
         public virtual Category Parent { get; set; }
         public List<SelectListItem> Categories { get; set; }
-        public virtual List<CategoryVM> Children { get; set; }
-        public ICollection<CategoryItemVM> CategoryItems { get; set; }
+        public virtual /*List<CategoryVM>*/ List<Category> Children { get; set; }
+        public ICollection<CategoryItem> CategoryItems { get; set; }
     }
 }

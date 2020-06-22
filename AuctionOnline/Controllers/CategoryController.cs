@@ -26,14 +26,18 @@ namespace AuctionOnline.Controllers
         {
             if (HttpContext.Session.GetInt32("checkidAdmin") != null)
             {
+                //var categories = db.Categories.Include(c => c.Parent);
                 var categories = db.Categories.Include(c => c.Parent);
-                var viewmodel = new LayoutViewModel();
-                viewmodel.CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList());
+                var viewmodel = new LayoutViewModel()
+                {
+                    CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList())
+                };
+
                 return View(viewmodel);
             }
             else
             {
-                return RedirectToAction("Login","Account");
+                return RedirectToAction("Login", "Account");
             }
 
         }
@@ -64,16 +68,24 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
-            var viewmodel = new LayoutViewModel();
-            //var cateVM = new CategoryVM();
-            viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
-                                   new SelectListItem
-                                   {
-                                       Value = a.Id.ToString(),
-                                       Text = a.Name
-                                   }).ToList();
-            return View(viewmodel);
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
+            {
+                ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
+                var viewmodel = new LayoutViewModel();
+                //var cateVM = new CategoryVM();
+                viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
+                                       new SelectListItem
+                                       {
+                                           Value = a.Id.ToString(),
+                                           Text = a.Name
+                                       }).ToList();
+                return View(viewmodel);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
         }
 
         [HttpPost]
@@ -201,7 +213,7 @@ namespace AuctionOnline.Controllers
             var categories = db.Categories.ToList();
             return View("Index", categories);
         }
-                
+
         private bool CategoryExists(int id)
         {
             return db.Categories.Any(e => e.Id == id);
