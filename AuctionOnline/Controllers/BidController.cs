@@ -92,9 +92,15 @@ namespace AuctionOnline.Controllers
 
                 if (latestCurrentPriceBid != null)
                 {
+                    db.Bids.Where(x => x.Id != latestCurrentPriceBid.Id)
+                           .ToList()
+                           .ForEach(y => y.IsLatestBidWinner = false);
+
                     latestCurrentPriceBid.IsWinned = true;
 
-                    latestCurrentPriceBid.IsWinnedDateTime = DateTime.Now;
+                    latestCurrentPriceBid.IsLatestBidWinner = true;
+
+                    latestCurrentPriceBid.WinnedDateTime = DateTime.Now;
 
                     db.Bids.Update(latestCurrentPriceBid);
                 }

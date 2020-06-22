@@ -51,12 +51,18 @@ namespace AuctionOnline.Notifications
 
             var dbContext = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
 
-            var latestEndSessionBid = dbContext.Bids.Where(x => x.AccountId == 1 && x.Item.BidStatus == BidStatus.Complete).OrderByDescending(x => x.BidSession).FirstOrDefault();
-            if (latestEndSessionBid != null)
+            var latestSessionBid = dbContext.Bids
+                .Where(x => x.AccountId == 1 && x.Item.BidStatus == BidStatus.Complete && x.IsLatestBidWinner)
+                .OrderByDescending(x => x.BidSession).FirstOrDefault();
+            if (latestSessionBid != null)
             {
-                var latestEndBid = dbContext.Bids.Where(x => x.BidSession == latestEndSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
+                var latestEndBid = dbContext.Bids
+                    .Where(x => x.BidSession == latestSessionBid.BidSession)
+                    .OrderByDescending(x => x.CurrentBid)
+                    .FirstOrDefault();
 
-                var existingExpiredItem = dbContext.ExpiredItems.FirstOrDefault(x => x.ItemId == latestEndBid.ItemId && x.SessionId == latestEndBid.BidSession);
+                var existingExpiredItem = dbContext.ExpiredItems
+                    .FirstOrDefault(x => x.ItemId == latestEndBid.ItemId && x.SessionId == latestEndBid.BidSession);
 
                 if (existingExpiredItem == null)
                 {

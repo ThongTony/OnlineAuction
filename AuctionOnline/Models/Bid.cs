@@ -18,6 +18,7 @@ namespace AuctionOnline.Models
         public DateTime BidEndDate { get; set; }
         public bool IsWinned { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime IsWinnedDateTime { get; set; }
+        public DateTime WinnedDateTime { get; set; }
+        public bool IsLatestBidWinner { get; set; }
     }
 }
