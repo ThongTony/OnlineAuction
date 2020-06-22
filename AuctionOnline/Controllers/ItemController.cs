@@ -281,15 +281,23 @@ namespace AuctionOnline.Controllers
         }
         public async Task<IActionResult> ListInShop()
         {
-            var username = HttpContext.Session.GetString("username");
-            var account = db.Accounts.FirstOrDefault(a => a.Username.Equals(username));
-            var items = db.Items.Where(i => i.AccountId == account.Id).ToList();
-
-            var viewVM = new LayoutViewModel()
+            if(HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                ItemsVM = ItemUtility.MapModelsToVMs(items)
-            };
-            return View(viewVM);
+                var username = HttpContext.Session.GetString("username");
+                var account = db.Accounts.FirstOrDefault(a => a.Username.Equals(username));
+                var items = db.Items.Where(i => i.AccountId == account.Id).ToList();
+
+                var viewVM = new LayoutViewModel()
+                {
+                    ItemsVM = ItemUtility.MapModelsToVMs(items)
+                };
+                return View(viewVM);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
         }
 
         private async Task<string> UploadAsync(IFormFile fileType, string path)

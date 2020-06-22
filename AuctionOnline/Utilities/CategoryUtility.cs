@@ -67,7 +67,7 @@ namespace AuctionOnline.Utilities
                     ParentId = category.ParentId,
                     CreatedAt = category.CreatedAt,
                     Parent = category.Parent,
-                    Children = MapModelsToVMs(category.Children)
+                    Children = category.Children//MapModeltoVM(category.Children)
                 };
                 categoriesVM.Add(categoryVM);
             }

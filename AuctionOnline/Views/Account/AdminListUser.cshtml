@@ -57,9 +57,15 @@
                                         <td>@(account.IsBlocked ? "blocked" : "unblock")</td>
                                         <td>@account.CreatedAt.ToString("dd/MM/yyyy")</td>
                                         <td>
-                                            <a asp-controller="Account" asp-action="Blocked" asp-route-id="@account.Id">Blocked</a>
-                                            <br />
-                                            <a asp-controller="Account" asp-action="Unlock" asp-route-id="@account.Id">UnBlock</a>
+                                            @if (@account.IsBlocked == false)
+                                            {
+                                                <a asp-controller="Account" asp-action="Blocked" asp-route-id="@account.Id">Blocked</a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-controller="Account" asp-action="Unlock" asp-route-id="@account.Id">UnBlock</a>
+                                            }
+
                                             <br />
                                             <a asp-controller="Account" asp-action="Delete" asp-route-id="@account.Id">Delete</a>
                                         </td>

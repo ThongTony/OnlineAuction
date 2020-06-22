@@ -14,9 +14,7 @@ namespace AuctionOnline.Utilities
                 Title = itemVM.Title,
                 Description = itemVM.Description,
                 Status= itemVM.Status,
-                //AccountId = itemVM.AccountId,
                 Account = itemVM.Account,
-
                 Photo = itemVM.PhotoName,
                 Document = itemVM.DocumentName,
 
@@ -39,7 +37,6 @@ namespace AuctionOnline.Utilities
                 Title = item.Title,
                 Description = item.Description,
                 Status = item.Status,
-                //AccountId = item.AccountId,
                 Account = item.Account,
 
                 PhotoName = item.Photo,
@@ -68,7 +65,6 @@ namespace AuctionOnline.Utilities
                     Title = itemVM.Title,
                     Description = itemVM.Description,
                     Status = itemVM.Status,
-                    //AccountId = itemVM.AccountId,
                     Account = itemVM.Account,
 
                     Photo = itemVM.PhotoName,
@@ -98,7 +94,6 @@ namespace AuctionOnline.Utilities
                     Title = item.Title,
                     Description = item.Description,
                     Status = item.Status,
-                    //AccountId = item.AccountId,
                     Account = item.Account,
 
                     PhotoName = item.Photo,
