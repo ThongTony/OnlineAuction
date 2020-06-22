@@ -2,13 +2,14 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
             $('#ItemName').autocomplete({
                 source: '/Item/Searchkeyword'
+
             });
         });
     </script>
@@ -48,7 +49,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="input-group">
-                        <input type="text" name="keyword" placeholder="Tìm sản phẩm" class="form-control" id="ItemName">
+                        <input type="text" name="keyword" placeholder="Tìm sản phẩm" class="form-control" size="90" id="ItemName">
                         <div class="input-group-btn">
                             <button type="submit" class="btn btn-default">
                                 <i class="fa fa-search"></i>
