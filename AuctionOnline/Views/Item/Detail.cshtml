@@ -26,17 +26,32 @@
                 <!--li.active=$topic->title-->
 
                 <li class="pull-right">
-                    <p>Back to Shop</p>
+                    <a asp-controller="Item" asp-action="ListInShop">Back to Shop</a>
                 </li>
             </ul>
         </div>
         <div class="panel-body">
             <div style="min-height:300px" class="row">
-                @{
-                    decimal currentPrice = 0;
-                    decimal availableBidPrice = 0;
+                <div class="col-lg-6">
+                    <div id="swap-info" style="margin-bottom:10px"></div>
+                    <div id="slick-container">
+                        <div class="slick slick-initialized slick-slider">
+                            <div aria-live="polite" class="slick-list draggable">
+                                <div class="slick-track" role="listbox" style="opacity: 1; width: 600px; transform: translate3d(0px, 0px, 0px);">
+                                    <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 600px;">
+                                        <img src="~/images/items/@Html.DisplayFor(model => model.ItemVM.PhotoName)" alt="@Html.DisplayFor(model => model.ItemVM.Title)" class="img-rounded" width="500" height="auto">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    @{
+                        decimal currentPrice = 0;
+                        decimal availableBidPrice = 0;
 
-                    var latestSessionBid = Model.ItemVM.Bids.OrderByDescending(x => x.BidSession).FirstOrDefault();
+                        var latestSessionBid = Model.ItemVM.Bids.OrderByDescending(x => x.BidSession).FirstOrDefault();
 
                         if (latestSessionBid != null)
                         {
@@ -65,14 +80,10 @@
                             availableBidPrice = Model.ItemVM.MinimumBid.Value;
                         }
                     }
-
-                    <h1>@Html.DisplayFor(model => model.ItemVM.Title)</h1>
-                    <hr>
-
-                    Increment Bid Price:
-                    <h1>@Html.DisplayFor(model => model.ItemVM.BidIncrement)</h1>
-                    <hr>
-
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <h1 style="color: olive; margin:20px 0px"><b>@Html.DisplayFor(model => model.ItemVM.Title)</b></h1>
+                    <div class="spacer"></div>
                     @{
                         var detailItem = Model.ItemVM;
                         var dt = detailItem.BidEndDate;
@@ -80,8 +91,8 @@
                         var itemId = detailItem.Id;
                         var bidStatus = detailItem.BidStatus != BidStatus.Complete && detailItem.BidStatus != BidStatus.NotStart;
                     }
-                    <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 60px;margin-top: 0px;"></p>
-                    <p id="bidstatus" style="display:none;">@bidStatus</p>
+                    
+                    <p id="demo" style="color: rebeccapurple;text-align: center;font-size: 25px;margin-top: 0px;"></p>
                     <script>
                         // Set the date we're counting down to
                         var countDownDate = new Date("@stringDateTime").getTime();
@@ -104,8 +115,8 @@
                             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                             // Output the result in an element with id="demo"
-                            document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-                                + minutes + "m " + seconds + "s ";
+                            document.getElementById("demo").innerHTML = days + ":" + hours + ":"
+                                + minutes + ":" + seconds + "";
 
                             // If the count down is over, write some text
                             if (distance < 0) {
@@ -115,7 +126,7 @@
                                 var isTrueBidstatus = (bidstatus.toLowerCase() === 'true');
                                 if (isTrueBidstatus) {
                                     finalizeBid(@itemId);
-                                    location.reload(); 
+                                    location.reload();
                                 }
                             }
                         }, 1000);
@@ -138,14 +149,21 @@
                         }
 
                     </script>
-                    <hr>
-
-                    Current BID:
-                    <h1>@Html.DisplayFor(model => currentPrice)</h1>
-                    <hr>
-
-                    Current Winner:
-                    Khoa
+                    <br />
+                    Increment Bid Price:
+                    <h1>@Html.DisplayFor(model => model.ItemVM.BidIncrement)</h1>
+                    <p id="bidstatus" style="display:none;">@bidStatus</p>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            Current BID:
+                            <h1>@Html.DisplayFor(model => currentPrice)</h1>
+                        </div>
+                        <div class="col-md-6">
+                            Current Winner:
+                            <h1>Khoa</h1>
+                        </div>
+                    </div>
 
                     @if (Model.ItemVM.BidStatus == BidStatus.InProgress)
                     {
@@ -159,29 +177,17 @@
                             <button type="submit" id="bid" name="bid">Start Bid</button>
                         </form>
                     }
-
-                    <div class="btn-group">
+                    <div class="spacer" style="padding-top:20px"></div>
+                    <div class="btn-group btn-group-lg">
                         <button type="button" class="btn btn-default">-</button>
                         <button type="button" class="btn btn-default">15K</button>
                         <button type="button" class="btn btn-default">+</button>
                     </div>
-                    <button type="button" class="btn btn-success" style="margin-left: 25px">BID</button>
-
-                    <div id="swap-info" style="margin-bottom:10px"></div>
-                    <div id="slick-container">
-                        <div class="slick slick-initialized slick-slider">
-                            <div aria-live="polite" class="slick-list draggable">
-                                <div class="slick-track" role="listbox" style="opacity: 1; width: 600px; transform: translate3d(0px, 0px, 0px);">
-                                    <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 600px;">
-                                        <img src="~/images/items/@Html.DisplayFor(model => model.ItemVM.PhotoName)" alt="@Html.DisplayFor(model => model.ItemVM.Title)" class="img-rounded" width="500" height="auto">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-success btn-lg" style="margin-left: 10px">BID</button>
                 </div>
             </div>
         </div>
+        <div class="spacer"></div>
     </div>
     <div class="panel panel-default">
         <div style="margin:auto" class="panel-body text-center">
