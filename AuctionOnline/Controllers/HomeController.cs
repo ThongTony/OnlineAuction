@@ -1,9 +1,7 @@
 ﻿using AuctionOnline.Data;
-using AuctionOnline.Models;
 using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AuctionOnline.Controllers
@@ -12,29 +10,21 @@ namespace AuctionOnline.Controllers
     {
 
         private readonly AuctionDbContext db;
+        private LayoutViewModel layoutVM;
         public HomeController(AuctionDbContext _db)
         {
             db = _db;
+            layoutVM = new LayoutViewModel()
+            {
+                CategoriesVM = RecursiveMenu.GetRecursiveMenu(db)
+            };
         }
         public IActionResult Index()
         {
             ViewBag.IsHome = true;
 
-            //Recursive
-            List<Category> category = new List<Category>();
-            List<Category> categories = db.Categories.OrderByDescending(c => c.Children.Any()).ToList();
-            category = categories
-                .Where(c => c.ParentId == null)
-                .Select(c => new Category()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    ParentId = c.ParentId,
-                    Children = GetChildren(categories, c.Id)
-                }).ToList();
-
             //main items
-            //var categories = db.Categories.Where(e => e.ParentId == null).ToList();
+            var categories = db.Categories.Where(e => e.ParentId == null).ToList();
             foreach (var cate in categories)
             {
                 var categoryItems = db.CategoryItems.Where(x => x.CategoryId == cate.Id).ToList();
@@ -45,28 +35,9 @@ namespace AuctionOnline.Controllers
                 }
                 cate.CategoryItems = categoryItems;
             }
-
-            var layoutVM = new LayoutViewModel()
-            {
-                CategoriesVM = CategoryUtility.MapModelsToVMs(category),
-                Categories = categories
-            };
+            layoutVM.Categories = categories;
             return View(layoutVM);
 
-        }
-
-        public static List<Category> GetChildren(List<Category> categories, int parentId)
-        {
-            return categories
-                .Where(c => c.ParentId == parentId)
-                .Select(c => new Category
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    ParentId = c.ParentId,
-                    Parent = c,
-                    Children = GetChildren(categories, c.Id)
-                }).ToList();
         }
 
         public IActionResult Error()

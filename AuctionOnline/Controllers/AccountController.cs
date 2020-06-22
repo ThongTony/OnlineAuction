@@ -5,7 +5,6 @@ using AuctionOnline.Data;
 using AuctionOnline.Models;
 using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +17,7 @@ namespace AuctionOnline.Controllers
         private IConfiguration configuration;
 
         private AuctionDbContext db;
-
+        private LayoutViewModel layoutVM;
         private readonly ILogger<AccountController> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -29,14 +28,17 @@ namespace AuctionOnline.Controllers
             _httpContextAccessor = httpContextAccessor;
             db = _db;
             configuration = _configuration;
-
+            layoutVM = new LayoutViewModel()
+            {
+                CategoriesVM = RecursiveMenu.GetRecursiveMenu(db)
+            };
         }
-
 
         [HttpGet]
         public IActionResult Login()
         {
-            return View("Login");
+
+            return View(layoutVM);
         }
 
         [HttpPost]
@@ -78,7 +80,7 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            var layoutVM = new LayoutViewModel();
+
             return View(layoutVM);
         }
 
@@ -176,31 +178,29 @@ namespace AuctionOnline.Controllers
             {
                 return RedirectToAction("Login");
             }
-
         }
 
         public IActionResult ListUser()
         {
+
+
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                var users = db.Accounts.Where(x => x.RoleId == 1).ToList();
-                var layoutVM = new LayoutViewModel()
-                {
-                    AccountsVM = AccountUtility.MapModelsToVMs(users)
-                };
+                var users = db.Accounts.Where(x => x.RoleId == 1 && x.IsBlocked == false).ToList();
+                layoutVM.AccountsVM = AccountUtility.MapModelsToVMs(users);
                 return View(layoutVM);
             }
             else
             {
                 return RedirectToAction("Login");
             }
-
         }
 
         [HttpGet]
         public IActionResult Forgotpassword()
         {
-                return View();
+
+            return View(layoutVM);
 
         }
 
@@ -239,9 +239,11 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Resetpassword()
         {
+
+
             if (HttpContext.Session.GetString("email") != null)
             {
-                return View();
+                return View(layoutVM);
             }
             else
             {
@@ -336,12 +338,14 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Profileuser()
         {
+
+
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
                 var id = HttpContext.Session.GetInt32("checkiduser");
                 var listuser = db.Accounts.Where(a => a.Id == id).ToList();
                 ViewBag.listuser = listuser;
-                return View();
+                return View(layoutVM);
             }
             else
             {
@@ -353,16 +357,16 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Edituser()
         {
+
+
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                return View("Edituser");
+                return View(layoutVM);
             }
             else
             {
                 return RedirectToAction("Login");
             }
-
-
         }
     }
 }
