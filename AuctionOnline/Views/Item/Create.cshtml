@@ -5,86 +5,114 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
-    <div style="margin:auto;min-width:300px;max-width:400px" class="center">
-        <div class="panel panel-default">
-            <div class="panel-heading" style="text-align:center"><b>Add a new Item</b></div>
-            <div class="panel-body">
-                <form class="ajax-form" asp-action="Create" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="ItemVM.Id" />
-                    <div class="xs-pad input-group">
-                        <span class="input-group-addon">
-                            <i class="fas fa-heading"></i>
-                        </span>
-                        <input asp-for="ItemVM.Title" placeholder="Title" type="text" size="25" style="text-align:center" class="form-control">
-                        <span asp-validation-for="ItemVM.Title" class="text-danger"></span>
-                    </div>
-                    <div class="xs-pad input-group">
-                        <span class="input-group-addon">
-                            <i class="fas fa-th-list"></i>
-                        </span>
-                        <select asp-for="ItemVM.SelectedCategoryIds" asp-items="Model.CategoryVM.Categories" multiple="multiple" class="form-control">
-                            <option value="">Choose a category</option>
-                        </select>
-                    </div>
-                    <div class="xs-pad input-group">
-                        <span class="input-group-addon">
-                            <i class="fas fa-info"></i>
-                        </span>
-                        <textarea asp-for="ItemVM.Description" placeholder="Description" type="text" size="25" style="text-align:center" class="form-control"></textarea>
-                        <span asp-validation-for="ItemVM.Description" class="text-danger"></span>
-                    </div>
-                    <div class="xs-pad input-group">
-                        <span class="input-group-addon">
-                            <i class="fas fa-dollar-sign"></i>
-                        </span>
-                        <input asp-for="ItemVM.MinimumBid" placeholder="Minimum Bid" type="number" size="25" style="text-align:center" class="form-control">
-                        <span asp-validation-for="ItemVM.MinimumBid" class="text-danger"></span>
-                    </div>
-                    @*<div class="xs-pad input-group">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/lib/jquery-datetimepicker/jquery.datetimepicker.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="~/js/datepicker-no.js"></script> //->for your language, this case norwegian
+    <script>
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+    </script>
+</head>
+<body>
+    <div class="row">
+        <div style="margin:auto;min-width:300px;max-width:400px" class="center">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="text-align:center"><b>Add a new Item</b></div>
+                <div class="panel-body">
+                    <form class="ajax-form" asp-action="Create" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="ItemVM.Id" />
+                        <div class="xs-pad input-group">
                             <span class="input-group-addon">
-                                <i class="far fa-image"></i>
+                                <i class="fas fa-heading"></i>
                             </span>
-                            <input class="btn" asp-for="ItemVM.Photo" value="Upload a photo">
-                        </div>*@
-                    <div class="xs-pad input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Upload Photo</span>
+                            <input asp-for="ItemVM.Title" placeholder="Title" type="text" size="25" style="text-align:center" class="form-control">
+                            <span asp-validation-for="ItemVM.Title" class="text-danger"></span>
                         </div>
-                        <div class="custom-file">
-                            <input class="custom-file-input" id="inputGroupFile01"
-                                   aria-describedby="inputGroupFileAddon01" class="btn" asp-for="ItemVM.Photo">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose Photo</label>
-                        </div>
-                    </div>
-                    <div class="file-field">
-                        <div class="btn btn-primary btn-sm float-left">
-                            <span>Choose file</span>
-                            <input asp-for="ItemVM.Document">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" disabled placeholder="Upload your file">
-                        </div>
-                    </div>
-                    @*<div class="xs-pad input-group">
+                        <div class="xs-pad input-group">
                             <span class="input-group-addon">
-                                <i class="far fa-file-alt"></i>
+                                <i class="fas fa-th-list"></i>
                             </span>
-                            <input class="btn" asp-for="ItemVM.Document" value="Upload a document">
-                        </div>*@
-                    <div class="xs-pad text-center">
-                        <button type="submit" class="btn btn-default custom" onclick="itemApproveWaiting()">Create</button>
-                        @*<div class="spacer"></div>*@
-                        <a asp-action="Index">Cancel</a>
-                        <hr>
-                        <a asp-controller="Home" asp-action="Index" class="btn btn-default custom">
-                            <i style="margin-right:5px" class="fas fa-store-alt"></i>
-                            Back to Home
-                        </a>
-                    </div>
-                </form>
+                            <select asp-for="ItemVM.SelectedCategoryIds" asp-items="Model.CategoryVM.Categories" multiple="multiple" class="form-control">
+                                <option value="">Choose a category</option>
+                            </select>
+                        </div>
+                        <div class="xs-pad input-group">
+                            <span class="input-group-addon">
+                                <i class="fas fa-info"></i>
+                            </span>
+                            <textarea asp-for="ItemVM.Description" placeholder="Description" type="text" size="25" style="text-align:center" class="form-control"></textarea>
+                            <span asp-validation-for="ItemVM.Description" class="text-danger"></span>
+                        </div>
+                        <div class="xs-pad input-group">
+                            <span class="input-group-addon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </span>
+                            <input asp-for="ItemVM.MinimumBid" placeholder="Minimum Bid" type="number" size="25" style="text-align:center" class="form-control">
+                            <span asp-validation-for="ItemVM.MinimumBid" class="text-danger"></span>
+                        </div>
+                        <div class="xs-pad input-group">
+                            <div class="form-group">
+                                <label asp-for="ItemVM.BidStartDate">Select Bid Start Date</label>
+                                <input asp-for="ItemVM.BidStartDate" class="form-control" placeholder="Date for the meeting" id="datepicker">
+                                <span asp-validation-for="ItemVM.BidStartDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="xs-pad input-group">
+                            <div class="form-group">
+                                <label asp-for="ItemVM.BidEndDate">Select Bid End Date</label>
+                                <input asp-for="ItemVM.BidEndDate" class="form-control" placeholder="Date for the meeting" id="datepicker">
+                                <span asp-validation-for="ItemVM.BidEndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        @*<div class="xs-pad input-group">
+                                <span class="input-group-addon">
+                                    <i class="far fa-image"></i>
+                                </span>
+                                <input class="btn" asp-for="ItemVM.Photo" value="Upload a photo">
+                            </div>*@
+                        <div class="xs-pad input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Upload Photo</span>
+                            </div>
+                            <div class="custom-file">
+                                <input class="custom-file-input" id="inputGroupFile01"
+                                       aria-describedby="inputGroupFileAddon01" class="btn" asp-for="ItemVM.Photo">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose Photo</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="file-field">
+                            <div class="btn btn-primary btn-sm float-left">
+                                <span>Choose file</span>
+                                <input asp-for="ItemVM.Document">
+                            </div>
+                        </div>
+                        @*<div class="xs-pad input-group">
+                                <span class="input-group-addon">
+                                    <i class="far fa-file-alt"></i>
+                                </span>
+                                <input class="btn" asp-for="ItemVM.Document" value="Upload a document">
+                            </div>*@
+                        <div class="xs-pad text-center">
+                            <button type="submit" class="btn btn-default custom" onclick="itemApproveWaiting()">Create</button>
+                            @*<div class="spacer"></div>*@
+                            <a asp-action="Index">Cancel</a>
+                            <hr>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-default custom">
+                                <i style="margin-right:5px" class="fas fa-store-alt"></i>
+                                Back to Home
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>

@@ -72,7 +72,7 @@ namespace AuctionOnline.Controllers
                     }
                 }
             }
-            ViewBag.invalid = "Username hoac Password Khong Dung";
+            ViewBag.invalid = "Username or password is incorrect";
             return View("Login");
         }
 
