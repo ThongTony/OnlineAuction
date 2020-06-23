@@ -37,8 +37,7 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-
-            return View();
+            return View(layoutVM);
         }
 
         [HttpPost]
@@ -73,7 +72,7 @@ namespace AuctionOnline.Controllers
                     }
                 }
             }
-            ViewBag.invalid = "Username hoac Password Khong Dung";
+            ViewBag.invalid = "Username or password is incorrect";
             return View("Login");
         }
 

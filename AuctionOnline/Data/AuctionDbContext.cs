@@ -51,19 +51,19 @@ namespace AuctionOnline.Data
                 .HasForeignKey(bc => bc.CategoryId);
 
             modelBuilder.Entity<Category>().HasData(
-                new Category() { Id = 1, Name = "Furniture" },
-                new Category() { Id = 2, Name = "Living Room", ParentId = 1 },
-                new Category() { Id = 3, Name = "Electric" },
-                new Category() { Id = 4, Name = "Smarts", ParentId = 3 },
-                new Category() { Id = 5, Name = "Laptops & Macs", ParentId = 3 },
-                new Category() { Id = 6, Name = "Toys" },
-                new Category() { Id = 7, Name = "Vehicles" },
-                new Category() { Id = 8, Name = "Motor Bikes", ParentId = 7 },
-                new Category() { Id = 9, Name = "Books" },
-                new Category() { Id = 10, Name = "Accessories" },
-                new Category() { Id = 11, Name = "Clothes" },
-                new Category() { Id = 12, Name = "First Fashion", ParentId = 12 },
-                new Category() { Id = 13, Name = "Phone", ParentId = 3 }
+                new Category() { Id = 1, Name = "Furniture", Level = 1 },
+                new Category() { Id = 2, Name = "Living Room", Level = 2, ParentId = 1 },
+                new Category() { Id = 3, Name = "Electric", Level = 1 },
+                new Category() { Id = 4, Name = "Smarts", Level = 2, ParentId = 3 },
+                new Category() { Id = 5, Name = "Laptops & Macs", Level = 2, ParentId = 3 },
+                new Category() { Id = 6, Name = "Toys", Level = 1 },
+                new Category() { Id = 7, Name = "Vehicles", Level = 1 },
+                new Category() { Id = 8, Name = "Motor Bikes", Level = 2, ParentId = 7 },
+                new Category() { Id = 9, Name = "Books", Level = 1 },
+                new Category() { Id = 10, Name = "Accessories", Level = 1 },
+                new Category() { Id = 11, Name = "Clothes", Level = 1 },
+                new Category() { Id = 12, Name = "First Fashion", Level = 2, ParentId = 12 },
+                new Category() { Id = 13, Name = "Phone", Level = 2, ParentId = 3 }
                 );
 
             modelBuilder.Entity<Item>().HasData(
@@ -77,7 +77,7 @@ namespace AuctionOnline.Data
                 new Item() { Id = 8, Title = "Lego Classic", Description = "description 8", Status = true, Photo = "lego.jpg", Document = "lego.txt", AccountId = 3, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now },
                 new Item() { Id = 9, Title = "Thảm Lót Sàn", Description = "description 9", Status = true, Photo = "thamlotsan.jpg", Document = "thamlotsan.txt", AccountId = 4, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now },
                 new Item() { Id = 10, Title = "Bàn Gỗ Thông ", Description = "description 10", Status = true, Photo = "bangothong.jpg", Document = "bangothong.txt", AccountId = 2, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now },
-                new Item() { Id = 11, Title = "Sách cũ cần thanh lý", Description = "description 11", Status = true, Photo = "bce52839-2d4d-4d06-84db-b09d747eda95_fr.png", Document = "oldbook.txt", AccountId = 3, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now }
+                new Item() { Id = 11, Title = "Sách cũ cần thanh lý", Description = "description 11", Status = true, Photo = "oldbook.jpg", Document = "oldbook.txt", AccountId = 3, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now }
                 );
 
             modelBuilder.Entity<Account>().HasData(

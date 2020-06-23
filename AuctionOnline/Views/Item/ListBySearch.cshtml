@@ -24,8 +24,8 @@
                         </button>
                         <ul class="dropdown-menu">
 
-                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-desc">Most expensive</a></li>
-                            <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Cheapiest</a></li>
+                            <li><a>Most expensive</a></li>
+                            <li><a>Cheapiest</a></li>
                         </ul>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                             <div class="itemcontainer">
                                 <div class="col-md-4 col-sm-3 col-xs-5">
                                     <div style="padding-left:15px" class="row">
-                                        <a class="thumb">
+                                        <a class="thumb" asp-action="Detail" asp-route-id="@search.Id">
                                             <img src="~/images/items/@search.Photo">
                                         </a>
                                     </div>
@@ -51,18 +51,12 @@
                                             <h3>
                                                 <a class="f-black">@search.Title</a>
                                             </h3>
-                                            <!--.infoline
-                                                                        if !$byUser
-                                                                            //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
-                                                                            //&nbsp;
-                                                                            span.f-grey=$i->up_date_h
-                                                                        else
-                                                                            span.f-grey=$i->up_date_h
-                                            -->
                                         </div>
                                         <div class="col-sm-3 f-red text-right">
+                                            <a asp-controller="Item" asp-action="Detail" asp-route-id="@search.Id">
+                                                <button type="button" class="btn btn-success">Go Bid Now</button>
+                                            </a>
 
-                                            
                                             <div class="text-nowrap">
 
                                             </div>
@@ -90,7 +84,7 @@
                 <div class="col-xs-4 text-right">
                     <div class="row">
 
-                        <a id="nextpage" href="https://sohot.vn/tp-ho-chi-minh/tham?page=2" class="btn btn-default f-red">
+                        <a id="nextpage" class="btn btn-default f-red">
                             <i style="margin-right:5px" class="fa fa-chevron-circle-right fa-lg"></i>
                             Tiếp
                         </a>
