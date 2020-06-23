@@ -13,6 +13,7 @@ namespace AuctionOnline.Utilities
                 Id = accountVM.Id,
                 Fullname = accountVM.Fullname,
                 Username = accountVM.Username,
+                Password = accountVM.Password,
                 Address = accountVM.Address,
                 Photo = accountVM.PhotoName,
                 //Status = accountVM.Status,

@@ -2,6 +2,7 @@
 using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace AuctionOnline.Controllers
@@ -24,7 +25,8 @@ namespace AuctionOnline.Controllers
             ViewBag.IsHome = true;
 
             //main items
-            var categories = db.Categories.Where(e => e.ParentId == null).ToList();
+            //var categories = db.Categories.Where(e => e.ParentId == null).ToList(); 
+            var categories = db.Categories.Include(c => c.Children).ToList();
             foreach (var cate in categories)
             {
                 var categoryItems = db.CategoryItems.Where(x => x.CategoryId == cate.Id).ToList();

@@ -13,7 +13,7 @@
     <div class="spacer"></div>
     <div style="margin-bottom:10px" class="panel panel-default">
         <div class="topiclist panel-body">
-            @foreach (var category in Model.Categories)
+            @foreach (var category in Model.Categories.Where(c => c.ParentId == null).ToList())
             {
                 <h2 class="section-header">
                     <a>@category.Name</a>
@@ -27,7 +27,7 @@
                             <div class="itemcontainer">
                                 <div class="col-md-4 col-sm-3 col-xs-5">
                                     <div style="padding-left:15px" class="row">
-                                        <a href="/tp-ho-chi-minh/ghe-aston-co-tay-110.html" class="thumb">
+                                        <a class="thumb">
                                             <img src="~/images/items/@ci.Item.Photo" style="width: 220px; height:220px">
                                         </a>
                                     </div>
@@ -36,26 +36,13 @@
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h3>
-                                                <a href="/tp-ho-chi-minh/ghe-aston-co-tay-110.html" class="f-black">@ci.Item.Title</a>
+                                                <a class="f-black">@ci.Item.Title</a>
                                             </h3>
-                                            <!--.infoline
-                                                                        if !$byUser
-                                                                            //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
-                                                                            //&nbsp;
-                                                                            span.f-grey=$i->up_date_h
-                                                                        else
-                                                                            span.f-grey=$i->up_date_h
-                                            -->
                                         </div>
                                         <div class="col-sm-3">
-                                            <div class="col-sm-6 f-red text-right">
-                                                <div class="text-nowrap">
-
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <button asp-controller="Item" asp-action="Details" asp-route-id="@ci.Item.Id" type="button" class="btn btn-success">Go Bid Now</button>
-                                            </div>
+                                            <a asp-controller="Item" asp-action="Detail" asp-route-id="@ci.Item.Id">
+                                                <button type="button" class="btn btn-success">Go Bid Now</button>
+                                            </a>
                                             <div class="spacer"></div>
                                         </div>
                                     </div>
@@ -71,20 +58,31 @@
                 <div class="spacer"></div>
 
                 <!--loop 2nd categories-->
-                <a href="/toan-quoc/tag/B%C3%A0n%20m%E1%BA%B7t%20%C4%91%C3%A1">
-                    <div class="col-sm-3 col-xs-6 adblock img-hover-zoom--zoom-n-rotate">
-                        <div class="cont">
-                            <img src="uploads/ad/zb23qvhvj0l6fr57.jpg">
-                            <div class="title">BÀN MẶT ĐÁ</div>
-                        </div>
-                    </div>
-                </a>
+                @if (category.Children.Any())
+                {
+                    foreach (var cateChildren in category.Children)
+                    {
+
+                        <a asp-controller="Item" asp-action="ListedByCategory" asp-route-id="@cateChildren.Id">
+                            <div class="col-sm-3 col-xs-6 adblock img-hover-zoom--zoom-n-rotate">
+                                @*<div class="cont">
+                                        <img src="uploads/ad/zb23qvhvj0l6fr57.jpg">
+                                        <div class="title">@cateChildren.Name</div>
+                                    </div>*@
+                                <h1><span class="label label-primary">@cateChildren.Name</span></h1>
+                            </div>
+                        </a>
+                    }
+                    <div class="clearfix"></div>
+                    <div class="spacer"></div>
+                    <div class="spacer"></div>
+                    <hr style="border-top: 1px solid #cf0f19;">
+                    <div class="spacer"></div>
+                }
+
+
                 <!-- end loop 2nd categories-->
-                <div class="clearfix"></div>
-                <div class="spacer"></div>
-                <div class="spacer"></div>
-                <hr style="border-top: 1px solid #cf0f19;">
-                <div class="spacer"></div>
+
             }
             @*end foreach list*@
 
