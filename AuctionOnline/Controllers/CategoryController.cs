@@ -1,5 +1,4 @@
 ﻿using AuctionOnline.Data;
-using AuctionOnline.Models;
 using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,11 +13,12 @@ namespace AuctionOnline.Controllers
 {
     public class CategoryController : Controller
     {
-
         private AuctionDbContext db;
+        private LayoutViewModel layoutVM;
         public CategoryController(AuctionDbContext _category)
         {
             db = _category;
+            layoutVM = new LayoutViewModel();
         }
 
         public async Task<IActionResult> Index()
@@ -44,42 +43,54 @@ namespace AuctionOnline.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var category = await db.Categories
+                    .Include(c => c.Parent)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+                var viewmodel = new LayoutViewModel()
+                {
+                    CategoryVM = CategoryUtility.MapModeltoVM(category)
+                };
+
+
+                return View(viewmodel);
             }
-
-            var category = await db.Categories
-                .Include(c => c.Parent)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            else
             {
-                return NotFound();
+                return RedirectToAction("Login", "Account");
             }
-            var viewmodel = new LayoutViewModel()
-            {
-                CategoryVM = CategoryUtility.MapModeltoVM(category)
-            };
-
-
-            return View(viewmodel);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
             if (HttpContext.Session.GetInt32("checkidAdmin") != null)
             {
-                ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
-                var viewmodel = new LayoutViewModel();
+                //var category = db.Categories.Find(id);
+                //layoutVM.CategoryVM.ParentId = id;
+                var categoryVM = new CategoryVM();
+                categoryVM.ParentId = id;
+                layoutVM.CategoryVM = categoryVM;
+
+                //ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
                 //var cateVM = new CategoryVM();
-                viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
-                                       new SelectListItem
-                                       {
-                                           Value = a.Id.ToString(),
-                                           Text = a.Name
-                                       }).ToList();
-                return View(viewmodel);
+                //viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
+                //                       new SelectListItem
+                //                       {
+                //                           Value = a.Id.ToString(),
+                //                           Text = a.Name
+                //                       }).ToList();
+                return View(layoutVM);
             }
             else
             {
@@ -92,43 +103,62 @@ namespace AuctionOnline.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CategoryVM categoryVM)
         {
-
             ViewBag.CategoryAdd = "Failed";
             categoryVM.CreatedAt = DateTime.Now;
             if (categoryVM != null)
             {
                 var category = CategoryUtility.MapVMtoModel(categoryVM);
+
+                category.ParentId = categoryVM.Id;
+
+                //stop admin add 3rd category
+                if (category.ParentId == null)
+                {
+                    category.Level = 1;
+                }
+                else if (category.Level == 1)
+                {
+                    category.Level = 2;
+                }
+
                 db.Add(category);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", categoryVM.ParentId);
+            //ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", categoryVM.ParentId);
             return View(categoryVM);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var category = await db.Categories.FindAsync(id);
-            var layoutViewModel = new LayoutViewModel();
-            layoutViewModel.CategoryVM = CategoryUtility.MapModeltoVM(category);
-            layoutViewModel.CategoryVM.Categories = db.Categories.Select(a =>
-                                  new SelectListItem
-                                  {
-                                      Value = a.Id.ToString(),
-                                      Text = a.Name
-                                  }).ToList();
-            if (category == null)
-            {
-                return NotFound();
+                var category = await db.Categories.FindAsync(id);
+                var layoutViewModel = new LayoutViewModel();
+                layoutViewModel.CategoryVM = CategoryUtility.MapModeltoVM(category);
+                layoutViewModel.CategoryVM.Categories = db.Categories.Select(a =>
+                                      new SelectListItem
+                                      {
+                                          Value = a.Id.ToString(),
+                                          Text = a.Name
+                                      }).ToList();
+                if (category == null)
+                {
+                    return NotFound();
+                }
+                ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
+                return View(layoutViewModel);
             }
-            ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
-            return View(layoutViewModel);
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         [HttpPost]
@@ -169,24 +199,31 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
             {
-                return NotFound();
-            }
-            var category = await db.Categories
-                .Include(c => c.Parent)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var category = await db.Categories
+                    .Include(c => c.Parent)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
 
-            var viewlayout = new LayoutViewModel()
-            {
-                CategoryVM = CategoryUtility.MapModeltoVM(category)
-            };
+                var viewlayout = new LayoutViewModel()
+                {
+                    CategoryVM = CategoryUtility.MapModeltoVM(category)
+                };
 
-            return View(viewlayout);
+                return View(viewlayout);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         [HttpPost]

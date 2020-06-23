@@ -45,12 +45,8 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-
-
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                //ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id");
-
                 layoutVM.CategoryVM.Categories = db.Categories.Select(a =>
                                       new SelectListItem
                                       {
@@ -276,6 +272,7 @@ namespace AuctionOnline.Controllers
         public async Task<IActionResult> ListedByCategory(int id)
         {
             var category = db.Categories.Find(id);
+            //var c = category.Children;
             //var items = db.Items.FromSqlRaw(
             //    $"Select i.* from Categories c, CategoryItems ci, Items i where c.Id = ci.CategoryId and i.Id = ci.ItemId and c.Id = " + id);
 
@@ -369,12 +366,12 @@ namespace AuctionOnline.Controllers
                 {
                     ViewBag.Success = checkkeyword;
                     ViewBag.keyword = keyword;
-                    return View("ListBySearch");
+                    return View("ListBySearch",layoutVM);
 
                 }
                 else
                 {
-                    return View("ListBySearch");
+                    return View("ListBySearch", layoutVM);
                 }
             }
             else
@@ -385,7 +382,7 @@ namespace AuctionOnline.Controllers
 
         public IActionResult ListBySearch()
         {
-            return View();
+            return View(layoutVM);
         }
 
         public IActionResult AdminListItem()

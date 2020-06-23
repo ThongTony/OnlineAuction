@@ -37,8 +37,7 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-
-            return View();
+            return View(layoutVM);
         }
 
         [HttpPost]

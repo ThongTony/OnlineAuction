@@ -15,7 +15,8 @@ namespace AuctionOnline.Utilities
                 Name = categoryVM.Name,
                 ParentId = categoryVM.ParentId,
                 Parent = categoryVM.Parent,
-                CreatedAt = categoryVM.CreatedAt,               
+                CreatedAt = categoryVM.CreatedAt,
+                Level = categoryVM.Level
             };
 
             return model;
@@ -30,7 +31,7 @@ namespace AuctionOnline.Utilities
                 ParentId = category.ParentId,
                 CreatedAt = category.CreatedAt,
                 Parent = category.Parent,
-
+                Level = category.Level,
                 CategoryItems = category.CategoryItems 
             };
 
@@ -49,7 +50,8 @@ namespace AuctionOnline.Utilities
                     Name = categoryVM.Name,
                     ParentId = categoryVM.ParentId,
                     CreatedAt = categoryVM.CreatedAt,
-                    Parent = categoryVM.Parent,//MapVMtoModel(categoryVM)
+                    Parent = categoryVM.Parent,
+                    Level = categoryVM.Level
                 };
 
                 categories.Add(category);
@@ -70,7 +72,8 @@ namespace AuctionOnline.Utilities
                     ParentId = category.ParentId,
                     CreatedAt = category.CreatedAt,
                     Parent = category.Parent,
-                    Children = category.Children//MapModeltoVM(category.Children)
+                    Children = category.Children,
+                    Level = category.Level
                 };
                 categoriesVM.Add(categoryVM);
             }

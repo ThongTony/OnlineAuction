@@ -21,10 +21,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css" media="screen">
     <link href="~/library/bootstrap/panel-tabs.css" rel="stylesheet">
     <link href="~/base/view/css/user.css" rel="stylesheet">
+    <link href="~/library/css/style.css" rel="stylesheet">
 
     <!-- link(href=URL_ROOT + 'library/font_awesome/css/font-awesome.min.css', rel='stylesheet')-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <script src="~/library/javascript/jquery-3.1.1.min.js"></script>
+
 
     <script src="~/library/javascript/jquery.cookie.js"></script>
     <script src="~/library/javascript/nprogress/nprogress.js"></script>
@@ -46,7 +48,7 @@
         <div id="sidebar">
             <div id="sidebar-wrapper" style="background:#fff">
                 <div id="catlist" style="position:fixed;top:65px;min-width:185px;max-width:185px !important;margin-bottom:10px" class="list-group list-group-root well">
-                    @*@await Html.PartialAsync("~/Views/Category/_CategoryPartial.cshtml", Model.CategoriesVM)*@
+                    @await Html.PartialAsync("~/Views/PartialViews/_CategoryPartial.cshtml", Model.CategoriesVM)
                 </div>
             </div>
         </div>
@@ -134,3 +136,6 @@
 </body>
 </html>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("~/Views/PartialViews/_ValidationScriptsPartial.cshtml");}
+}

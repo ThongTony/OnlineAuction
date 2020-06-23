@@ -29,14 +29,6 @@
                             <li><a href="https://sohot.vn/tp-ho-chi-minh/tham?sort=price-asc">Cheapiest</a></li>
                         </ul>
                     </div>
-                    <!--.btn-group.btn-group-justified
-                                        a.btn.btn-default(href='#{sortURL[0]}', class=(!$sort) ? 'active' : '')
-                                            i.fa.fa-clock-o.fa-lg(data-toggle="tooltip" data-placement="top", title="Tin mới nhất")
-                                        a.btn.btn-default(href='#{sortURL[1]}sort=price', class=($sort=='price') ? 'active' : '')
-                                            span(data-toggle="tooltip" data-placement="top", title="Giá thấp nhất")
-                                                | VNĐ
-                                                i.fa.fa-angle-down.fa-lg
-                    -->
                 </div>
             </div>
             <hr>
@@ -60,18 +52,10 @@
                                             <h3>
                                                 <a class="f-black">@ci.Item.Title</a>
                                             </h3>
-                                            <!--.infoline
-                                                                        if !$byUser
-                                                                            //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
-                                                                            //&nbsp;
-                                                                            span.f-grey=$i->up_date_h
-                                                                        else
-                                                                            span.f-grey=$i->up_date_h
-                                            -->
                                         </div>
                                         <div class="col-sm-3 f-red text-right">
 
-                                            <button type="button" class="btn btn-success">Bid</button>
+                                            <a asp-action="Detail" asp-route-id="@ci.Item.Id"><button type="button" class="btn btn-success">Go Bid</button></a>
                                             <div class="text-nowrap">
 
                                             </div>
@@ -81,6 +65,7 @@
                                 </div>
                             </div>
                         </div>
+
                     }
 
                     <!--foreach-->

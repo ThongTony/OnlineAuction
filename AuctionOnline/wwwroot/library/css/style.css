@@ -206,8 +206,8 @@
 
     .carousel-inner > .item > img,
     .carousel-inner > .item > a > img {
-        width: 100%;
-        margin: auto;
+        width: 1200;
+        margin: 400;
         min-height: initial;
     }
 
