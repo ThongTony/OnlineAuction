@@ -256,6 +256,34 @@ namespace AuctionOnline.Controllers
             return db.Categories.Any(e => e.Id == id);
         }
 
+        [HttpPost]
+        public IActionResult SearchCategory(string keyword)
+        {
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                var checkkeyword = db.Categories.Where(a => a.Name.Trim().Contains(keyword.Trim())).ToList();
+
+                if (checkkeyword != null)
+                {
+                    var viewmodel = new LayoutViewModel()
+                    {
+                        CategoriesVM = CategoryUtility.MapModelsToVMs(checkkeyword.ToList())
+                    };
+
+                    return View("Index",viewmodel);
+
+                }
+                else
+                {
+                    return View("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
 
     }
 }
