@@ -387,5 +387,94 @@ namespace AuctionOnline.Controllers
         {
             return View();
         }
+
+        public IActionResult AdminListItem()
+        {
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
+            {
+                ViewBag.item = db.Items.ToList();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+        }
+
+        public IActionResult Approveitem(ItemVM itemVM, Item item)
+        {
+            var checkid = db.Items.Find(itemVM.Id);
+            if (checkid != null)
+            {
+                var i = db.Items.Where(i => i.Status == false);
+                if (i != null)
+                {
+                    item = db.Items.Find(itemVM.Id);
+                    item.Status = true;
+                    db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("AdminListItem");
+                }
+            }
+            return View("AdminListItem");
+        }
+
+        public IActionResult Banitem(ItemVM itemVM, Item item)
+        {
+            var checkid = db.Items.Find(itemVM.Id);
+            if (checkid != null)
+            {
+                var i = db.Items.Where(i => i.Status == true);
+                if (i != null)
+                {
+                    item = db.Items.Find(itemVM.Id);
+                    item.Status = false;
+                    db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("AdminListItem");
+                }
+            }
+            return View("AdminListItem");
+        }
+
+        public IActionResult Removeitem(ItemVM itemVM)
+        {
+            if (itemVM.Id != null)
+            {
+                db.Items.Remove(db.Items.Find(itemVM.Id));
+                db.SaveChanges();
+                return RedirectToAction("AdminListItem");
+            }
+            else
+            {
+                return RedirectToAction("AdminListItem");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult SearchTitle(string keyword)
+        {
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                var checkkeyword = db.Items.Where(a => a.Title.Trim().Contains(keyword.Trim())).ToList();
+
+                if (checkkeyword != null)
+                {
+                    ViewBag.item = checkkeyword;
+
+                    return View("AdminListItem");
+
+                }
+                else
+                {
+                    return View("AdminListItem");
+                }
+            }
+            else
+            {
+                return RedirectToAction("AdminListItem");
+            }
+        }
     }
 }

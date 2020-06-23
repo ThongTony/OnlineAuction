@@ -38,7 +38,7 @@ namespace AuctionOnline.Controllers
         public IActionResult Login()
         {
 
-            return View(layoutVM);
+            return View();
         }
 
         [HttpPost]
@@ -53,7 +53,7 @@ namespace AuctionOnline.Controllers
                     {
                         HttpContext.Session.SetString("username", username);
                         int checkiduser = (from i in db.Accounts
-                                           where i.RoleId == 1
+                                           where i.Username == username
                                            select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkiduser", checkiduser);
                         return RedirectToAction("Index", "Home");
@@ -61,7 +61,7 @@ namespace AuctionOnline.Controllers
                     else if (account.RoleId == 0)
                     {
                         int checkidadmin = (from i in db.Accounts
-                                            where i.RoleId == 0
+                                            where i.Username == username
                                             select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkidAdmin", checkidadmin);
                         return RedirectToAction("AdminListUser");
@@ -140,15 +140,17 @@ namespace AuctionOnline.Controllers
                 if (accountVM != null)
                 {
                     var acccount = AccountUtility.MapVMToModel(accountVM);
-                    ViewBag.success = "Success";
                     //Account accounts = new Account();
-                    account.Password = BCrypt.Net.BCrypt.HashPassword(accountVM.Password);
-                    account.Status = true;
-                    account.RoleId = 1;
-                    account.IsBlocked = false;
-                    account.CreatedAt = DateTime.Now;
-                    db.Accounts.Add(account);
+                    var i = acccount.Password;
+                    var hashpassword = BCrypt.Net.BCrypt.HashPassword(i);
+                    acccount.Password = hashpassword;
+                    acccount.Status = true;
+                    acccount.RoleId = 1;
+                    acccount.IsBlocked = false;
+                    acccount.CreatedAt = DateTime.Now;
+                    db.Accounts.Add(acccount);
                     await db.SaveChangesAsync();
+                    ViewBag.success = "Success";
                     return RedirectToAction(nameof(Login));
                 }
 
@@ -200,7 +202,7 @@ namespace AuctionOnline.Controllers
         public IActionResult Forgotpassword()
         {
 
-            return View(layoutVM);
+            return View();
 
         }
 
@@ -338,8 +340,6 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Profileuser()
         {
-
-
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
                 var id = HttpContext.Session.GetInt32("checkiduser");
@@ -357,8 +357,6 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Edituser()
         {
-
-
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
                 return View(layoutVM);
@@ -366,6 +364,30 @@ namespace AuctionOnline.Controllers
             else
             {
                 return RedirectToAction("Login");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Searchusername(string keyword)
+        {
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                var checkkeyword = db.Accounts.Where(a => a.Username.Trim().Contains(keyword.Trim())).ToList();
+
+                if (checkkeyword != null)
+                {
+                    ViewBag.Accounts = checkkeyword;
+                    return View("AdminListUser");
+
+                }
+                else
+                {
+                    return View("AdminListUser");
+                }
+            }
+            else
+            {
+                return RedirectToAction("AdminListUser");
             }
         }
     }

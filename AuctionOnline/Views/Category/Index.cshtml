@@ -12,6 +12,14 @@
             <div class="col-sm-6">
                 <h1>List Category</h1>
             </div>
+            <form method="post" asp-action="SearchCategory" asp-controller="Category">
+                &nbsp;
+                <input type="text" name="keyword" placeholder="Tìm Category" size="30" id="KeywordUsername">
+                <button type="submit" class="btn btn-primary">
+                    Search
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
 
         </div>
     </div><!-- /.container-fluid -->
