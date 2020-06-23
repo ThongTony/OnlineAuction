@@ -45,12 +45,8 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-
-
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                //ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id");
-
                 layoutVM.CategoryVM.Categories = db.Categories.Select(a =>
                                       new SelectListItem
                                       {

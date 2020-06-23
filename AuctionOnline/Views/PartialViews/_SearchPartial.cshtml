@@ -1,0 +1,20 @@
+﻿@model System.Collections.Generic.List<AuctionOnline.ViewModels.CategoryVM>
+
+@foreach (var cate in Model)
+{
+    if (cate.Children.Any())
+    {
+        <option value="@cate.Id">--@cate.Name--</option>
+        @foreach (var cate2 in cate.Children)
+        {
+            <option value="@cate2.Id">@cate2.Name</option>
+        }
+    }
+    else
+    {
+        <option value="@cate.Id">--@cate.Name--</option>
+    }
+}
+
+
+

@@ -9,7 +9,6 @@
             <a asp-controller="Item" asp-action="ListedByCategory" asp-route-id="@cate.Id">@cate.Name</a>
         </div>
         <div id="sub_@cate.Id" class="list-group collapse" style="position:relative">
-            @*await Html.PartialAsync("~/Views/Category/_CategoryPartial.cshtml", cate.Children)*@
             @foreach (var cate2 in cate.Children)
             {
                 <a asp-controller="Item" asp-action="ListedByCategory" asp-route-id="@cate2.Id" class="list-group-item">@cate2.Name</a>
@@ -20,7 +19,7 @@
     {
         <div class="list-group-item">
             <a data-toggle="collapse" class="collapsed" aria-expanded="false"></a>
-            <a href="/toan-quoc/noi-that-gia-dinh">@cate.Name</a>
+            <a asp-controller="Item" asp-action="ListedByCategory" asp-route-id="@cate.Id">@cate.Name</a>
         </div>
 
     }

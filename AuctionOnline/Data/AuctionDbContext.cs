@@ -51,19 +51,19 @@ namespace AuctionOnline.Data
                 .HasForeignKey(bc => bc.CategoryId);
 
             modelBuilder.Entity<Category>().HasData(
-                new Category() { Id = 1, Name = "Furniture" },
-                new Category() { Id = 2, Name = "Living Room", ParentId = 1 },
-                new Category() { Id = 3, Name = "Electric" },
-                new Category() { Id = 4, Name = "Smarts", ParentId = 3 },
-                new Category() { Id = 5, Name = "Laptops & Macs", ParentId = 3 },
-                new Category() { Id = 6, Name = "Toys" },
-                new Category() { Id = 7, Name = "Vehicles" },
-                new Category() { Id = 8, Name = "Motor Bikes", ParentId = 7 },
-                new Category() { Id = 9, Name = "Books" },
-                new Category() { Id = 10, Name = "Accessories" },
-                new Category() { Id = 11, Name = "Clothes" },
-                new Category() { Id = 12, Name = "First Fashion", ParentId = 12 },
-                new Category() { Id = 13, Name = "Phone", ParentId = 3 }
+                new Category() { Id = 1, Name = "Furniture", Level = 1 },
+                new Category() { Id = 2, Name = "Living Room", Level = 2, ParentId = 1 },
+                new Category() { Id = 3, Name = "Electric", Level = 1 },
+                new Category() { Id = 4, Name = "Smarts", Level = 2, ParentId = 3 },
+                new Category() { Id = 5, Name = "Laptops & Macs", Level = 2, ParentId = 3 },
+                new Category() { Id = 6, Name = "Toys", Level = 1 },
+                new Category() { Id = 7, Name = "Vehicles", Level = 1 },
+                new Category() { Id = 8, Name = "Motor Bikes", Level = 2, ParentId = 7 },
+                new Category() { Id = 9, Name = "Books", Level = 1 },
+                new Category() { Id = 10, Name = "Accessories", Level = 1 },
+                new Category() { Id = 11, Name = "Clothes", Level = 1 },
+                new Category() { Id = 12, Name = "First Fashion", Level = 2, ParentId = 12 },
+                new Category() { Id = 13, Name = "Phone", Level = 2, ParentId = 3 }
                 );
 
             modelBuilder.Entity<Item>().HasData(
