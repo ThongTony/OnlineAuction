@@ -53,7 +53,7 @@ namespace AuctionOnline.Controllers
                     {
                         HttpContext.Session.SetString("username", username);
                         int checkiduser = (from i in db.Accounts
-                                           where i.RoleId == 1
+                                           where i.Username == username
                                            select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkiduser", checkiduser);
                         return RedirectToAction("Index", "Home");
@@ -61,7 +61,7 @@ namespace AuctionOnline.Controllers
                     else if (account.RoleId == 0)
                     {
                         int checkidadmin = (from i in db.Accounts
-                                            where i.RoleId == 0
+                                            where i.Username == username
                                             select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkidAdmin", checkidadmin);
                         return RedirectToAction("AdminListUser");

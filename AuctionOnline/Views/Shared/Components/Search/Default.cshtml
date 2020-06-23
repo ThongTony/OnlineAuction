@@ -59,12 +59,16 @@
                     </div>
                 </div>
                 <div class="col-md-2" style="align-self: end">
-                    <a asp-controller="Item" asp-action="ListInShop" asp-route-id="@Context.Session.GetInt32("checkiduser")">
-                        <btn class="btn btn-primary">Go To Shop</btn>
-                    </a>
-                    <a asp-controller="Account" asp-action="ListUser">
-                        <btn class="btn btn-primary">Go To Shop</btn>
-                    </a>
+                    <div class="col-md-6">
+                        <a style="margin-left: 40px" asp-controller="Item" asp-action="ListInShop" asp-route-id="@Context.Session.GetInt32("checkiduser")">
+                            <btn class="btn btn-warning">Go To Shop</btn>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a asp-controller="Account" asp-action="ListUser" style="margin-left: 40px">
+                            <btn class="btn btn-info">Other Shops</btn>
+                        </a>
+                    </div>
                 </div>
             </form>
 

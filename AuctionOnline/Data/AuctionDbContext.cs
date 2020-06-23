@@ -77,7 +77,7 @@ namespace AuctionOnline.Data
                 new Item() { Id = 8, Title = "Lego Classic", Description = "description 8", Status = true, Photo = "lego.jpg", Document = "lego.txt", AccountId = 3, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now },
                 new Item() { Id = 9, Title = "Thảm Lót Sàn", Description = "description 9", Status = true, Photo = "thamlotsan.jpg", Document = "thamlotsan.txt", AccountId = 4, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now },
                 new Item() { Id = 10, Title = "Bàn Gỗ Thông ", Description = "description 10", Status = true, Photo = "bangothong.jpg", Document = "bangothong.txt", AccountId = 2, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now },
-                new Item() { Id = 11, Title = "Sách cũ cần thanh lý", Description = "description 11", Status = true, Photo = "bce52839-2d4d-4d06-84db-b09d747eda95_fr.png", Document = "oldbook.txt", AccountId = 3, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now }
+                new Item() { Id = 11, Title = "Sách cũ cần thanh lý", Description = "description 11", Status = true, Photo = "oldbook.jpg", Document = "oldbook.txt", AccountId = 3, BidStatus = 0, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddMinutes(3), MinimumBid = 2, BidIncrement = 3, CreatedAt = DateTime.Now }
                 );
 
             modelBuilder.Entity<Account>().HasData(

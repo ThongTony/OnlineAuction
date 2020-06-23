@@ -276,6 +276,7 @@ namespace AuctionOnline.Controllers
         public async Task<IActionResult> ListedByCategory(int id)
         {
             var category = db.Categories.Find(id);
+            //var c = category.Children;
             //var items = db.Items.FromSqlRaw(
             //    $"Select i.* from Categories c, CategoryItems ci, Items i where c.Id = ci.CategoryId and i.Id = ci.ItemId and c.Id = " + id);
 
