@@ -46,12 +46,12 @@
                 <div class="topiclist-wrapper">
                     @foreach (var item in Model.ItemsVM)
                     {
-                        <div class="item grid col-md-5ths col-xs-6">
+                        <div class="item grid col-md-3ths col-xs-6">
                             <div class="itemcontainer">
                                 <div class="col-md-4 col-sm-3 col-xs-5">
                                     <div style="padding-left:15px" class="row">
                                         <a class="thumb" asp-action="Details" asp-route-id="@Html.DisplayFor(modelItem => item.Id)">
-                                            <img src="~/images/items/@item.PhotoName">
+                                            <img src="~/images/items/@item.PhotoName" style="width:220px; height:auto;" >
                                         </a>
                                     </div>
                                 </div>

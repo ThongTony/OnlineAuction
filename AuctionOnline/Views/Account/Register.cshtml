@@ -1,10 +1,72 @@
-﻿
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
 @{
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="row">
+<div class="row">
+    <style>
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 32px;
+            overflow: hidden;
+            margin-right: 10px
+        }
+    </style>
+    <div style="margin:auto;min-width:300px;max-width:400px" class="center">
+        <div class="panel panel-default">
+            <div class="panel-heading">Đăng ký</div>
+            <h3>@ViewBag.failed</h3>
+            <div class="panel-body">
+                <form method="post" asp-action="Register">
+                    <div class="xs-pad input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <input placeholder="Tên đầy đủ" asp-for="AccountVM.Fullname" required="required" type="text" size="25" style="text-align:center" class="form-control">
+                    </div>
+                    <div class="xs-pad input-group">
+                        <span class="input-group-addon">
+                            <i class="fas fa-user-circle"></i>
+                        </span>
+                        <input placeholder="Tên truy cập" asp-for="AccountVM.Username" required="required"  type="text" size="25" style="text-align:center" class="form-control">
+                    </div>
+                    <div class="xs-pad input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                        <input placeholder="Mật khẩu" asp-for="AccountVM.Password" required="required"  type="password" size="25" style="text-align:center" class="form-control">
+                    </div>
+                    <div class="xs-pad input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                        <input placeholder="Email" asp-for="AccountVM.Email" type="text" required="required"  size="25" style="text-align:center" class="form-control">
+                    </div>
+                    <div class="xs-pad input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                        </span>
+                        <input placeholder="Phone" asp-for="AccountVM.PhoneNumber" required="required"  type="text" size="25" style="text-align:center" class="form-control">
+                    </div>
+                    <div class="xs-pad input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-address-book" aria-hidden="true"></i>
+                        </span>
+                        <input placeholder="Địa Chỉ" asp-for="AccountVM.Address" required="required"  type="text" size="25" style="text-align:center" class="form-control">
+                    </div>
+                    <div class="xs-pad text-center">
+                        <button type="submit" class="btn btn-default custom">Đăng ký</button>
+                    </div>
+                    <input type="hidden" name="submit" value="register">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
         <style>
             .avatar {
                 width: 64px;
@@ -65,4 +127,4 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@

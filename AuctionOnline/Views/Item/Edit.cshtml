@@ -18,7 +18,6 @@
                             <i class="fas fa-heading"></i>
                         </span>
                         <input asp-for="ItemVM.Title" placeholder="Title" type="text" size="25" style="text-align:center" class="form-control">
-                        <span asp-validation-for="ItemVM.Title" class="text-danger"></span>
                     </div>
                     <div class="xs-pad input-group">
                         <span class="input-group-addon">
@@ -32,8 +31,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-user"></i>
                         </span>
-                        <input asp-for="ItemVM.Description" placeholder="Description" type="text" size="25" style="text-align:center" class="form-control">
-                        <span asp-validation-for="ItemVM.Description" class="text-danger"></span>
+                        <textarea asp-for="ItemVM.Description" placeholder="Description" type="text" size="25" style="text-align:center" class="form-control"></textarea>
                     </div>
                     <div class="xs-pad input-group">
                         <span class="input-group-addon">
@@ -46,15 +44,14 @@
                         <span class="input-group-addon">
                             <i class="far fa-image"></i>
                         </span>
-                        <input asp-for="ItemVM.Photo" value="Upload a photo">
+                        <input class="btn" asp-for="ItemVM.Photo" value="Upload a photo">
                         <span asp-validation-for="ItemVM.Photo" class="text-danger"></span>
                     </div>
                     <div class="xs-pad input-group">
                         <span class="input-group-addon">
                             <i class="far fa-file-alt"></i>
                         </span>
-                        <input asp-for="ItemVM.Document" value="Upload a document">
-                        <span asp-validation-for="ItemVM.Document" class="text-danger"></span>
+                        <input class="btn" asp-for="ItemVM.Document" value="Upload a document">
                     </div>
                     <div class="xs-pad text-center">
                         <button type="submit" class="btn btn-default custom">Save</button>

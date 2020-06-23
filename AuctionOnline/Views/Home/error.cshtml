@@ -1,9 +1,21 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http;
+@{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Page content -->
 <div class="row">
-    <h2>404 NOT FOUND</h2>
     <h2>Something went wrong. Please try again </h2>
+    <h2>404 NOT FOUND</h2>
+    @if (Context.Session.GetString("usernameblocked") != null)
+    {
+        <p>
+            User with name:&nbsp;
+            <h3 style="color: blueviolet">
+                <b>@Context.Session.GetString("usernameblocked")</b>
+            </h3>
+            &nbsp;is blocked
+        </p>
+    }
+    
 </div>

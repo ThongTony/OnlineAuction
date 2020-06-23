@@ -1,0 +1,95 @@
+﻿@model AuctionOnline.ViewModels.LayoutViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>List Item</h1>
+            </div>
+            <form method="post" asp-action="SearchTitle" asp-controller="Item">
+                &nbsp;
+                <input type="text" name="keyword" placeholder="Tìm Category" size="30" id="KeywordUsername">
+                <button type="submit" class="btn btn-primary">
+                    Search
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Photo</th>
+                                <th>AccountId</th>
+                                <th>Bid Status</th>
+                                <th>Bid Start Date</th>
+                                <th>Bid End Date</th>
+                                <th>Minimum Bid</th>
+                                <th>Bid Increment</th>
+                                <th>Created At</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.item)
+                            {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Title</td>
+                                <td>@item.Description</td>
+                                <td>@(item.Status  ? "Approved" : "Banned")</td>
+                                <td>@item.Photo</td>
+                                <td>@item.AccountId</td>
+                                <td>@item.BidStatus </td>
+                                <td>@item.BidStartDate.ToString("dd/MM/yyyy")</td>
+                                <td>@item.BidEndDate.ToString("dd/MM/yyyy")</td>
+                                <td>@item.MinimumBid</td>
+                                <td>@item.BidIncrement</td>
+                                <td>@item.CreatedAt.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (@item.Status == false)
+                                    {
+                                        <a asp-action="Approveitem" asp-controller="Item" asp-route-id="@item.Id">Approve</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Banitem" asp-controller="Item" asp-route-id="@item.Id">Ban</a>
+                                    }
+                                    <br />
+                                    <a asp-action="Removeitem" asp-controller="Item" asp-route-id="@item.Id">Remove</a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

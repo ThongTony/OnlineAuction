@@ -19,6 +19,7 @@ namespace AuctionOnline.Controllers
     public class ItemController : Controller
     {
         private readonly AuctionDbContext db;
+        private LayoutViewModel layoutVM;
         private readonly IWebHostEnvironment webHostEnvironment;
 
         private const string photoPath = "images\\items";
@@ -28,33 +29,39 @@ namespace AuctionOnline.Controllers
         {
             db = _db;
             webHostEnvironment = hostEnvironment;
+            layoutVM = new LayoutViewModel()
+            {
+                CategoriesVM = RecursiveMenu.GetRecursiveMenu(db)
+            };
         }
         public async Task<IActionResult> Index()
         {
             var items = db.Items.Include(i => i.Account);
-            var viewVM = new LayoutViewModel();
-            viewVM.ItemsVM = ItemUtility.MapModelsToVMs(items.ToList());
-            return View(viewVM);
+
+            layoutVM.ItemsVM = ItemUtility.MapModelsToVMs(items.ToList());
+            return View(layoutVM);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+
+
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
                 //ViewData["AccountId"] = new SelectList(db.Accounts, "Id", "Id");
-                var viewmodel = new LayoutViewModel();
-                viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
+
+                layoutVM.CategoryVM.Categories = db.Categories.Select(a =>
                                       new SelectListItem
                                       {
                                           Value = a.Id.ToString(),
                                           Text = a.Name
                                       }).ToList();
-                return View(viewmodel);
+                return View(layoutVM);
             }
             else
             {
-                return RedirectToAction("Login","Account");
+                return RedirectToAction("Login", "Account");
             }
 
         }
@@ -103,7 +110,7 @@ namespace AuctionOnline.Controllers
             }
 
             var item = await db.Items.FindAsync(id);
-            var layoutVM = new LayoutViewModel();
+
             layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
 
             int[] selectedCategoryIds = db.CategoryItems.Where(x => x.ItemId == id).Select(i => i.CategoryId).ToArray();
@@ -186,10 +193,10 @@ namespace AuctionOnline.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var layoutVM = new LayoutViewModel()
-            {
-                ItemVM = itemVM
-            };
+
+
+            layoutVM.ItemVM = itemVM;
+
 
             layoutVM.ItemVM.Categories = db.Categories.Select(a =>
                                  new SelectListItem
@@ -217,11 +224,11 @@ namespace AuctionOnline.Controllers
                 return NotFound();
             }
 
-            var viewlayout = new LayoutViewModel()
-            {
-                ItemVM = ItemUtility.MapModelToVM(item)
-            };
-            return View(viewlayout);
+
+
+            layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
+
+            return View(layoutVM);
         }
 
         [HttpPost]
@@ -244,6 +251,8 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
+
+
             if (id == null)
             {
                 return NotFound();
@@ -259,37 +268,46 @@ namespace AuctionOnline.Controllers
                 return NotFound();
             }
 
-            var viewmodel = new LayoutViewModel()
-            {
-                ItemVM = ItemUtility.MapModelToVM(item)
-            };
+            layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
 
-            return View(viewmodel);
+            return View(layoutVM);
         }
 
-        public IActionResult Model()
-        {
-            var items = db.Items.ToList();
-            return View(items);
-        }
         public async Task<IActionResult> ListedByCategory(int id)
         {
-            ViewBag.Category = db.Categories.Find(id);
-            ViewBag.Items = db.Items.FromSqlRaw(
-                $"Select i.* from Categories c, CategoryItems ci, Items i where c.Id = ci.CategoryId and i.Id = ci.ItemId and c.Id = " + id);
-            return View();
+            var category = db.Categories.Find(id);
+            //var items = db.Items.FromSqlRaw(
+            //    $"Select i.* from Categories c, CategoryItems ci, Items i where c.Id = ci.CategoryId and i.Id = ci.ItemId and c.Id = " + id);
+
+            var categoryItems = db.CategoryItems.Where(x => x.CategoryId == category.Id).ToList();
+
+            foreach (var categoryItem in categoryItems)
+            {
+                categoryItem.Item = db.Items.FirstOrDefault(x => x.Id == categoryItem.ItemId);
+            }
+            category.CategoryItems = categoryItems;
+            layoutVM.CategoryVM = CategoryUtility.MapModeltoVM(category);
+            return View(layoutVM);
         }
         public async Task<IActionResult> ListInShop()
         {
-            var username = HttpContext.Session.GetString("username");
-            var account = db.Accounts.FirstOrDefault(a => a.Username.Equals(username));
-            var items = db.Items.Where(i => i.AccountId == account.Id).ToList();
 
-            var viewVM = new LayoutViewModel()
+
+            if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                ItemsVM = ItemUtility.MapModelsToVMs(items)
-            };
-            return View(viewVM);
+                var username = HttpContext.Session.GetString("username");
+                var account = db.Accounts.FirstOrDefault(a => a.Username.Equals(username));
+                var items = db.Items.Where(i => i.AccountId == account.Id).ToList();
+
+                layoutVM.ItemsVM = ItemUtility.MapModelsToVMs(items);
+
+                return View(layoutVM);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
         }
 
         private async Task<string> UploadAsync(IFormFile fileType, string path)
@@ -368,6 +386,95 @@ namespace AuctionOnline.Controllers
         public IActionResult ListBySearch()
         {
             return View();
+        }
+
+        public IActionResult AdminListItem()
+        {
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
+            {
+                ViewBag.item = db.Items.ToList();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+        }
+
+        public IActionResult Approveitem(ItemVM itemVM, Item item)
+        {
+            var checkid = db.Items.Find(itemVM.Id);
+            if (checkid != null)
+            {
+                var i = db.Items.Where(i => i.Status == false);
+                if (i != null)
+                {
+                    item = db.Items.Find(itemVM.Id);
+                    item.Status = true;
+                    db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("AdminListItem");
+                }
+            }
+            return View("AdminListItem");
+        }
+
+        public IActionResult Banitem(ItemVM itemVM, Item item)
+        {
+            var checkid = db.Items.Find(itemVM.Id);
+            if (checkid != null)
+            {
+                var i = db.Items.Where(i => i.Status == true);
+                if (i != null)
+                {
+                    item = db.Items.Find(itemVM.Id);
+                    item.Status = false;
+                    db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("AdminListItem");
+                }
+            }
+            return View("AdminListItem");
+        }
+
+        public IActionResult Removeitem(ItemVM itemVM)
+        {
+            if (itemVM.Id != null)
+            {
+                db.Items.Remove(db.Items.Find(itemVM.Id));
+                db.SaveChanges();
+                return RedirectToAction("AdminListItem");
+            }
+            else
+            {
+                return RedirectToAction("AdminListItem");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult SearchTitle(string keyword)
+        {
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                var checkkeyword = db.Items.Where(a => a.Title.Trim().Contains(keyword.Trim())).ToList();
+
+                if (checkkeyword != null)
+                {
+                    ViewBag.item = checkkeyword;
+
+                    return View("AdminListItem");
+
+                }
+                else
+                {
+                    return View("AdminListItem");
+                }
+            }
+            else
+            {
+                return RedirectToAction("AdminListItem");
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AuctionOnline.Data;
 using AuctionOnline.Models;
 using AuctionOnline.Utilities;
@@ -16,6 +17,7 @@ namespace AuctionOnline.Controllers
         private IConfiguration configuration;
 
         private AuctionDbContext db;
+        private LayoutViewModel layoutVM;
         private readonly ILogger<AccountController> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -26,29 +28,32 @@ namespace AuctionOnline.Controllers
             _httpContextAccessor = httpContextAccessor;
             db = _db;
             configuration = _configuration;
-
+            layoutVM = new LayoutViewModel()
+            {
+                CategoriesVM = RecursiveMenu.GetRecursiveMenu(db)
+            };
         }
-
 
         [HttpGet]
         public IActionResult Login()
         {
-            return View("Login");
+
+            return View();
         }
 
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username) && a.Status == true);
+            var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
             if (account != null)
             {
                 if (BCrypt.Net.BCrypt.Verify(password, account.Password))
                 {
-                    if (account.RoleId == 1 && account.IsBlocked == false)
+                    if (account.RoleId == 1 && account.IsBlocked == false && account.Status == true)
                     {
                         HttpContext.Session.SetString("username", username);
                         int checkiduser = (from i in db.Accounts
-                                           where i.RoleId == 1
+                                           where i.Username == username
                                            select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkiduser", checkiduser);
                         return RedirectToAction("Index", "Home");
@@ -56,13 +61,14 @@ namespace AuctionOnline.Controllers
                     else if (account.RoleId == 0)
                     {
                         int checkidadmin = (from i in db.Accounts
-                                            where i.RoleId == 0
+                                            where i.Username == username
                                             select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkidAdmin", checkidadmin);
                         return RedirectToAction("AdminListUser");
                     }
                     else
                     {
+                        HttpContext.Session.SetString("usernameblocked", username);
                         return RedirectToAction("error", "Home");
                     }
                 }
@@ -71,47 +77,84 @@ namespace AuctionOnline.Controllers
             return View("Login");
         }
 
-
-
         [HttpGet]
         public IActionResult Register()
         {
-            return View("Register");
+
+            return View(layoutVM);
         }
 
+        //[HttpPost]
+        //public IActionResult Register(string fullname, string username, string email, string password , int phone , string address)
+        //{
+        //    var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
+        //    var emails = db.Accounts.SingleOrDefault(a => a.Email.Equals(email));
+        //    if (account != null)
+        //    {
+        //        ViewBag.failed = "Username đã tồn tại ";
+        //        return View();
+        //    }
+        //    else if (emails != null)
+        //    {
+        //        ViewBag.failed = "Email đã tồn tại ";
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        ViewBag.success = "Success";
+        //        Account accounts = new Account();
+        //        accounts.Fullname = fullname;
+        //        accounts.Username = username;
+        //        accounts.Email = email;
+        //        accounts.Address = address;
+        //        accounts.PhoneNumber = phone;
+        //        accounts.Password = BCrypt.Net.BCrypt.HashPassword(password);
+        //        accounts.Status = true;
+        //        accounts.RoleId = 1;
+        //        accounts.IsBlocked = false;
+        //        accounts.CreatedAt = DateTime.Now;
+        //        db.Accounts.Add(accounts);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Login");
+        //    }
+        //}
 
         [HttpPost]
-        public IActionResult Register(string fullname, string username, string email, string password, int phone, string address)
+        public async Task<IActionResult> Register(AccountVM accountVM)
         {
-            var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(username));
-            var emails = db.Accounts.SingleOrDefault(a => a.Email.Equals(email));
+            var account = db.Accounts.SingleOrDefault(a => a.Username.Equals(accountVM.Username));
+            var email = db.Accounts.SingleOrDefault(a => a.Email.Equals(accountVM.Email));
+
             if (account != null)
             {
                 ViewBag.failed = "The Username already exists ";
                 return View();
             }
-            else if (emails != null)
+            else if (email != null)
             {
                 ViewBag.failed = "The Emails already exists";
                 return View();
             }
             else
             {
-                ViewBag.success = "Success";
-                Account accounts = new Account();
-                accounts.Fullname = fullname;
-                accounts.Username = username;
-                accounts.Email = email;
-                accounts.Address = address;
-                accounts.PhoneNumber = phone;
-                accounts.Password = BCrypt.Net.BCrypt.HashPassword(password);
-                accounts.Status = true;
-                accounts.RoleId = 1;
-                accounts.IsBlocked = false;
-                accounts.CreatedAt = DateTime.Now;
-                db.Accounts.Add(accounts);
-                db.SaveChanges();
-                return RedirectToAction("Login");
+                if (accountVM != null)
+                {
+                    var acccount = AccountUtility.MapVMToModel(accountVM);
+                    //Account accounts = new Account();
+                    var i = acccount.Password;
+                    var hashpassword = BCrypt.Net.BCrypt.HashPassword(i);
+                    acccount.Password = hashpassword;
+                    acccount.Status = true;
+                    acccount.RoleId = 1;
+                    acccount.IsBlocked = false;
+                    acccount.CreatedAt = DateTime.Now;
+                    db.Accounts.Add(acccount);
+                    await db.SaveChangesAsync();
+                    ViewBag.success = "Success";
+                    return RedirectToAction(nameof(Login));
+                }
+
+                return View(accountVM);
             }
         }
 
@@ -137,30 +180,29 @@ namespace AuctionOnline.Controllers
             {
                 return RedirectToAction("Login");
             }
-
         }
 
         public IActionResult ListUser()
         {
-            var users = db.Accounts.Where(x => x.RoleId == 1).ToList();
-            var layoutVM = new LayoutViewModel()
+
+
+            if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                AccountsVM = AccountUtility.MapModelsToVMs(users)
-            };
-            return View(layoutVM);
+                var users = db.Accounts.Where(x => x.RoleId == 1 && x.IsBlocked == false).ToList();
+                layoutVM.AccountsVM = AccountUtility.MapModelsToVMs(users);
+                return View(layoutVM);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         [HttpGet]
         public IActionResult Forgotpassword()
         {
-            if (HttpContext.Session.GetInt32("checkid") != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+
+            return View();
 
         }
 
@@ -199,9 +241,11 @@ namespace AuctionOnline.Controllers
         [HttpGet]
         public IActionResult Resetpassword()
         {
+
+
             if (HttpContext.Session.GetString("email") != null)
             {
-                return View();
+                return View(layoutVM);
             }
             else
             {
@@ -261,6 +305,7 @@ namespace AuctionOnline.Controllers
                 if (i != null)
                 {
                     account = db.Accounts.Find(accountVM.Id);
+                    account.Status = false;
                     account.IsBlocked = true;
                     db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
@@ -280,6 +325,7 @@ namespace AuctionOnline.Controllers
                 if (i != null)
                 {
                     account = db.Accounts.Find(accountVM.Id);
+                    account.Status = true;
                     account.IsBlocked = false;
 
                     db.Entry(account).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -299,7 +345,7 @@ namespace AuctionOnline.Controllers
                 var id = HttpContext.Session.GetInt32("checkiduser");
                 var listuser = db.Accounts.Where(a => a.Id == id).ToList();
                 ViewBag.listuser = listuser;
-                return View();
+                return View(layoutVM);
             }
             else
             {
@@ -313,14 +359,36 @@ namespace AuctionOnline.Controllers
         {
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                return View("Edituser");
+                return View(layoutVM);
             }
             else
             {
                 return RedirectToAction("Login");
             }
+        }
 
+        [HttpPost]
+        public IActionResult Searchusername(string keyword)
+        {
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                var checkkeyword = db.Accounts.Where(a => a.Username.Trim().Contains(keyword.Trim())).ToList();
 
+                if (checkkeyword != null)
+                {
+                    ViewBag.Accounts = checkkeyword;
+                    return View("AdminListUser");
+
+                }
+                else
+                {
+                    return View("AdminListUser");
+                }
+            }
+            else
+            {
+                return RedirectToAction("AdminListUser");
+            }
         }
     }
 }
