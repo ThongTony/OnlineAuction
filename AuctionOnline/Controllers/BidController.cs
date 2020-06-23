@@ -24,23 +24,33 @@ namespace AuctionOnline.Controllers
         {
             if (ModelState.IsValid)
             {
-                var bidSession = 1;
+                int? bidSession = null;
 
-                var latestSessionBid = db.Bids.Where(x => x.ItemId == itemVM.Id).OrderByDescending(x => x.BidSession).FirstOrDefault();
+                var latestSessionBid = db.Bids
+                    .Where(x => x.ItemId == itemVM.Id)
+                    .OrderByDescending(x => x.BidSession)
+                    .FirstOrDefault();
 
-                if (latestSessionBid != null)
+                if (latestSessionBid == null)
                 {
-                    var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
+                    bidSession = 1;
+                }
+                else
+                {
+                    var latestPriceBid = db.Bids
+                        .Where(x => x.BidSession == latestSessionBid.BidSession && x.ItemId == itemVM.Id)
+                        .OrderByDescending(x => x.CurrentBid)
+                        .FirstOrDefault();
 
-                    if (latestCurrentPriceBid != null)
+                    if (latestPriceBid != null)
                     {
-                        if (!latestCurrentPriceBid.IsWinned)
+                        if (!latestPriceBid.IsWinned)
                         {
-                            bidSession = latestCurrentPriceBid.BidSession;
+                            bidSession = latestPriceBid.BidSession;
                         }
                         else
                         {
-                            bidSession = latestCurrentPriceBid.BidSession + 1;
+                            bidSession = latestPriceBid.BidSession + 1;
                         }
                     }
                 }
@@ -50,7 +60,7 @@ namespace AuctionOnline.Controllers
                     AccountId = 1,
                     ItemId = itemVM.Id,
                     CurrentBid = itemVM.BidPrice,
-                    BidSession = bidSession,
+                    BidSession = bidSession.Value,
                     BidStartDate = itemVM.BidStartDate.Value,
                     BidEndDate = itemVM.BidEndDate.Value,
                     CreatedAt = DateTime.Now
@@ -64,21 +74,33 @@ namespace AuctionOnline.Controllers
         }
 
         [HttpGet]
-        public async Task<Boolean> FinalizeBid(int itemId) 
+        public async Task<Boolean> FinalizeBid(int itemId)
         {
             var item = await db.Items.FindAsync(itemId);
 
             if (item != null && item.BidStatus == BidStatus.InProgress)
             {
-                var latestSessionBid = db.Bids.Where(x => x.ItemId == itemId).OrderByDescending(x => x.BidSession).FirstOrDefault();
+                var latestSessionBid = db.Bids
+                    .Where(x => x.ItemId == itemId)
+                    .OrderByDescending(x => x.BidSession)
+                    .FirstOrDefault();
 
-                var latestCurrentPriceBid = db.Bids.Where(x => x.BidSession == latestSessionBid.BidSession).OrderByDescending(x => x.CurrentBid).FirstOrDefault();
+                var latestCurrentPriceBid = db.Bids
+                    .Where(x => x.BidSession == latestSessionBid.BidSession)
+                    .OrderByDescending(x => x.CurrentBid)
+                    .FirstOrDefault();
 
                 if (latestCurrentPriceBid != null)
                 {
+                    db.Bids.Where(x => x.Id != latestCurrentPriceBid.Id)
+                           .ToList()
+                           .ForEach(y => y.IsLatestBidWinner = false);
+
                     latestCurrentPriceBid.IsWinned = true;
 
-                    latestCurrentPriceBid.IsWinnedDateTime = DateTime.Now;
+                    latestCurrentPriceBid.IsLatestBidWinner = true;
+
+                    latestCurrentPriceBid.WinnedDateTime = DateTime.Now;
 
                     db.Bids.Update(latestCurrentPriceBid);
                 }

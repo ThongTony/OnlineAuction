@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\ItemsController.cs" />
+    <Compile Remove="Migrations\20200622205445_master.cs" />
+    <Compile Remove="Migrations\20200622205445_master.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
