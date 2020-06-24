@@ -31,7 +31,7 @@ $(() => {
                                     <div style="float:left;margin-right:10px;">
                                         <img style="border-radius: 50%;" src="https://scontent.xx.fbcdn.net/v/t1.0-1/cp0/p48x48/55738269_2813143815370024_4176931368388788224_n.jpg?_nc_cat=106&amp;_nc_sid=dbb9e7&amp;_nc_ohc=r1_aiKlQr2oAX9slP3O&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_ht=scontent.xx&amp;oh=0b4355eaa6036f3654a35daeac226554&amp;oe=5F0C85E2">
                                     </div>
-                                    <div>
+                                    <div style="float:left; width:75%;">
                                         <span>
                                             <span>Nước hoa Charme Bình Dương</span>
                                             <span> checked in at </span>
@@ -50,6 +50,10 @@ $(() => {
                                                 </span>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div style="font-size:12px;">
+                                         <div><a href="#" alt="Remove this notification">X</a></div>
+                                         <div><a href="#" alt="Mark as read">...</a></div>
                                     </div>
                                 </div>
                             </a>
