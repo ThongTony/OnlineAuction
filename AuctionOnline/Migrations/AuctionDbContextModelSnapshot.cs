@@ -237,8 +237,8 @@ namespace AuctionOnline.Migrations
                     b.Property<DateTime?>("BidStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("BidStatus")
-                        .HasColumnType("bit");
+                    b.Property<int>("BidStatus")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -258,8 +258,8 @@ namespace AuctionOnline.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,1)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -269,6 +269,53 @@ namespace AuctionOnline.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccountId = 1,
+                            BidEndDate = new DateTime(2020, 6, 23, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(4791),
+                            BidIncrement = 2m,
+                            BidStartDate = new DateTime(2020, 6, 20, 8, 45, 46, 728, DateTimeKind.Local).AddTicks(1378),
+                            BidStatus = 1,
+                            CreatedAt = new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(6752),
+                            Description = "description 1",
+                            MinimumBid = 7m,
+                            Price = 5m,
+                            Status = true,
+                            Title = "product 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccountId = 1,
+                            BidEndDate = new DateTime(2020, 6, 23, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9770),
+                            BidIncrement = 2m,
+                            BidStartDate = new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9751),
+                            BidStatus = 1,
+                            CreatedAt = new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9810),
+                            Description = "description 2",
+                            MinimumBid = 7m,
+                            Price = 10m,
+                            Status = true,
+                            Title = "product 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccountId = 1,
+                            BidEndDate = new DateTime(2020, 6, 23, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9852),
+                            BidIncrement = 2m,
+                            BidStartDate = new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9850),
+                            BidStatus = 1,
+                            CreatedAt = new DateTime(2020, 6, 20, 8, 45, 46, 729, DateTimeKind.Local).AddTicks(9855),
+                            Description = "description 3",
+                            MinimumBid = 7m,
+                            Price = 15m,
+                            Status = true,
+                            Title = "product 3"
+                        });
                 });
 
             modelBuilder.Entity("AuctionOnline.Models.Bid", b =>

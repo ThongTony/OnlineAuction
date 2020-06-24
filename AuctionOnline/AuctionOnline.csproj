@@ -36,6 +36,8 @@
     <Compile Remove="Migrations\20200616080707_khoa5.Designer.cs" />
     <Compile Remove="Migrations\20200616081240_khoa6.cs" />
     <Compile Remove="Migrations\20200616081240_khoa6.Designer.cs" />
+    <Compile Remove="Migrations\20200616081349_khoa7.cs" />
+    <Compile Remove="Migrations\20200616081349_khoa7.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

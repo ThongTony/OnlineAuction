@@ -56,6 +56,13 @@ namespace AuctionOnline.Data
                 new Category() { Id = 3, Name = "Smarts", ParentId = 2 },
                 new Category() { Id = 4, Name = "Laptops & Macs", ParentId = 3 }
                 );
+
+            modelBuilder.Entity<Item>().HasData(
+                new Item() { Id = 1, Title = "product 1", Description = "description 1", Price = 5, BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(3), MinimumBid = 7, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 2, Status = true },
+                new Item() { Id = 2, Title = "product 2", Description = "description 2", Price = 10, BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(3), MinimumBid = 7, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 2, Status = true },
+                new Item() { Id = 3, Title = "product 3", Description = "description 3", Price = 15, BidStatus = 1, BidStartDate = DateTime.Now, BidEndDate = DateTime.Now.AddDays(3), MinimumBid = 7, CreatedAt = DateTime.Now, AccountId = 1, BidIncrement = 2, Status = true }
+                );
+
             modelBuilder.Entity<Account>().HasData(
                 new Account() { Id = 1, Fullname = "Admin", Username = "admin123", Password = "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", Email = "admin@gmail.com", RoleId = 0, IsBlocked = false, Status = true },
                 new Account() { Id = 2, Fullname = "User 1", Username = "user1", Password = "$2y$12$cxOGZj/S7yYv1waxPxyZweMygntL37mkvvUqtLFzeX1QW/mOt2bpG", Email = "user1@gmail.com", RoleId = 1, IsBlocked = false, Status = true },

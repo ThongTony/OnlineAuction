@@ -63,8 +63,8 @@ namespace AuctionOnline.Notifications
                 dbContext.ExpiredItems.Add(model);
             }
 
-            dbContext.SaveChanges();
-            hubContext.Clients.All.SendAsync("refreshNotifications");
+            //dbContext.SaveChanges();
+            //hubContext.Clients.All.SendAsync("refreshNotifications");
 
             var count = Interlocked.Increment(ref executionCount) + "----" + now;
 
