@@ -54,7 +54,7 @@
                         <div id="notificationTitle">
                             <div style="float:left;">Notifications</div>
                             <div style="text-align:right;font-weight:normal;" id="markasread">
-                                <a asp-controller="ManageExpiredItem" asp-action="MarkAllAsRead">Mark all as read</a>
+                                <a style="cursor:pointer;" onclick="markAllAsRead()">Mark all as read</a>
                             </div>
                         </div>
                         <div id="notificationsBody" class="notifications">
@@ -133,3 +133,44 @@
             </ul>
         </div>
     }*@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#notificationLink").click(function () {
+            var notificationCount = $("#notification_count").text();
+            if (!notificationCount) {
+                $("#notificationContainer").hide();
+            } else {
+                $("#notificationContainer").fadeToggle(300);
+                $("#notification_count").fadeOut("slow");
+                return false;
+            }
+        });
+
+        //Document Click
+        $(document).click(function () {
+            $("#notificationContainer").hide();
+        });
+        //Popup Click
+        $("#notificationContainer").click(function () {
+            return false
+        });
+
+
+
+    });
+
+    function markAllAsRead() {
+        $.ajax({
+            url: '/ManageExpiredItem/MarkAllAsRead',
+            method: 'GET',
+            success: (result) => {
+                console.log("MarkAllAsRead");
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        });
+    }
+
+</script>
