@@ -46,7 +46,7 @@ namespace AuctionOnline.Controllers
 
             dbContext.SaveChanges();
             hubContext.Clients.All.SendAsync("refreshNotifications");
-            return RedirectToAction("index", "Home");
+            return Ok();
         }
 
     }
