@@ -27,18 +27,13 @@ namespace AuctionOnline.Controllers
             {
                 //var categories = db.Categories.Include(c => c.Parent);
                 var categories = db.Categories.Include(c => c.Parent);
-                var viewmodel = new LayoutViewModel()
-                {
-                    CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList())
-                };
-
-                return View(viewmodel);
+                layoutVM.CategoriesVM = CategoryUtility.MapModelsToVMs(categories.ToList());
+                return View(layoutVM);
             }
             else
             {
                 return RedirectToAction("Login", "Account");
             }
-
         }
 
         public async Task<IActionResult> Detail(int id)
@@ -49,7 +44,6 @@ namespace AuctionOnline.Controllers
                 {
                     return NotFound();
                 }
-
                 var category = await db.Categories
                     .Include(c => c.Parent)
                     .FirstOrDefaultAsync(m => m.Id == id);
@@ -57,13 +51,9 @@ namespace AuctionOnline.Controllers
                 {
                     return NotFound();
                 }
-                var viewmodel = new LayoutViewModel()
-                {
-                    CategoryVM = CategoryUtility.MapModeltoVM(category)
-                };
+                layoutVM.CategoryVM = CategoryUtility.MapModeltoVM(category);
 
-
-                return View(viewmodel);
+                return View(layoutVM);
             }
             else
             {
@@ -76,20 +66,7 @@ namespace AuctionOnline.Controllers
         {
             if (HttpContext.Session.GetInt32("checkidAdmin") != null)
             {
-                //var category = db.Categories.Find(id);
-                //layoutVM.CategoryVM.ParentId = id;
-                var categoryVM = new CategoryVM();
-                categoryVM.ParentId = id;
-                layoutVM.CategoryVM = categoryVM;
-
-                //ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id");
-                //var cateVM = new CategoryVM();
-                //viewmodel.CategoryVM.Categories = db.Categories.Select(a =>
-                //                       new SelectListItem
-                //                       {
-                //                           Value = a.Id.ToString(),
-                //                           Text = a.Name
-                //                       }).ToList();
+                layoutVM.CategoryVM.ParentId = id;
                 return View(layoutVM);
             }
             else
@@ -109,14 +86,12 @@ namespace AuctionOnline.Controllers
             {
                 var category = CategoryUtility.MapVMtoModel(categoryVM);
 
-                category.ParentId = categoryVM.Id;
-
                 //stop admin add 3rd category
                 if (category.ParentId == null)
                 {
                     category.Level = 1;
                 }
-                else if (category.Level == 1)
+                else if (CategoryExists(category.ParentId) == true)
                 {
                     category.Level = 2;
                 }
@@ -125,7 +100,7 @@ namespace AuctionOnline.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", categoryVM.ParentId);
+
             return View(categoryVM);
         }
 
@@ -140,9 +115,9 @@ namespace AuctionOnline.Controllers
                 }
 
                 var category = await db.Categories.FindAsync(id);
-                var layoutViewModel = new LayoutViewModel();
-                layoutViewModel.CategoryVM = CategoryUtility.MapModeltoVM(category);
-                layoutViewModel.CategoryVM.Categories = db.Categories.Select(a =>
+
+                layoutVM.CategoryVM = CategoryUtility.MapModeltoVM(category);
+                layoutVM.CategoryVM.Categories = db.Categories.Select(a =>
                                       new SelectListItem
                                       {
                                           Value = a.Id.ToString(),
@@ -153,7 +128,7 @@ namespace AuctionOnline.Controllers
                     return NotFound();
                 }
                 ViewData["ParentId"] = new SelectList(db.Categories, "Id", "Id", category.ParentId);
-                return View(layoutViewModel);
+                return View(layoutVM);
             }
             else
             {
@@ -251,7 +226,7 @@ namespace AuctionOnline.Controllers
             return View("Index", categories);
         }
 
-        private bool CategoryExists(int id)
+        private bool CategoryExists(int? id)
         {
             return db.Categories.Any(e => e.Id == id);
         }

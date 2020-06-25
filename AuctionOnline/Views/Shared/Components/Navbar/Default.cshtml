@@ -70,9 +70,7 @@
                         </div>
                     </div>
 
-                </li>
-                    
-                
+                </li>               
                 <li>
                     <a asp-controller="Item" asp-action="Create" asp-route-id="@Context.Session.GetInt32("checkiduser")">
                         <i class="fa fa-sign-in"></i>
@@ -81,30 +79,25 @@
                 </li>
 
                 <li>
-
-
-
                     @if (@Context.Session.GetString("username") == null)
                     {
                         @*<a asp-controller="item" asp-action="Add" asp-route-id="@user.Id" style="margin:7px 5px !important" class="hasbtn lean ta-center">*@
                         <a asp-controller="Account" asp-action="Login" style="margin:7px 5px !important" class="hasbtn lean ta-center">
                             <btn class="btn btn-success">
-                                <i class="fa fa-pencil-square-o"></i>
-                                Login
+                                <i class="fas fa-sign-in-alt"></i>
+                                Login                               
                             </btn>
                         </a>
                     }
                     else
                     {
-
                         <a asp-controller="Account" asp-action="Logout" style="margin:7px 5px !important" class="hasbtn lean ta-center">
                             <btn class="btn btn-success">
-                                <i class="fa fa-pencil-square-o"></i>
                                 Logout
+                                <i class="fas fa-sign-out-alt"></i>
                             </btn>
                         </a>
                     }
-
                 </li>
             </ul>
         </div>
@@ -132,9 +125,6 @@
         $("#notificationContainer").click(function () {
             return false
         });
-
-
-
     });
 
     function markAllAsRead() {

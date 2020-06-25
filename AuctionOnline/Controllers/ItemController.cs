@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AuctionOnline.Data;
@@ -34,12 +33,26 @@ namespace AuctionOnline.Controllers
                 CategoriesVM = RecursiveMenu.GetRecursiveMenu(db)
             };
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ListItem()
         {
-            var items = db.Items.Include(i => i.Account);
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
+            {
+                ViewBag.item = db.Items.ToList();
+                return View("AdminListItem");
+            }
+            else if (HttpContext.Session.GetInt32("checkiduser") != null)
+            {
+                var items = db.Items.Include(i => i.Account);
 
-            layoutVM.ItemsVM = ItemUtility.MapModelsToVMs(items.ToList());
-            return View(layoutVM);
+                layoutVM.ItemsVM = ItemUtility.MapModelsToVMs(items.ToList());
+                return View(layoutVM);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+
         }
 
         [HttpGet]
@@ -71,8 +84,8 @@ namespace AuctionOnline.Controllers
             itemVM.Status = false;
             if (itemVM != null)
             {
-                string fileName = await UploadAsync(itemVM.Photo, photoPath);
-                string documentName = await UploadAsync(itemVM.Document, documentPath);
+                string fileName = await UploadFile.UploadAsync(webHostEnvironment, itemVM.Photo, photoPath);
+                string documentName = await UploadFile.UploadAsync(webHostEnvironment, itemVM.Document, documentPath);
                 var item = ItemUtility.MapVMToModel(itemVM);
 
                 item.AccountId = (int)HttpContext.Session.GetInt32("checkiduser");
@@ -131,13 +144,13 @@ namespace AuctionOnline.Controllers
             var item = await db.Items.FindAsync(itemVM.Id);
             if (itemVM.Photo != null)
             {
-                string fileName = await UploadAsync(itemVM.Photo, photoPath);
+                string fileName = await UploadFile.UploadAsync(webHostEnvironment, itemVM.Photo, photoPath);
                 item.Photo = fileName;
             }
 
             if (itemVM.Document != null)
             {
-                string documentName = await UploadAsync(itemVM.Document, documentPath);
+                string documentName = await UploadFile.UploadAsync(webHostEnvironment, itemVM.Document, documentPath);
                 item.Document = documentName;
             }
 
@@ -189,11 +202,7 @@ namespace AuctionOnline.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-
-
             layoutVM.ItemVM = itemVM;
-
-
             layoutVM.ItemVM.Categories = db.Categories.Select(a =>
                                  new SelectListItem
                                  {
@@ -220,8 +229,6 @@ namespace AuctionOnline.Controllers
                 return NotFound();
             }
 
-
-
             layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
 
             return View(layoutVM);
@@ -231,42 +238,54 @@ namespace AuctionOnline.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(ItemVM itemVM)
         {
-            var item = await db.Items.FindAsync(itemVM.Id);
-
-            var categoryitems = db.CategoryItems.Where(c => c.ItemId == itemVM.Id);
-
-            foreach (var categoryitem in categoryitems)
+            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
             {
-                item.CategoryItems.Remove(categoryitem);
+                var item = await db.Items.FindAsync(itemVM.Id);
+
+                var categoryitems = db.CategoryItems.Where(c => c.ItemId == itemVM.Id);
+
+                foreach (var categoryitem in categoryitems)
+                {
+                    item.CategoryItems.Remove(categoryitem);
+                }
+                db.Items.Remove(item);
+                await db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            db.Items.Remove(item);
-            await db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            else
+            {
+                return RedirectToAction("AdminListItem");
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
-
-
-            if (id == null)
+            if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var item = await db.Items
+                    .Include(i => i.Account)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBid).ToList();
+
+                if (item == null)
+                {
+                    return NotFound();
+                }
+
+                layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
+
+                return View(layoutVM);
             }
-
-            var item = await db.Items
-                .Include(i => i.Account)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBid).ToList();
-
-            if (item == null)
+            else
             {
-                return NotFound();
+                return RedirectToAction("Login", "Account");
             }
-
-            layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
-
-            return View(layoutVM);
         }
 
         public async Task<IActionResult> ListedByCategory(int id)
@@ -288,8 +307,6 @@ namespace AuctionOnline.Controllers
         }
         public async Task<IActionResult> ListInShop()
         {
-
-
             if (HttpContext.Session.GetInt32("checkiduser") != null)
             {
                 var username = HttpContext.Session.GetString("username");
@@ -304,27 +321,25 @@ namespace AuctionOnline.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-
         }
 
-        private async Task<string> UploadAsync(IFormFile fileType, string path)
-        {
+        //private async Task<string> UploadAsync(IFormFile fileType, string path)
+        //{
+        //    string uniqueFileName = null;
 
-            string uniqueFileName = null;
-
-            if (fileType != null)
-            {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, path);
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + fileType.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                Directory.CreateDirectory(uploadsFolder);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await fileType.CopyToAsync(fileStream);
-                }
-            }
-            return uniqueFileName;
-        }
+        //    if (fileType != null)
+        //    {
+        //        string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, path);
+        //        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileType.FileName;
+        //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+        //        Directory.CreateDirectory(uploadsFolder);
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            await fileType.CopyToAsync(fileStream);
+        //        }
+        //    }
+        //    return uniqueFileName;
+        //}
 
         public async Task<IActionResult> Pagination(int page = 1, int pageSize = 5)
         {
@@ -366,7 +381,7 @@ namespace AuctionOnline.Controllers
                 {
                     ViewBag.Success = checkkeyword;
                     ViewBag.keyword = keyword;
-                    return View("ListBySearch",layoutVM);
+                    return View("ListBySearch", layoutVM);
 
                 }
                 else
@@ -383,20 +398,6 @@ namespace AuctionOnline.Controllers
         public IActionResult ListBySearch()
         {
             return View(layoutVM);
-        }
-
-        public IActionResult AdminListItem()
-        {
-            if (HttpContext.Session.GetInt32("checkidAdmin") != null)
-            {
-                ViewBag.item = db.Items.ToList();
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
         }
 
         public IActionResult Approveitem(ItemVM itemVM, Item item)
@@ -433,20 +434,6 @@ namespace AuctionOnline.Controllers
                 }
             }
             return View("AdminListItem");
-        }
-
-        public IActionResult Removeitem(ItemVM itemVM)
-        {
-            if (itemVM.Id != null)
-            {
-                db.Items.Remove(db.Items.Find(itemVM.Id));
-                db.SaveChanges();
-                return RedirectToAction("AdminListItem");
-            }
-            else
-            {
-                return RedirectToAction("AdminListItem");
-            }
         }
 
         [HttpPost]

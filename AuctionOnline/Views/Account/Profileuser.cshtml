@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,14 +20,10 @@
                         <a>Province / City Name</a>
                     </li>
                     <li>
-                        @*@foreach(var cate in Model.ItemVM.Categories)
-                    {
-                    <a>@Html.DisplayFor(modelCate => cate.)</a>
-                    }*@
+
                         <a>Profile User</a>
 
                     </li>
-                    <!--li.active=$topic->title-->
                 </ul>
             </div>
             @foreach (var i in ViewBag.listuser)
@@ -42,7 +38,7 @@
                                     <div aria-live="polite" class="slick-list draggable">
                                         <div class="slick-track" role="listbox" style="opacity: 1; width: 600px; transform: translate3d(0px, 0px, 0px);">
                                             <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 600px;">
-                                                <img src="~/images/items/" alt="" class="img-rounded" width="500" height="auto">
+                                                <img src="~/images/accounts/@i.Photo" alt="" class="img-rounded" width="500" height="auto">
                                             </div>
                                         </div>
                                     </div>
@@ -71,13 +67,13 @@
                                     <br /><br />
                                     <a style="font-weight:bold">Creat At:   &nbsp;&nbsp;</a> @i.CreatedAt.ToString("dd/MM/yyyy")
                                     <br /><br />
-                                    <a  asp-action="Edituser" asp-controller="Account">
+                                    <a asp-action="Edit" asp-route-id="@Context.Session.GetInt32("checkiduser")">
                                         <btn class="btn btn-success">
-                                            <i class="fa fa-pencil-square-o"></i>
+                                            <i class="far fa-user"></i>
                                             Edit
                                         </btn>
                                     </a>
-                                   
+
                                 </div>
                             </div>
                         </div>

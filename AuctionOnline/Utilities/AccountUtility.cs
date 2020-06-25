@@ -16,7 +16,7 @@ namespace AuctionOnline.Utilities
                 Password = accountVM.Password,
                 Address = accountVM.Address,
                 Photo = accountVM.PhotoName,
-                //Status = accountVM.Status,
+                
                 Email = accountVM.Email,
                 PhoneNumber = accountVM.PhoneNumber           
             };
@@ -33,7 +33,7 @@ namespace AuctionOnline.Utilities
                 Username = account.Username,
                 PhotoName = account.Photo,
                 Address = account.Address,
-                //Status = account.Status,
+                
                 Email = account.Email,
                 PhoneNumber = account.PhoneNumber
             };
@@ -53,7 +53,7 @@ namespace AuctionOnline.Utilities
                     Username = accountVM.Username,
                     Photo = accountVM.PhotoName,
                     Address = accountVM.Address,
-                    //Status = accountVM.Status,
+                    
                     Email = accountVM.Email,
                     PhoneNumber = accountVM.PhoneNumber
                 };
@@ -75,7 +75,7 @@ namespace AuctionOnline.Utilities
                     Username = account.Username,
                     Address = account.Address,
                     PhotoName = account.Photo,
-                    //Status = account.Status,
+                    
                     Email = account.Email,
                     PhoneNumber = account.PhoneNumber
                 };
