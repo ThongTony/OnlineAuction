@@ -245,7 +245,7 @@ namespace AuctionOnline.Controllers
                         CategoriesVM = CategoryUtility.MapModelsToVMs(checkkeyword.ToList())
                     };
 
-                    return View("Index",viewmodel);
+                    return View("Index", viewmodel);
 
                 }
                 else

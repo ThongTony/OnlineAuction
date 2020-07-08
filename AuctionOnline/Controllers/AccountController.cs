@@ -69,7 +69,7 @@ namespace AuctionOnline.Controllers
                                             where i.Username == username
                                             select i.Id).FirstOrDefault();
                         HttpContext.Session.SetInt32("checkidAdmin", checkidadmin);
-                        return RedirectToAction("AdminListUser");
+                        return RedirectToAction("ListAccount");
                     }
                     else
                     {

@@ -9,10 +9,10 @@ namespace AuctionOnline.ViewModels
 {
     public class ItemVM
     {
-        public int Id { get; set; }       
-        public string Title { get; set; }       
+        public int Id { get; set; }
+        public string Title { get; set; }
         public string Description { get; set; }
-        public bool Status { get; set; }      
+        public bool Status { get; set; }
 
         public IFormFile Photo { get; set; }
         public string PhotoName { get; set; }
@@ -23,6 +23,8 @@ namespace AuctionOnline.ViewModels
         public Account Account { get; set; }
 
         public int BidStatus { get; set; }
+        public List<SelectListItem> BidStatuses { get; set; }
+
         public DateTime? BidStartDate { get; set; }
         public DateTime? BidEndDate { get; set; }
         public decimal? MinimumBid { get; set; }

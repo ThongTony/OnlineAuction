@@ -46,44 +46,46 @@
                 <div class="topiclist-wrapper">
                     @foreach (var item in Model.ItemsVM)
                     {
-                        <div class="item grid col-md-3ths col-xs-6">
-                            <div class="itemcontainer">
-                                <div class="col-md-4 col-sm-3 col-xs-5">
-                                    <div style="padding-left:15px" class="row">
-                                        <a class="thumb" asp-action="Details" asp-route-id="@Html.DisplayFor(modelItem => item.Id)">
-                                            <img src="~/images/items/@item.PhotoName" style="width:220px; height:auto;" >
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-sm-9 col-xs-7">
-                                    <div class="row">
-                                        <div class="col-sm-9">
-                                            <h3>
-                                                <a class="f-black">@Html.DisplayFor(modelItem => item.Title)</a>
-                                            </h3>
-                                            <!--.infoline
-                                                                        if !$byUser
-                                                                            //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
-                                                                            //&nbsp;
-                                                                            span.f-grey=$i->up_date_h
-                                                                        else
-                                                                            span.f-grey=$i->up_date_h
-                                            -->
+                        @if (item.Status == true)
+                        {
+                            <div class="item grid col-md-3ths col-xs-6">
+                                <div class="itemcontainer">
+                                    <div class="col-md-4 col-sm-3 col-xs-5">
+                                        <div style="padding-left:15px" class="row">
+                                            <a class="thumb" asp-action="Details" asp-route-id="@Html.DisplayFor(modelItem => item.Id)">
+                                                <img src="~/images/items/@item.PhotoName" style="width:220px; height:auto;">
+                                            </a>
                                         </div>
-                                        <div class="col-sm-3 f-red text-right">
-
-                                            <a asp-action="Detail" asp-route-id="@Html.DisplayFor(modelItem => item.Id)"><button type="button" class="btn btn-success">Bid</button></a>
-                                            <div class="text-nowrap">
-
+                                    </div>
+                                    <div class="col-md-8 col-sm-9 col-xs-7">
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <h3>
+                                                    <a class="f-black">@Html.DisplayFor(modelItem => item.Title)</a>
+                                                </h3>
+                                                <!--.infoline
+                                                                            if !$byUser
+                                                                                //a.f-grey(href=URL_ROOT.'/user/'.$i->author->name)=i->author->name
+                                                                                //&nbsp;
+                                                                                span.f-grey=$i->up_date_h
+                                                                            else
+                                                                                span.f-grey=$i->up_date_h
+                                                -->
                                             </div>
-                                            <div class="spacer"></div>
+                                            <div class="col-sm-3 f-red text-right">
+
+                                                <a asp-action="Detail" asp-route-id="@Html.DisplayFor(modelItem => item.Id)"><button type="button" class="btn btn-success">Bid</button></a>
+                                                <div class="text-nowrap">
+
+                                                </div>
+                                                <div class="spacer"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
-
                     <!--foreach-->
 
                 </div>

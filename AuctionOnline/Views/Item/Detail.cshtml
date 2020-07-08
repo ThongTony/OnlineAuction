@@ -26,7 +26,8 @@
                 <!--li.active=$topic->title-->
 
                 <li class="pull-right">
-                    <a asp-controller="Item" asp-action="ListInShop">Back to Shop</a>
+                    <a asp-action="Edit" asp-route-id="@Model.ItemVM.Id"><b>Edit Item</b></a>/&nbsp;
+                    <a asp-action="ListInShop">Back to Shop</a>
                 </li>
             </ul>
         </div>
@@ -51,6 +52,7 @@
                         string bidSessionNo = "The item does not have bid.";
                         decimal currentBid = 0;
                         decimal yourBidPrice = 0;
+                        AuctionOnline.Models.Bid latestPriceBid = null;
 
                         var latestSessionBid = Model.ItemVM.Bids
                             .OrderByDescending(x => x.BidSession)
@@ -59,12 +61,13 @@
                         if (latestSessionBid == null)
                         {
                             yourBidPrice = Model.ItemVM.MinimumBid.Value;
+
                         }
                         else
                         {
                             bidSessionNo = "###: " + latestSessionBid.BidSession.ToString();
 
-                            var latestPriceBid = Model.ItemVM.Bids
+                            latestPriceBid = Model.ItemVM.Bids
                                 .Where(x => x.BidSession == latestSessionBid.BidSession && x.ItemId == latestSessionBid.ItemId)
                                 .OrderByDescending(x => x.CurrentBid)
                                 .FirstOrDefault();
@@ -144,7 +147,7 @@
                                 var isTrueBidstatus = (bidstatus.toLowerCase() === 'true');
                                 if (isTrueBidstatus) {
                                     finalizeBid(@itemId);
-                                    //location.reload();
+                                    location.reload();
                                 }
                             }
                         }, 1000);
@@ -172,17 +175,20 @@
                     <h1 style="font-size:16px;">@Html.DisplayFor(model => model.ItemVM.BidIncrement)</h1>
                     <p id="bidstatus" style="display:none;">@bidStatus</p>
                     <br />
-                    <div class="row">
-                        <div class="col-md-3">
-                            Current BID:
-                            <h1 style="font-size:16px; color: blue;">@Html.DisplayFor(model => currentBid) đ</h1>
-                        </div>
-                        <div class="col-md-3">
-                            Current Winner:
-                            <h1 style="font-size:16px;">@Model.ItemVM.Account.Fullname</h1>
-                        </div>
-                    </div>
+                    @if (Model.ItemVM.Bids.Any())
+                    {
+                        <div class="row">
+                            <div class="col-md-3">
+                                Current BID:
+                                <h1 style="font-size:16px; color: blue;">@Html.DisplayFor(model => currentBid) đ</h1>
+                            </div>
 
+                            <div class="col-md-3">
+                                Current Winner:
+                                <h1 style="font-size:16px;">@latestPriceBid.Account.Fullname</h1>
+                            </div>
+                        </div>
+                    }
                     @if (Model.ItemVM.BidStatus == BidStatus.InProgress)
                     {
                         <form asp-controller="Bid" asp-action="Create">
@@ -200,12 +206,8 @@
                             @Html.ValidationMessageFor(model => Model.ItemVM.BidPrice, "", new { @class = "text-danger" })
 
                             <button type="submit" class="btn btn-success btn-lg" style="margin-left: 10px">BID</button>
+
                         </form>
-                    }
-                    else
-                    {
-                        <input style="width: 100px;" type="number" asp-for="ItemVM.BidPrice" value="@yourBidPrice" class="btn btn-default" />
-                        <button disabled type="button" class="btn btn-success btn-lg" style="margin-left: 10px">BID</button>
                     }
 
                 </div>
@@ -221,18 +223,22 @@
                         <tr class="info" style="text-align: center">
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Address</th>
-                            <th>Contact</th>
+                            <th>Current Bid</th>
+                            <th>Create At</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!--foreach-->
-                        <tr style="text-align: center">
-                            <td>John Wick</td>
-                            <td>john@example.com</td>
-                            <td>hcm City</td>
-                            <td>0000000000</td>
-                        </tr>
+                        @*@foreach (var a in Model.BidHistoriesVM)
+                        {*@
+                            <tr style="text-align: center">
+                                <td>Fullname</td>
+                                <td>Email</td>
+                                <td>CurrentBid</td>
+                                <td>CreatedAt</td>
+                            </tr>
+                        @*}*@
+
                         <!------>
                     </tbody>
                 </table>

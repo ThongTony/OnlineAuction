@@ -3,6 +3,7 @@ using AuctionOnline.Models;
 using AuctionOnline.Utilities;
 using AuctionOnline.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,7 +58,7 @@ namespace AuctionOnline.Controllers
 
                 var availableBid = new Bid
                 {
-                    AccountId = 1,
+                    AccountId = HttpContext.Session.GetInt32("checkiduser").Value,
                     ItemId = itemVM.Id,
                     CurrentBid = itemVM.BidPrice,
                     BidSession = bidSession.Value,

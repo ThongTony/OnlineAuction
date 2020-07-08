@@ -129,6 +129,18 @@ namespace AuctionOnline.Controllers
                                       Value = a.Id.ToString(),
                                       Text = a.Name
                                   }).ToList();
+            layoutVM.ItemVM.BidStatuses = new List<SelectListItem>()
+            {
+                new SelectListItem{
+                                      Value = "0",
+                                      Text = "Not Start"
+                                  },
+                new SelectListItem{
+                                      Value = "1",
+                                      Text = "Start bid"
+                                  }
+        };
+
             layoutVM.ItemVM.SelectedCategoryIds = selectedCategoryIds;
             if (item == null)
             {
@@ -158,7 +170,9 @@ namespace AuctionOnline.Controllers
             item.Description = itemVM.Description;
             item.MinimumBid = itemVM.MinimumBid;
             item.CreatedAt = itemVM.CreatedAt;
-
+            item.BidStatus = itemVM.BidStatus;
+            item.BidEndDate = itemVM.BidEndDate;
+            item.BidStartDate = itemVM.BidStartDate;
             if (itemVM.SelectedCategoryIds != null)
             {
                 var categoryitems = db.CategoryItems.Where(c => c.ItemId == itemVM.Id).ToList();
@@ -199,7 +213,7 @@ namespace AuctionOnline.Controllers
                     }
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Detail", "Item", new { id = itemVM.Id });
             }
 
             layoutVM.ItemVM = itemVM;
@@ -271,7 +285,11 @@ namespace AuctionOnline.Controllers
                 var item = await db.Items
                     .Include(i => i.Account)
                     .FirstOrDefaultAsync(m => m.Id == id);
-                item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBid).ToList();
+
+                if (db.Bids.Any())
+                {
+                    item.Bids = db.Bids.Where(x => x.ItemId == id).OrderByDescending(x => x.CurrentBid).ToList();
+                }
 
                 if (item == null)
                 {
@@ -279,7 +297,7 @@ namespace AuctionOnline.Controllers
                 }
 
                 layoutVM.ItemVM = ItemUtility.MapModelToVM(item);
-
+                //layoutVM.BidHistoriesVM = GetBidHistory(id);
                 return View(layoutVM);
             }
             else
@@ -322,24 +340,6 @@ namespace AuctionOnline.Controllers
                 return RedirectToAction("Login", "Account");
             }
         }
-
-        //private async Task<string> UploadAsync(IFormFile fileType, string path)
-        //{
-        //    string uniqueFileName = null;
-
-        //    if (fileType != null)
-        //    {
-        //        string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, path);
-        //        uniqueFileName = Guid.NewGuid().ToString() + "_" + fileType.FileName;
-        //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-        //        Directory.CreateDirectory(uploadsFolder);
-        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
-        //        {
-        //            await fileType.CopyToAsync(fileStream);
-        //        }
-        //    }
-        //    return uniqueFileName;
-        //}
 
         public async Task<IActionResult> Pagination(int page = 1, int pageSize = 5)
         {
@@ -460,5 +460,6 @@ namespace AuctionOnline.Controllers
                 return RedirectToAction("AdminListItem");
             }
         }
+
     }
 }

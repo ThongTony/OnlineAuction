@@ -1,6 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Http;
-@using Newtonsoft.Json;
-@using AuctionOnline.ViewModels;
 
 @{
     var user = ViewBag.User;
@@ -41,7 +39,7 @@
 
                 @if ((@Context.Session.GetString("username") != null))
                 {
-                   
+
                     <li>
                         <a asp-action="Profileuser" asp-controller="Account">
                             <i class="fa fa-sign-in"></i>
@@ -70,7 +68,7 @@
                         </div>
                     </div>
 
-                </li>               
+                </li>
                 <li>
                     <a asp-controller="Item" asp-action="Create" asp-route-id="@Context.Session.GetInt32("checkiduser")">
                         <i class="fa fa-sign-in"></i>
@@ -85,7 +83,7 @@
                         <a asp-controller="Account" asp-action="Login" style="margin:7px 5px !important" class="hasbtn lean ta-center">
                             <btn class="btn btn-success">
                                 <i class="fas fa-sign-in-alt"></i>
-                                Login                               
+                                Login
                             </btn>
                         </a>
                     }

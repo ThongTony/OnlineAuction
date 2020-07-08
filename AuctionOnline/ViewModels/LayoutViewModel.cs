@@ -18,6 +18,7 @@ namespace AuctionOnline.ViewModels
             Categories = new List<Category>();
 
             Bid = new Bid();
+            BidHistoriesVM = new List<BidVM>();
         }
 
         public CategoryVM CategoryVM { get; set; }
@@ -31,6 +32,7 @@ namespace AuctionOnline.ViewModels
 
         public List<Category> Categories { get; set; }
         public Bid Bid { get; set; }
+        public List<BidVM> BidHistoriesVM { get; set; }
 
     }
 }

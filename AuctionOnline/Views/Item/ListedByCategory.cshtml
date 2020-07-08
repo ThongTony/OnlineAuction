@@ -37,35 +37,38 @@
                 <div class="topiclist-wrapper">
                     @foreach (var ci in Model.CategoryVM.CategoryItems)
                     {
-                        <div class="item grid col-md-5ths col-xs-6">
-                            <div class="itemcontainer">
-                                <div class="col-md-4 col-sm-3 col-xs-5">
-                                    <div style="padding-left:15px" class="row">
-                                        <a class="thumb" asp-action="Details" asp-route-id="@ci.Item.Id">
-                                            <img src="~/images/items/@ci.Item.Photo">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-md-8 col-sm-9 col-xs-7">
-                                    <div class="row">
-                                        <div class="col-sm-9">
-                                            <h3>
-                                                <a class="f-black">@ci.Item.Title</a>
-                                            </h3>
+                        @if (ci.Item.Status == true)
+                        {
+                            <div class="item grid col-md-5ths col-xs-6">
+                                <div class="itemcontainer">
+                                    <div class="col-md-4 col-sm-3 col-xs-5">
+                                        <div style="padding-left:15px" class="row">
+                                            <a class="thumb" asp-action="Details" asp-route-id="@ci.Item.Id">
+                                                <img src="~/images/items/@ci.Item.Photo">
+                                            </a>
                                         </div>
-                                        <div class="col-sm-3 f-red text-right">
-
-                                            <a asp-action="Detail" asp-route-id="@ci.Item.Id"><button type="button" class="btn btn-success">Go Bid</button></a>
-                                            <div class="text-nowrap">
-
+                                    </div>
+                                    <div class="col-md-8 col-sm-9 col-xs-7">
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <h3>
+                                                    <a class="f-black">@ci.Item.Title</a>
+                                                </h3>
                                             </div>
-                                            <div class="spacer"></div>
+                                            <div class="col-sm-3 f-red text-right">
+
+                                                <a asp-action="Detail" asp-route-id="@ci.Item.Id"><button type="button" class="btn btn-success">Go Bid</button></a>
+                                                <div class="text-nowrap">
+
+                                                </div>
+                                                <div class="spacer"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        }
                     }
 
                     <!--foreach-->
